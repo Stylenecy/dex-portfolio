@@ -148,70 +148,132 @@ section {
 }
 
 /* -- STATUS WINDOW (Glassmorphism) -- */
+/* =========================================
+   ORV STYLE SYSTEM WINDOW (New Update)
+   ========================================= */
 .status-window {
-  background: var(--glass-surface);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px); /* Efek kaca buram */
-  -webkit-backdrop-filter: blur(12px);
-  padding: 30px;
-  width: 380px;
-  border-radius: var(--radius-md);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* Deep shadow */
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.status-window:hover {
-  transform: translateY(-5px);
-  border-color: rgba(100, 210, 255, 0.3);
-}
-
-.status-window h2 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--glass-border);
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.status-window ul li {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-}
-
-.status-window ul li strong {
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-/* -- STATS BARS -- */
-.stats { margin-top: 24px; }
-
-.stat { margin-bottom: 16px; }
-
-.stat span {
-  display: block;
-  font-size: 0.85rem;
-  margin-bottom: 6px;
-  color: var(--text-secondary);
-}
-
-.bar {
-  background: rgba(255,255,255,0.05);
-  height: 6px;
-  border-radius: 4px;
+  background: rgba(10, 15, 35, 0.9) !important; /* Latar belakang biru gelap pekat */
+  border: 2px solid #4866ff !important; /* Border biru neon tajam */
+  box-shadow: 
+    0 0 20px rgba(72, 102, 255, 0.4),
+    inset 0 0 30px rgba(72, 102, 255, 0.2) !important;
+  border-radius: 4px !important; /* Sudut tajam kotak */
+  padding: 0 !important; /* Reset padding */
   overflow: hidden;
 }
 
+/* Header Biru ala "DING!" */
+.status-window::before {
+  content: "SYSTEM WINDOW // DEX BENNETT";
+  display: block;
+  background: linear-gradient(90deg, #2d46b9, #4866ff);
+  color: white;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #4866ff;
+}
+
+.status-window h2 {
+  display: none; /* Sembunyikan judul lama */
+}
+
+.status-window ul {
+  padding: 25px 25px 10px !important;
+  margin-bottom: 0 !important;
+}
+
+.status-window ul li {
+  border-bottom: 1px dashed rgba(72, 102, 255, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  font-family: monospace;
+  font-size: 0.95rem;
+}
+
+.status-window li strong {
+  color: #aab4ff; /* Warna label */
+}
+
+.stats {
+  padding: 10px 25px 30px !important;
+}
+
+.stat span {
+  font-family: monospace;
+  color: #7cf7ff; /* Cyan terang untuk nama stat */
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.bar {
+  background: rgba(72, 102, 255, 0.2) !important;
+  height: 8px !important;
+  border-radius: 2px !important;
+  border: 1px solid rgba(72, 102, 255, 0.5);
+}
+
 .bar div {
+  background: #7cf7ff !important; /* Isi bar warna cyan neon */
+  box-shadow: 0 0 10px #7cf7ff !important;
+  border-radius: 1px !important;
+}
+
+@keyframes loadBar {
+  to { width: var(--target-width); } /* Nanti diatur di HTML */
+}
+
+
+/* =========================================
+   [FIX] MISSION LOG IMAGE DISPLAY
+   ========================================= */
+
+.mission-visual {
+  flex: 1; /* Pastikan dia mengambil ruang yang cukup di flex container */
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden; /* Mencegah gambar keluar dari border radius */
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  
+  /* PENTING: Hapus 'aspect-ratio' kalau mau ukuran ngikutin gambar asli */
+  /* ATAU pakai aspect-ratio yang lebih kotak kalau gambar kamu tinggi */
+  aspect-ratio: 16/9; 
+  
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  background-color: #000; /* Warna background kalau gambar belum load */
+}
+
+/* Class untuk gambar di dalam kotak */
+.mission-visual-img {
+  width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, var(--text-accent), #7c3aed);
-  border-radius: 4px;
+  
+  /* OPSI 1: 'cover' (Default) - Memenuhi kotak, pasti ada yang kepotong */
+  /* object-fit: cover; */
+
+  /* OPSI 2: 'contain' (Rekomendasi kalau gambar kamu ada teksnya) */
+  /* Gambar bakal utuh 100%, tapi mungkin ada sisa ruang hitam di kiri-kanan */
+  object-fit: cover; 
+  
+  /* KUNCI SUPAYA TIDAK KEPOTONG SEMBARANGAN */
+  object-position: center top; /* Fokus ke bagian atas-tengah gambar */
+  
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Efek Hover: Zoom dikit aja, jangan lebay */
+.mission-item:hover .mission-visual-img {
+  transform: scale(1.03); /* Cuma zoom 3%, cukup buat efek hidup */
+}
+
+/* Efek Hover pada container */
+.mission-visual:hover {
+  border-color: rgba(100, 210, 255, 0.4);
+  box-shadow: 0 15px 40px rgba(100, 210, 255, 0.1);
 }
 
 /* =========================================
