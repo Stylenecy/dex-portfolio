@@ -1,0 +1,339 @@
+/* =========================================
+   UTILITIES.CSS — System Helpers & Micro-Animations
+   Part of the Dex Bennett // Reforging Phase OS
+   =========================================
+   TABLE OF CONTENTS:
+   1. Hub Header Size Overrides
+   2. Scroll Reveal Engine
+   3. Transition Helpers
+   4. Spacing Utilities
+   5. Text Utilities
+   6. Visibility & Display Helpers
+   7. Glitch & Pulse Animations
+   ========================================= */
+
+
+/* =========================================
+   1. HUB HEADER SIZE OVERRIDES
+   For hubs that need smaller/larger headers
+   than the default layout.css provides.
+   ========================================= */
+
+.hub__label--xs {
+  font-size: 0.65rem;
+}
+
+.hub__title--lg {
+  font-size: 1.4rem;
+}
+
+.hub__header--compact {
+  margin-bottom: 20px;
+}
+
+.hub__header--relaxed {
+  margin-bottom: 24px;
+}
+
+
+/* =========================================
+   2. SCROLL REVEAL ENGINE
+   — Elements start hidden, animate in when
+     the IntersectionObserver fires .active
+   ========================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delay variants */
+.reveal-delay-1 { transition-delay: 0.10s; }
+.reveal-delay-2 { transition-delay: 0.20s; }
+.reveal-delay-3 { transition-delay: 0.30s; }
+.reveal-delay-4 { transition-delay: 0.45s; }
+.reveal-delay-5 { transition-delay: 0.60s; }
+
+/* Directional reveal variants */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(28px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* =========================================
+   3. TRANSITION HELPERS
+   — Reusable transition presets for hover
+     states and interactive elements
+   ========================================= */
+
+.transition-fast   { transition: opacity 0.15s ease, transform 0.15s ease, background-color 0.15s ease; }
+.transition-normal { transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease; }
+.transition-slow   { transition: opacity 0.45s ease, transform 0.45s ease, background-color 0.45s ease, border-color 0.45s ease; }
+
+/* Specific property transitions */
+.transition-opacity  { transition: opacity 0.25s ease; }
+.transition-color    { transition: color 0.2s ease, background-color 0.2s ease; }
+.transition-transform { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.transition-border   { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+
+
+/* =========================================
+   4. SPACING UTILITIES
+   — Minimal set; not a full utility framework.
+     Use these for quick layout adjustments.
+   ========================================= */
+
+.mt-sm  { margin-top: 0.5rem; }
+.mt-md  { margin-top: 1rem; }
+.mt-lg  { margin-top: 2rem; }
+.mt-xl  { margin-top: 3rem; }
+
+.mb-sm  { margin-bottom: 0.5rem; }
+.mb-md  { margin-bottom: 1rem; }
+.mb-lg  { margin-bottom: 2rem; }
+
+.pt-md  { padding-top: 1rem; }
+.pt-lg  { padding-top: 2rem; }
+
+.pb-md  { padding-bottom: 1rem; }
+.pb-lg  { padding-bottom: 2rem; }
+
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+
+
+/* =========================================
+   5. TEXT UTILITIES
+   ========================================= */
+
+.text-accent   { color: var(--text-accent); }
+.text-primary  { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted    { color: var(--text-secondary); font-size: 0.8rem; }
+
+.text-xs  { font-size: 0.7rem; }
+.text-sm  { font-size: 0.8rem; }
+.text-md  { font-size: 1rem; }
+.text-lg  { font-size: 1.25rem; }
+.text-xl  { font-size: 1.5rem; }
+
+.text-upper   { text-transform: uppercase; }
+.text-mono    { font-family: 'Courier New', Courier, monospace; }
+.letter-wide  { letter-spacing: 0.12em; }
+.letter-wider { letter-spacing: 0.2em; }
+
+.label-system {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-accent);
+  opacity: 0.8;
+}
+
+/* Inline code / system path style */
+.code-inline {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.78rem;
+  color: var(--text-accent);
+  background: rgba(100, 210, 255, 0.07);
+  padding: 0.1em 0.45em;
+  border-radius: 4px;
+  border: 1px solid rgba(100, 210, 255, 0.15);
+}
+
+/* Double-slash section prefix — e.g., "// SYSTEM_CORE" */
+.section-prefix {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-accent);
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.section-prefix::before {
+  content: '// ';
+  opacity: 0.5;
+}
+
+
+/* =========================================
+   6. VISIBILITY & DISPLAY HELPERS
+   ========================================= */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.opacity-0   { opacity: 0; }
+.opacity-50  { opacity: 0.5; }
+.opacity-75  { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+.pointer-none { pointer-events: none; }
+.pointer-auto { pointer-events: auto; }
+
+.overflow-hidden { overflow: hidden; }
+.overflow-auto   { overflow: auto; }
+
+/* Flex helpers */
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap    { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.gap-xs       { gap: 0.35rem; }
+
+
+/* =========================================
+   7. GLITCH & PULSE ANIMATIONS
+   — Shared keyframes used across multiple
+     hub components
+   ========================================= */
+
+/* Blinking cursor / signal indicator */
+@keyframes blink-signal {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.blink {
+  animation: blink-signal 1.2s step-start infinite;
+}
+
+/* Gentle pulse glow — e.g., active status dot */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--text-accent),
+                0 0 8px var(--text-accent);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 10px var(--text-accent),
+                0 0 20px var(--text-accent);
+    opacity: 0.7;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Glitch text effect — used on AWAKENED overlay */
+@keyframes glitch-shift {
+  0%   { clip-path: inset(0 0 95% 0); transform: translateX(-3px); }
+  10%  { clip-path: inset(30% 0 50% 0); transform: translateX(3px); }
+  20%  { clip-path: inset(60% 0 20% 0); transform: translateX(-2px); }
+  30%  { clip-path: inset(80% 0 5% 0);  transform: translateX(1px); }
+  40%  { clip-path: inset(0 0 0 0);     transform: translateX(0); }
+  100% { clip-path: inset(0 0 0 0);     transform: translateX(0); }
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  animation: glitch-shift 4s steps(1) infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  color: #ff4dca;
+  animation: glitch-shift 4s steps(1) infinite;
+  animation-delay: 0.05s;
+  opacity: 0.6;
+}
+
+.glitch-text::after {
+  color: var(--text-accent);
+  animation: glitch-shift 4s steps(1) infinite;
+  animation-delay: 0.1s;
+  opacity: 0.5;
+}
+
+/* Scan line sweep — used on profile photo frame */
+@keyframes scan-sweep {
+  0%   { top: -10%; opacity: 0.6; }
+  100% { top: 110%; opacity: 0; }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--text-accent),
+    transparent
+  );
+  animation: scan-sweep 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Note: float-ambient keyframes are defined in aurora.css.
+   Do not re-define here to avoid duplication. */

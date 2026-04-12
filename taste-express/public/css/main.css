@@ -1,0 +1,116 @@
+/* ==========================================================================
+   MAIN.CSS — System Manifest
+   Dex Bennett // Reforging Phase — System OS Dashboard
+
+   This is the SINGLE entry point for all styles.
+   The HTML only needs ONE <link> tag pointing here.
+
+   Load order is intentional and must not be changed:
+     1. Variables   → CSS custom properties (the "brain") must load first
+                      so every subsequent file can reference them.
+     2. Reset        → Zero-state normalization before any styling begins.
+     3. Aurora       → Fixed background layer; no dependencies.
+     4. Glassmorphism→ Reusable glass utility classes & shared keyframes.
+     5. Layout       → Dashboard shell grid, sidebar, center-area, hub panels.
+     6. Utilities    → Scroll reveal, spacing helpers, text utilities.
+     7. Components   → Self-contained UI blocks (dock, stat-block, cards, etc.)
+     8. Hubs         → Per-section theming & bento layouts.
+                      Each hub overrides --hub-accent and defines its own grid.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   LAYER 1 — FOUNDATION
+   Design tokens and global reset.
+   These MUST come first. All other files depend on the CSS variables defined
+   in variables.css being available in the cascade.
+   -------------------------------------------------------------------------- */
+
+@import url('variables.css');
+@import url('reset.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 2 — AMBIENT BACKGROUND
+   The Aurora engine renders behind everything via z-index: -1.
+   Imported early so the fixed layer is established before layout paints.
+   -------------------------------------------------------------------------- */
+
+@import url('aurora.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 3 — DESIGN SYSTEM UTILITIES
+   Glassmorphism utility classes (.glass, .glass-card, .glass-shimmer, etc.)
+   must be available before layout and component files reference them.
+   -------------------------------------------------------------------------- */
+
+@import url('glassmorphism.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 4 — LAYOUT SYSTEM
+   The outer OS shell: .dashboard grid, .dashboard__sidebar, .dashboard__center,
+   .hub panels, .bento-grid, and the fixed dock-container positioning.
+   This file defines the structural skeleton everything else sits inside.
+   -------------------------------------------------------------------------- */
+
+@import url('layout-dashboard.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 5 — UTILITY CLASSES
+   Scroll reveal engine (.reveal, .reveal-delay-*), transition helpers,
+   spacing/text utilities, glitch animations, and the scan-line keyframe.
+   -------------------------------------------------------------------------- */
+
+@import url('utilities.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 6 — COMPONENTS
+   Self-contained, reusable UI modules.
+   Load order within this layer is from least-dependent to most-dependent:
+     sidebar  → dock   (dock has no dependency on sidebar)
+     cards    → timeline (timeline uses .tech-tag from cards)
+     stat-block is fully independent
+   -------------------------------------------------------------------------- */
+
+/* Navigation & Chrome */
+@import url('components/sidebar.css');
+@import url('components/dock.css');
+
+/* Content Blocks */
+@import url('components/stat-block.css');
+@import url('components/cards.css');
+@import url('components/timeline.css');
+
+
+/* --------------------------------------------------------------------------
+   LAYER 7 — HUB MODULES
+   Each hub imports its own CSS overrides, bento grid definition, and
+   hub-specific component styles. They all rely on variables, glassmorphism,
+   layout, and components being already defined above.
+
+   Hub load order does not affect correctness (they never conflict),
+   but we load them in the order they appear in the dock for readability.
+   -------------------------------------------------------------------------- */
+
+/* Hub 1: // SYSTEM_CORE ─── Cyan ──── Technical / Code Projects */
+@import url('hubs/system-core.css');
+
+/* Hub 2: // OPERATIONS ──── Purple ── Leadership / Events */
+@import url('hubs/operations.css');
+
+/* Hub 3: // OPERATOR_METRICS  Orange ── RPG Stats / Physical */
+@import url('hubs/operator-metrics.css');
+
+/* Hub 4: // ARCHIVES ─────── Green ─── Gaming / Photography */
+@import url('hubs/archives.css');
+
+
+/* ==========================================================================
+   END OF MANIFEST
+   To add a new module: create the file, then add a single @import here.
+   Never add styles directly to this file — keep it as a pure manifest.
+   ========================================================================== */

@@ -1,0 +1,866 @@
+/* =====================================================
+   LAYOUT — DASHBOARD SHELL
+   System OS: Outer shell, left sidebar, center area.
+   All hubs live inside .dashboard__center and are
+   toggled by the JS router (router.js).
+   ===================================================== */
+
+/* ─────────────────────────────────────────────────────
+   1. ROOT SHELL
+   Full-viewport, fixed OS container.
+   Nothing escapes this box.
+───────────────────────────────────────────────────── */
+.dashboard {
+  display: grid;
+
+  /*
+    Column layout:
+      [sidebar] [center-area]
+    Sidebar width is dynamic via CSS custom property.
+    Center takes all remaining space.
+  */
+  grid-template-columns: var(--sidebar-width, 260px) 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar center";
+
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* The SHELL never scrolls. Only .dashboard__center does. */
+
+  position: relative;
+  z-index: 1;
+
+  /* Smooth transition when sidebar width changes */
+  transition: grid-template-columns 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─────────────────────────────────────────────────────
+   2. LEFT SIDEBAR — OPERATOR PROFILE PANEL
+   Fixed-width, full-height column on the left.
+   Contains: logo/avatar, name, role, quick meta.
+   Scrolls independently if content overflows.
+───────────────────────────────────────────────────── */
+.dashboard__sidebar {
+  grid-area: sidebar;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+
+  height: 100vh;
+  padding: 40px 28px 120px 28px; /* bottom pad clears the dock */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Glass panel surface */
+  background: var(--glass-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+
+  /* Position relative for resize handle & toggle button */
+  position: relative;
+
+  /* Smooth scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--glass-border) transparent;
+}
+
+.dashboard__sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.dashboard__sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard__sidebar::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: System Header / Branding
+───────────────────────────────────────────────────── */
+.sidebar__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.sidebar__brand-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  opacity: 0.7;
+}
+
+.sidebar__brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.sidebar__brand-title span {
+  color: var(--text-accent);
+}
+
+.sidebar__brand-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: Profile Photo Frame
+   Size is now dynamic via CSS custom property
+   so it scales with sidebar width.
+───────────────────────────────────────────────────── */
+.sidebar__avatar-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar__avatar-frame {
+  position: relative;
+  width: var(--sidebar-avatar-size, 100px);
+  height: var(--sidebar-avatar-size, 100px);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+
+  /* Glowing pulse animation — indicates clickable */
+  animation: avatar-glow 3s ease-in-out infinite;
+}
+
+@keyframes avatar-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(100, 210, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(100, 210, 255, 0.25),
+                0 0 24px 4px rgba(100, 210, 255, 0.1);
+  }
+}
+
+.sidebar__avatar-frame:hover {
+  border-color: var(--text-accent);
+  animation: none;
+  box-shadow: 0 0 16px 4px rgba(100, 210, 255, 0.3),
+              0 0 32px 8px rgba(100, 210, 255, 0.15);
+  transform: scale(1.03);
+}
+
+.sidebar__avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(20%);
+  transition: filter 0.3s ease, transform 0.4s ease;
+}
+
+.sidebar__avatar-frame:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.04);
+}
+
+/* Scan-line effect on hover */
+.sidebar__avatar-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(100, 210, 255, 0.03) 2px,
+    rgba(100, 210, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar__avatar-frame:hover::after {
+  opacity: 1;
+}
+
+/* Corner accent marks */
+.sidebar__avatar-frame .corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--text-accent);
+  border-style: solid;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.sidebar__avatar-frame:hover .corner { opacity: 1; }
+
+.sidebar__avatar-frame .corner.tl { top: 4px; left: 4px;  border-width: 1px 0 0 1px; transform: translate( 3px,  3px); }
+.sidebar__avatar-frame .corner.tr { top: 4px; right: 4px; border-width: 1px 1px 0 0; transform: translate(-3px,  3px); }
+.sidebar__avatar-frame .corner.bl { bottom: 4px; left: 4px;  border-width: 0 0 1px 1px; transform: translate( 3px, -3px); }
+.sidebar__avatar-frame .corner.br { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; transform: translate(-3px, -3px); }
+
+.sidebar__avatar-frame:hover .corner.tl { transform: translate(0, 0); }
+.sidebar__avatar-frame:hover .corner.tr { transform: translate(0, 0); }
+.sidebar__avatar-frame:hover .corner.bl { transform: translate(0, 0); }
+.sidebar__avatar-frame:hover .corner.br { transform: translate(0, 0); }
+
+/* ─────────────────────────────────────────────────────
+   PHOTO LIGHTBOX MODAL
+   Full-screen overlay shown when photo is clicked.
+   Elegant futuristic frame with rounded border.
+───────────────────────────────────────────────────── */
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 7, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.photo-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Futuristic frame container */
+.photo-lightbox__frame {
+  position: relative;
+  padding: 24px;
+  transform: scale(0.85);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.photo-lightbox.is-open .photo-lightbox__frame {
+  transform: scale(1);
+}
+
+/* Outer glow ring */
+.photo-lightbox__frame::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: calc(var(--radius-lg, 18px) + 4px);
+  background: conic-gradient(
+    from 0deg,
+    rgba(100, 210, 255, 0.4),
+    rgba(139, 92, 246, 0.4),
+    rgba(74, 222, 128, 0.4),
+    rgba(100, 210, 255, 0.4)
+  );
+  animation: frame-rotate 8s linear infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  padding: 4px;
+}
+
+@keyframes frame-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Inner frame border */
+.photo-lightbox__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg, 18px);
+  border: 1px solid rgba(100, 210, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Corner decorations */
+.photo-lightbox__corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--cyan, #64d2ff);
+  border-style: solid;
+  z-index: 2;
+}
+
+.photo-lightbox__corner--tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+.photo-lightbox__corner--tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+.photo-lightbox__corner--bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+.photo-lightbox__corner--br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
+/* Photo image inside frame */
+.photo-lightbox__img {
+  display: block;
+  max-width: min(400px, 80vw);
+  max-height: min(500px, 70vh);
+  border-radius: var(--radius-lg, 18px);
+  object-fit: cover;
+  box-shadow: 0 0 40px rgba(100, 210, 255, 0.15);
+}
+
+/* Close button */
+.photo-lightbox__close {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(5, 5, 7, 0.6);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  z-index: 3;
+}
+
+.photo-lightbox__close:hover {
+  background: rgba(100, 210, 255, 0.1);
+  border-color: rgba(100, 210, 255, 0.3);
+  color: var(--text-accent);
+}
+
+/* Photo label below frame */
+.photo-lightbox__label {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.photo-lightbox__label-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.photo-lightbox__label-role {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Label under photo */
+.sidebar__avatar-label {
+  margin-top: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  font-family: 'Consolas', monospace;
+  text-align: center;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__avatar-frame:hover + .sidebar__avatar-label,
+.sidebar__avatar-label:hover {
+  opacity: 1;
+  color: var(--text-accent);
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: Identity / Meta Data
+───────────────────────────────────────────────────── */
+.sidebar__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.sidebar__name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.sidebar__role {
+  font-size: 11px;
+  color: var(--text-accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sidebar__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.sidebar__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.sidebar__meta-row svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--text-accent);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: Divider
+───────────────────────────────────────────────────── */
+.sidebar__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--glass-border);
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: Status Badge
+───────────────────────────────────────────────────── */
+.sidebar__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(100, 210, 255, 0.05);
+  border: 1px solid rgba(100, 210, 255, 0.15);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.sidebar__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  flex-shrink: 0;
+  animation: blink-pulse 2.5s ease-in-out infinite;
+}
+
+.sidebar__status-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4ade80;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR: Hub Navigation List (vertical pills)
+   Secondary nav — mirrors the bottom dock on desktop.
+───────────────────────────────────────────────────── */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-top: auto; /* Push toward bottom if sidebar is tall */
+}
+
+.sidebar__nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  padding-left: 4px;
+  margin-bottom: 4px;
+}
+
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar__nav-item svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.sidebar__nav-item:hover {
+  background: rgba(100, 210, 255, 0.06);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+
+.sidebar__nav-item.active {
+  background: rgba(100, 210, 255, 0.1);
+  color: var(--text-accent);
+  border-color: rgba(100, 210, 255, 0.2);
+}
+
+.sidebar__nav-item.active svg {
+  stroke: var(--text-accent);
+}
+
+/* ─────────────────────────────────────────────────────
+   3. CENTER AREA — THE HUB VIEWPORT
+   This is the scrollable region that houses all
+   four hub panels. Only the active hub is visible.
+───────────────────────────────────────────────────── */
+.dashboard__center {
+  grid-area: center;
+
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Bottom padding so content never hides under the dock */
+  padding: 48px 48px 120px 48px;
+
+  /* Smooth scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--glass-border) transparent;
+}
+
+.dashboard__center::-webkit-scrollbar {
+  width: 5px;
+}
+.dashboard__center::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard__center::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+.dashboard__center::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 210, 255, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────
+   4. HUB PANELS
+   Each hub is a full div inside .dashboard__center.
+   The router toggles .hub--active to show/hide them.
+───────────────────────────────────────────────────── */
+.hub {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: none;
+
+  /* Hubs stack on top of each other within the flow */
+  width: 100%;
+  min-height: 100%;
+}
+
+/* Active state — router adds this class */
+.hub--active {
+  display: block;
+  animation: hub-enter 0.35s ease forwards;
+}
+
+/* Exit animation — router adds this BEFORE switching */
+.hub--exiting {
+  animation: hub-exit 0.25s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes hub-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hub-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   5. HUB SECTION HEADER
+   Reusable header block at the top of each hub.
+   Pattern: [label tag] + [H1 title] + [description]
+───────────────────────────────────────────────────── */
+.hub__header {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hub__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  opacity: 0.8;
+
+  /* Terminal prefix "// " is decorative */
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.hub__title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hub__desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.65;
+  margin-top: 4px;
+}
+
+/* ─────────────────────────────────────────────────────
+   6. BENTO GRID
+   The core layout primitive for hub content.
+   Uses named grid areas per hub via hub-specific CSS.
+───────────────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Default: 2-column auto grid. Hub files override this. */
+.bento-grid--auto {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.bento-grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.bento-grid--asymmetric {
+  grid-template-columns: 2fr 1fr;
+}
+
+/* Generic bento cell */
+.bento-cell {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.bento-cell:hover {
+  border-color: rgba(100, 210, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Glow shimmer on hover (top edge) */
+.bento-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(100, 210, 255, 0.35),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.bento-cell:hover::before {
+  opacity: 1;
+}
+
+/* Span helpers for grid cells */
+.bento-cell--span2  { grid-column: span 2; }
+.bento-cell--span3  { grid-column: span 3; }
+.bento-cell--tall   { grid-row: span 2; }
+
+/* ─────────────────────────────────────────────────────
+   7. BOTTOM DOCK — FIXED NAVIGATION BAR
+   This overlays the entire shell (sidebar + center).
+   Defined here so it always renders above everything.
+   Detailed styling lives in components/dock.css.
+───────────────────────────────────────────────────── */
+.dock-container {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* Container is pass-through; .dock handles clicks */
+}
+
+/* ─────────────────────────────────────────────────────
+   8. RESPONSIVE BREAKPOINTS
+   Tablet: sidebar collapses to icon-only strip.
+   Mobile: sidebar disappears, dock takes over entirely.
+───────────────────────────────────────────────────── */
+
+/* ── Tablet (≤ 1024px) ─────────────────────────── */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .dashboard__sidebar {
+    padding: 24px 10px 120px 10px;
+    align-items: center;
+  }
+
+  /* Hide text-only elements, keep icons */
+  .sidebar__brand-title,
+  .sidebar__brand-sub,
+  .sidebar__brand-tag,
+  .sidebar__identity,
+  .sidebar__status-label,
+  .sidebar__nav-label,
+  .sidebar__nav-item span,
+  .sidebar__divider {
+    display: none;
+  }
+
+  .sidebar__nav-item {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .sidebar__status {
+    padding: 8px;
+    justify-content: center;
+  }
+
+  .dashboard__center {
+    padding: 32px 28px 120px 28px;
+  }
+
+  .hub__title {
+    font-size: 26px;
+  }
+
+  .bento-grid--auto,
+  .bento-grid--3col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bento-cell--span3 {
+    grid-column: span 2;
+  }
+}
+
+/* ── Mobile (≤ 768px) ──────────────────────────── */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-areas: "center";
+  }
+
+  .dashboard__sidebar {
+    display: none; /* Dock takes over on mobile */
+  }
+
+  .dashboard__center {
+    padding: 24px 16px 110px 16px;
+  }
+
+  .hub__title {
+    font-size: 22px;
+  }
+
+  .bento-grid--auto,
+  .bento-grid--3col,
+  .bento-grid--asymmetric {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-cell--span2,
+  .bento-cell--span3 {
+    grid-column: span 1;
+  }
+
+  .bento-cell--tall {
+    grid-row: span 1;
+  }
+
+  .hub__header {
+    margin-bottom: 28px;
+  }
+}
+
+/* ── Small mobile (≤ 480px) ────────────────────── */
+@media (max-width: 480px) {
+  .dashboard__center {
+    padding: 20px 12px 100px 12px;
+  }
+
+  .hub__title {
+    font-size: 20px;
+  }
+
+  .bento-cell {
+    padding: 16px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   9. UTILITY ANIMATIONS (shared by layout)
+───────────────────────────────────────────────────── */
+@keyframes blink-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(74, 222, 128, 0.6); }
+  50%       { opacity: 0.4; box-shadow: 0 0 3px rgba(74, 222, 128, 0.2); }
+}
+
+/* ─────────────────────────────────────────────────────
+   10. REDUCED MOTION
+───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .blink,
+  [class*="blink-"] {
+    animation: none !important;
+  }
+}

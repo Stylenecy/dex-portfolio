@@ -1,0 +1,1106 @@
+/* =====================================================
+   HUB: // OPERATIONS
+   Leadership, Organization & Event Management
+   Theme Accent: Purple (--purple: #8b5cf6)
+   =====================================================
+   TABLE OF CONTENTS:
+   1. Hub Root & Accent Override
+   2. Hub Header
+   3. Bento Grid Layout
+   4. Mission Card (Leadership Projects)
+   5. Timeline Section (inside hub)
+   6. Event Card
+   7. Impact Metrics Row
+   8. Role Badge
+   9. Organization Tag
+   10. Responsive
+   ===================================================== */
+
+
+/* ─────────────────────────────────────────────────────
+   1. HUB ROOT & ACCENT OVERRIDE
+   The [data-hub] selector in variables.css sets
+   --hub-accent to purple for all children here.
+   We build on that locally.
+───────────────────────────────────────────────────── */
+
+#hub-operations {
+  --hub-accent:       #8b5cf6;
+  --hub-accent-dim:   rgba(139, 92, 246, 0.12);
+  --hub-accent-glow:  rgba(139, 92, 246, 0.25);
+  --hub-accent-border: rgba(139, 92, 246, 0.22);
+}
+
+/* Hub entrance — inherits hub--active animation from layout */
+#hub-operations .bento-cell:hover {
+  border-color: rgba(139, 92, 246, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.08),
+    0 0 28px rgba(139, 92, 246, 0.07),
+    0 20px 48px rgba(0, 0, 0, 0.45);
+}
+
+/* Override shimmer line color for this hub */
+#hub-operations .bento-cell::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.4),
+    transparent
+  );
+}
+
+
+/* ─────────────────────────────────────────────────────
+   2. HUB HEADER
+   The "// OPERATIONS" label block at the top.
+───────────────────────────────────────────────────── */
+
+#hub-operations .hub__label {
+  color: var(--hub-accent);
+}
+
+/* Animated underline on the section title */
+#hub-operations .hub__title {
+  position: relative;
+  display: inline-block;
+}
+
+#hub-operations .hub__title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--hub-accent),
+    rgba(139, 92, 246, 0.3)
+  );
+  border-radius: 2px;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   3. BENTO GRID LAYOUT — OPERATIONS
+   Layout:
+     [ FEATURED ROLE — wide ]  [ IMPACT METRICS — tall ]
+     [ EVENT CARD ]  [ EVENT CARD ]  [ METRIC SIDEBAR ]
+     [ TIMELINE — full width ]
+───────────────────────────────────────────────────── */
+
+.ops-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "ops-featured   ops-metrics"
+    "ops-events     ops-metrics"
+    "ops-timeline   ops-timeline";
+  gap: 16px;
+  width: 100%;
+}
+
+.ops-cell--featured  { grid-area: ops-featured; }
+.ops-cell--metrics   { grid-area: ops-metrics; }
+.ops-cell--events    { grid-area: ops-events; }
+.ops-cell--timeline  { grid-area: ops-timeline; }
+
+
+/* ─────────────────────────────────────────────────────
+   4. FEATURED ROLE CARD
+   Highlights the most significant leadership role.
+   Large card with title, org name, scope, and tags.
+───────────────────────────────────────────────────── */
+
+.ops-role-card {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--hub-accent-border);
+  border-radius: var(--radius-lg);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow   0.3s ease,
+    transform    0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Purple top-edge accent */
+.ops-role-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.5) 30%,
+    rgba(167, 139, 250, 0.6) 50%,
+    rgba(139, 92, 246, 0.5) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Ambient corner glow */
+.ops-role-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at top left,
+    rgba(139, 92, 246, 0.06) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ops-role-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ops-role-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    0 0 32px rgba(139, 92, 246, 0.10),
+    0 24px 56px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Role Card: System Tag (e.g., "CURRENT ROLE") ── */
+.ops-role-card__sys-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  opacity: 0.75;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* ── Role Card: Title ─── */
+.ops-role-card__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* ── Role Card: Organization ─── */
+.ops-role-card__org {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ops-role-card__org svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--hub-accent);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* ── Role Card: Description ─── */
+.ops-role-card__desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+/* ── Role Card: Period Tag ─── */
+.ops-role-card__period {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  background: var(--hub-accent-dim);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  width: fit-content;
+}
+
+.ops-role-card__period::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hub-accent);
+  box-shadow: 0 0 6px var(--hub-accent);
+  animation: blink-signal 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Role Card: Footer Actions ─── */
+.ops-role-card__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   5. IMPACT METRICS PANEL
+   Vertical panel showing key impact numbers.
+   e.g., "500+ Students Reached", "3 Policy Changes"
+───────────────────────────────────────────────────── */
+
+.ops-metrics-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle vertical accent line on the left inside edge */
+.ops-metrics-panel::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--hub-accent),
+    transparent
+  );
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.ops-metrics-panel__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  opacity: 0.7;
+  font-family: 'Consolas', monospace;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* ── Individual Metric Item ─── */
+.ops-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.05));
+  transition: padding-left 0.2s ease;
+}
+
+.ops-metric-item:last-child {
+  border-bottom: none;
+}
+
+.ops-metric-item:hover {
+  padding-left: 6px;
+}
+
+.ops-metric__value {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+
+  /* Purple digit glow */
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+
+  transition: text-shadow 0.3s ease;
+}
+
+.ops-metric-item:hover .ops-metric__value {
+  text-shadow: 0 0 28px rgba(139, 92, 246, 0.55);
+  color: #fff;
+}
+
+/* Accent color for the "+", "x", "%" suffix */
+.ops-metric__value span {
+  font-size: 16px;
+  color: var(--hub-accent);
+  font-weight: 700;
+}
+
+.ops-metric__label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   6. EVENT CARDS GRID
+   Smaller cards for individual events/activities.
+───────────────────────────────────────────────────── */
+
+.ops-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.ops-event-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition:
+    border-color 0.25s ease,
+    transform    0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow   0.25s ease;
+}
+
+.ops-event-card:hover {
+  border-color: rgba(139, 92, 246, 0.28);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Event Card: Type indicator dot ─── */
+.ops-event-card__type {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  opacity: 0.8;
+  font-family: 'Consolas', monospace;
+}
+
+.ops-event-card__type::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hub-accent);
+  flex-shrink: 0;
+}
+
+/* ── Event Card: Title ─── */
+.ops-event-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.ops-event-card:hover .ops-event-card__title {
+  color: #fff;
+}
+
+/* ── Event Card: Body ─── */
+.ops-event-card__body {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+/* ── Event Card: Footer (Date + Scope) ─── */
+.ops-event-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--glass-border);
+  margin-top: auto;
+}
+
+.ops-event-card__date {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  font-family: 'Consolas', monospace;
+}
+
+.ops-event-card__scope {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--hub-accent);
+  background: var(--hub-accent-dim);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
+  letter-spacing: 0.07em;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   7. IMPACT METRICS ROW
+   Horizontal strip of 3–4 large metric tiles —
+   alternative to the vertical panel.
+───────────────────────────────────────────────────── */
+
+.ops-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.ops-metric-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ops-metric-tile:hover {
+  border-color: rgba(139, 92, 246, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Small left-edge accent line */
+.ops-metric-tile::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 0;
+  width: 2px;
+  background: var(--hub-accent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0.45;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.ops-metric-tile:hover::before {
+  opacity: 0.8;
+}
+
+.ops-metric-tile__number {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 18px rgba(139, 92, 246, 0.25);
+}
+
+.ops-metric-tile__suffix {
+  font-size: 18px;
+  color: var(--hub-accent);
+  font-weight: 700;
+}
+
+.ops-metric-tile__label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.ops-metric-tile__sub {
+  font-size: 10px;
+  color: var(--text-secondary);
+  opacity: 0.55;
+  font-family: 'Consolas', monospace;
+  letter-spacing: 0.06em;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   8. ROLE BADGE
+   Reusable pill badge for role/position labels.
+   e.g., "Chairman", "Coordinator", "Member"
+───────────────────────────────────────────────────── */
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* ── Role Variants ─── */
+.role-badge--chairman {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.22);
+}
+
+.role-badge--coordinator {
+  color: var(--hub-accent);
+  background: var(--hub-accent-dim);
+  border: 1px solid var(--hub-accent-border);
+}
+
+.role-badge--member {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+}
+
+.role-badge--lead {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+/* Icon prefix inside badge */
+.role-badge svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   9. ORGANIZATION TAG
+   Compact label identifying the parent organization
+   of a role or event.
+───────────────────────────────────────────────────── */
+
+.org-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  transition: color 0.2s ease;
+}
+
+.org-tag::before {
+  content: '◉';
+  font-size: 9px;
+  color: var(--hub-accent);
+  opacity: 0.7;
+}
+
+.org-tag:hover {
+  color: var(--text-primary);
+}
+
+/* Bordered variant */
+.org-tag--bordered {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 3px 9px;
+}
+
+.org-tag--bordered:hover {
+  border-color: rgba(139, 92, 246, 0.2);
+  color: var(--hub-accent);
+  background: var(--hub-accent-dim);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   10. RESPONSIVE
+───────────────────────────────────────────────────── */
+
+/* ── Tablet ─── */
+@media (max-width: 1024px) {
+  .ops-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "ops-metrics"
+      "ops-featured"
+      "ops-events"
+      "ops-timeline";
+  }
+
+  .ops-metrics-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .ops-metrics-panel::before {
+    display: none;
+  }
+
+  .ops-metric-item {
+    flex: 1 1 140px;
+    border-bottom: none;
+    border-right: 1px solid var(--border-subtle, rgba(255,255,255,0.05));
+    padding: 0 16px 0 0;
+  }
+
+  .ops-metric-item:last-child {
+    border-right: none;
+  }
+}
+
+/* ── Mobile ─── */
+@media (max-width: 768px) {
+  .ops-role-card {
+    padding: 22px 18px;
+  }
+
+  .ops-role-card__title {
+    font-size: 18px;
+  }
+
+  .ops-events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ops-metric-tile__number {
+    font-size: 26px;
+  }
+
+  .ops-metric-item {
+    flex: 1 1 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.05));
+    padding: 10px 0;
+  }
+
+  .ops-metric-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* ── Small Mobile ─── */
+@media (max-width: 480px) {
+  .ops-metrics-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ops-metric-tile {
+    padding: 16px;
+  }
+
+  .ops-metric-tile__number {
+    font-size: 22px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────
+   11. CERTIFICATE SHOWCASE
+   Three-group bento: Command Deployments, Operations Logs, Arena Records.
+   Each certificate card has thumbnail, name, category, and PDF link.
+───────────────────────────────────────────────────── */
+
+/* Section divider label */
+.ops-section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 40px 0 20px 0;
+}
+
+.ops-section-label__prefix {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  opacity: 0.8;
+  font-family: 'Consolas', monospace;
+  white-space: nowrap;
+}
+
+.ops-section-label__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--hub-accent-glow),
+    transparent
+  );
+}
+
+/* Certificate grid */
+.ops-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+/* Individual certificate card */
+.ops-cert-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+
+  transition:
+    border-color 0.25s ease,
+    transform    0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow   0.25s ease;
+}
+
+.ops-cert-card:hover {
+  border-color: rgba(139, 92, 246, 0.28);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Top-edge purple shimmer */
+.ops-cert-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.5),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.ops-cert-card:hover::before {
+  opacity: 1;
+}
+
+/* Certificate thumbnail */
+.ops-cert-card__thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-surface-2, #13161c);
+  border-bottom: 1px solid var(--glass-border);
+  flex-shrink: 0;
+}
+
+.ops-cert-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.7) brightness(0.85);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.ops-cert-card:hover .ops-cert-card__thumb img {
+  filter: saturate(1) brightness(1);
+  transform: scale(1.05);
+}
+
+/* Fallback when no image available */
+.ops-cert-card__thumb--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.08),
+    rgba(139, 92, 246, 0.03)
+  );
+}
+
+.ops-cert-card__thumb--placeholder svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--hub-accent);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.35;
+}
+
+/* Category badge overlaid on thumbnail */
+.ops-cert-card__badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ops-cert-card__badge--command {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.ops-cert-card__badge--operations {
+  color: var(--hub-accent);
+  background: var(--hub-accent-dim);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.ops-cert-card__badge--arena {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+}
+
+/* Card body */
+.ops-cert-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px 14px;
+  flex: 1;
+}
+
+.ops-cert-card__name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.ops-cert-card:hover .ops-cert-card__name {
+  color: #fff;
+}
+
+.ops-cert-card__org {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Card footer — PDF link */
+.ops-cert-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px 12px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.ops-cert-card__year {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  font-family: 'Consolas', monospace;
+}
+
+.ops-cert-card__view {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  padding: 4px 10px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-pill);
+  background: rgba(139, 92, 246, 0.06);
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ops-cert-card__view:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.ops-cert-card__view svg {
+  width: 10px;
+  height: 10px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+}
+
+/* Expandable section toggle */
+.ops-section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-pill);
+  background: rgba(139, 92, 246, 0.06);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+  font-family: 'Consolas', monospace;
+}
+
+.ops-section-toggle:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.ops-section-toggle svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+
+.ops-section-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* Hidden sections */
+.ops-section-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+
+.ops-section-collapsed.is-open {
+  max-height: 3000px;
+  opacity: 1;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   12. RESPONSIVE — CERTIFICATE SHOWCASE
+───────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ops-cert-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .ops-cert-card__body {
+    padding: 10px 12px 12px;
+  }
+
+  .ops-cert-card__name {
+    font-size: 11.5px;
+  }
+
+  .ops-cert-card__thumb {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .ops-cert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-section-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 28px 0 14px 0;
+  }
+
+  .ops-section-label__line {
+    width: 100%;
+  }
+}

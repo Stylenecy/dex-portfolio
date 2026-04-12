@@ -1,0 +1,649 @@
+/* =====================================================
+   SIDEBAR.CSS — Supplementary Overrides & Enhancements
+   Core sidebar layout lives in layout-dashboard.css.
+   This file handles: extended states, animations,
+   themed accents, and any sidebar sub-components
+   not covered by the base layout.
+   ===================================================== */
+
+
+/* ─────────────────────────────────────────────────────
+   1. SIDEBAR ENTRANCE ANIMATION
+   Runs once on page load — slides in from the left.
+───────────────────────────────────────────────────── */
+.dashboard__sidebar {
+  animation: sidebar-boot 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sidebar-boot {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────
+   2. SIDEBAR SYSTEM SIGNATURE
+   The "OS version" string shown at the very bottom
+   of the sidebar — a subtle branding detail.
+───────────────────────────────────────────────────── */
+.sidebar__signature {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+  width: 100%;
+}
+
+.sidebar__sig-id {
+  font-size: 9px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-secondary);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  display: block;
+  line-height: 1.8;
+}
+
+.sidebar__sig-id::before {
+  content: '> ';
+  color: var(--text-accent);
+  opacity: 0.6;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   3. SIDEBAR TECH TAG STRIP
+   A compact row of small skill/status badges shown
+   beneath the operator's role label.
+───────────────────────────────────────────────────── */
+.sidebar__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+}
+
+.sidebar__tag {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 3px 7px;
+  line-height: 1.4;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.sidebar__tag:hover {
+  color: var(--text-accent);
+  border-color: rgba(100, 210, 255, 0.25);
+  background: rgba(100, 210, 255, 0.06);
+}
+
+/* Active tag — highlights the currently active hub's tech */
+.sidebar__tag.active {
+  color: var(--text-accent);
+  background: rgba(100, 210, 255, 0.08);
+  border-color: rgba(100, 210, 255, 0.3);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   4. SIDEBAR SYSTEM STATS MINI-PANEL
+   A compact read-only panel showing 2–3 key metrics
+   (e.g., Projects Deployed, Active Phase, GPA).
+───────────────────────────────────────────────────── */
+.sidebar__stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--glass-border);   /* Gap color = border-like dividers */
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+}
+
+.sidebar__stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  background: var(--bg-surface, #0f1115);
+  transition: background 0.2s ease;
+}
+
+.sidebar__stat-row:hover {
+  background: var(--bg-surface-2, #13161c);
+}
+
+.sidebar__stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+}
+
+.sidebar__stat-value {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-accent);
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.08em;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   5. SIDEBAR PHASE INDICATOR
+   A slim visual showing the operator's current phase
+   (LEGACY → REFORGING [active] → HIGH-AVAILABILITY).
+   Three dots connected by a line.
+───────────────────────────────────────────────────── */
+.sidebar__phase {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar__phase-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
+  opacity: 0.55;
+}
+
+.sidebar__phase-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+.sidebar__phase-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.sidebar__phase-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Completed phase nodes */
+.sidebar__phase-node.done .sidebar__phase-dot {
+  background: rgba(100, 210, 255, 0.3);
+  border-color: var(--text-accent);
+}
+
+/* Active / current phase node */
+.sidebar__phase-node.current .sidebar__phase-dot {
+  background: var(--text-accent);
+  border-color: var(--text-accent);
+  box-shadow: 0 0 10px rgba(100, 210, 255, 0.5);
+  animation: phase-pulse 2.5s ease-in-out infinite;
+}
+
+/* Locked / future phase nodes stay dim */
+.sidebar__phase-node.locked .sidebar__phase-dot {
+  opacity: 0.3;
+}
+
+.sidebar__phase-node-name {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+.sidebar__phase-node.current .sidebar__phase-node-name {
+  color: var(--text-accent);
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* Connector line between nodes */
+.sidebar__phase-line {
+  flex: 1;
+  height: 1px;
+  background: var(--glass-border);
+  margin-bottom: 14px; /* Align with the dot center */
+}
+
+.sidebar__phase-line.done {
+  background: linear-gradient(
+    90deg,
+    rgba(100, 210, 255, 0.5),
+    rgba(100, 210, 255, 0.2)
+  );
+}
+
+@keyframes phase-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(100, 210, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(100, 210, 255, 0.9),
+                0 0 24px rgba(100, 210, 255, 0.3);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────
+   6. SIDEBAR SOCIAL LINKS
+   Compact row of icon-only social links at the bottom
+   of the sidebar panel.
+───────────────────────────────────────────────────── */
+.sidebar__socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.sidebar__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.sidebar__social-link svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+  display: block;
+}
+
+.sidebar__social-link:hover {
+  color: var(--text-accent);
+  border-color: rgba(100, 210, 255, 0.3);
+  background: rgba(100, 210, 255, 0.07);
+  transform: translateY(-2px);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   7. TABLET COLLAPSED STATE OVERRIDES
+   When sidebar shrinks to 64px icon strip (≤ 1024px),
+   these rules ensure the remaining elements display
+   correctly.
+───────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+
+  .sidebar__stats,
+  .sidebar__phase,
+  .sidebar__tags,
+  .sidebar__signature {
+    display: none;
+  }
+
+  .sidebar__socials {
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .sidebar__social-link {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sidebar__stat-row {
+    padding: 8px;
+    justify-content: center;
+  }
+
+  /* Status dot only — no text */
+  .sidebar__status-label {
+    display: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────
+   8. REDUCED MOTION
+───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard__sidebar {
+    animation: none;
+  }
+
+  .sidebar__phase-node.current .sidebar__phase-dot {
+    animation: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────
+   9. RESIZE HANDLE
+   Draggable strip on the right edge of the sidebar.
+   Made visually obvious with a persistent subtle line
+   and enhanced on hover.
+───────────────────────────────────────────────────── */
+.sidebar__resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100vh;
+  cursor: col-resize;
+  z-index: 10;
+  background: transparent;
+  transition: background 0.2s ease;
+
+  /* Persistent subtle visual indicator */
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebar__resize-handle:hover,
+.sidebar__resize-handle--active {
+  background: rgba(100, 210, 255, 0.08);
+  border-right-color: rgba(100, 210, 255, 0.3);
+}
+
+/* Visual indicator line — always subtly visible */
+.sidebar__resize-handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 60px;
+  border-radius: 2px;
+  background: rgba(100, 210, 255, 0.2);
+  transition: 
+    opacity 0.2s ease, 
+    height 0.3s ease,
+    background 0.2s ease;
+}
+
+.sidebar__resize-handle:hover::before,
+.sidebar__resize-handle--active::before {
+  opacity: 1;
+  height: 80px;
+  background: rgba(100, 210, 255, 0.5);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   10. COLLAPSE TOGGLE BUTTON
+   Small chevron button in the sidebar — always visible,
+   positioned at the top-right for easy access.
+───────────────────────────────────────────────────── */
+.sidebar__collapse-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(100, 210, 255, 0.2);
+  background: rgba(5, 5, 7, 0.8);
+  color: var(--text-accent);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Glow effect to make button more visible */
+.sidebar__collapse-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-sm) + 2px);
+  background: rgba(100, 210, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.sidebar__collapse-btn:hover::before {
+  opacity: 1;
+}
+
+.sidebar__collapse-btn:hover {
+  background: rgba(100, 210, 255, 0.15);
+  border-color: rgba(100, 210, 255, 0.4);
+  color: #fff;
+}
+
+.sidebar__collapse-btn:active {
+  transform: scale(0.92);
+}
+
+/* Rotate icon when collapsed */
+.sidebar__collapse-btn--collapsed svg {
+  transform: rotate(180deg);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Move button to center when sidebar is collapsed */
+.sidebar--collapsed .sidebar__collapse-btn {
+  right: 50%;
+  transform: translateX(50%);
+  top: 12px;
+}
+
+.sidebar--collapsed .sidebar__collapse-btn--collapsed {
+  right: 50%;
+  transform: translateX(50%);
+}
+
+/* Hide resize handle when collapsed */
+.sidebar--collapsed .sidebar__resize-handle {
+  display: none;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   11. COLLAPSED STATE (Icon Rail)
+   When sidebar is minimized to ~64px, only icons and
+   essential elements remain visible.
+───────────────────────────────────────────────────── */
+
+/* Collapsed sidebar width */
+.dashboard__sidebar.sidebar--collapsed {
+  width: var(--sidebar-min-width, 64px) !important;
+  min-width: var(--sidebar-min-width, 64px) !important;
+  max-width: var(--sidebar-min-width, 64px) !important;
+  overflow: visible;
+  align-items: center;
+  padding: 40px 8px 120px 8px;
+}
+
+/* Hide text content in collapsed state */
+.sidebar--collapsed .sidebar__brand-tag,
+.sidebar--collapsed .sidebar__brand-title,
+.sidebar--collapsed .sidebar__brand-sub,
+.sidebar--collapsed .sidebar__name,
+.sidebar--collapsed .sidebar__role,
+.sidebar--collapsed .sidebar__meta,
+.sidebar--collapsed .sidebar__status-label,
+.sidebar--collapsed .sidebar__nav-label,
+.sidebar--collapsed .sidebar__nav-item span,
+.sidebar--collapsed .sidebar__stats,
+.sidebar--collapsed .sidebar__phase,
+.sidebar--collapsed .sidebar__tags,
+.sidebar--collapsed .sidebar__signature,
+.sidebar--collapsed .sidebar__phase-label {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Center avatar in collapsed state */
+.sidebar--collapsed .sidebar__avatar-wrap {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sidebar--collapsed .sidebar__avatar-frame {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar--collapsed .sidebar__avatar-frame .corner {
+  display: none;
+}
+
+/* Hide avatar label in collapsed */
+.sidebar--collapsed .sidebar__avatar-label {
+  display: none;
+}
+
+/* Nav items become icon-only with tooltip */
+.sidebar--collapsed .sidebar__nav {
+  width: 100%;
+  padding: 0;
+}
+
+.sidebar--collapsed .sidebar__nav-item {
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+  position: relative;
+  border-radius: var(--radius-sm);
+  margin: 2px 0;
+}
+
+.sidebar--collapsed .sidebar__nav-item svg {
+  margin-right: 0;
+  flex-shrink: 0;
+}
+
+/* Tooltip on hover for collapsed nav items */
+.sidebar--collapsed .sidebar__nav-item::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.sidebar--collapsed .sidebar__nav-item:hover::after {
+  opacity: 1;
+}
+
+/* Status dot only in collapsed */
+.sidebar--collapsed .sidebar__status {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.sidebar--collapsed .sidebar__status-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* Divider adjustments */
+.sidebar--collapsed .sidebar__divider {
+  margin: 8px 0;
+  width: 32px;
+}
+
+/* Social links become icon-only */
+.sidebar--collapsed .sidebar__socials {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar--collapsed .sidebar__social-link {
+  padding: 0;
+  width: 36px;
+  height: 36px;
+}
+
+/* Identity section centering */
+.sidebar--collapsed .sidebar__identity {
+  align-items: center;
+  width: 100%;
+}
+
+.sidebar--collapsed .sidebar__meta {
+  display: none;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   12. COLLAPSED STATE — RESPONSIVE
+   At small viewports, keep collapsed behavior but
+   adjust positioning.
+───────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar__collapse-btn {
+    opacity: 1;
+    width: 24px;
+    height: 24px;
+  }
+
+  .sidebar--collapsed .sidebar__nav-item::after {
+    left: auto;
+    right: calc(100% + 8px);
+  }
+}

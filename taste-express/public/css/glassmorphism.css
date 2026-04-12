@@ -1,0 +1,276 @@
+/* =========================================
+   GLASSMORPHISM.CSS — Reusable Glass Utilities
+   Part of the Dex Bennett // System OS Design System
+   ========================================= */
+
+/* ── Base Glass Surface ──────────────────────────────────────────────────── */
+/* The core glass effect. Apply .glass to any element for the base look.     */
+.glass {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+/* ── Glass Variants ──────────────────────────────────────────────────────── */
+
+/* Heavier blur — for primary surfaces like cards and panels */
+.glass--heavy {
+  background: rgba(15, 17, 21, 0.75);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+/* Lighter, more transparent — for overlays and tooltips */
+.glass--light {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+}
+
+/* Frosted — strong blur, almost opaque. Good for sidebars and fixed panels */
+.glass--frosted {
+  background: rgba(10, 11, 15, 0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+/* ── Glass Border Accents ────────────────────────────────────────────────── */
+
+/* Cyan-tinted top edge — signals an "active" or highlighted card */
+.glass--accent-cyan {
+  border-top: 1px solid rgba(100, 210, 255, 0.35);
+}
+
+/* Purple-tinted top edge — for secondary or "locked" state cards */
+.glass--accent-purple {
+  border-top: 1px solid rgba(139, 92, 246, 0.35);
+}
+
+/* Dual-tone edge — gradient border simulation via box-shadow */
+.glass--accent-dual {
+  box-shadow:
+    0 0 0 1px rgba(100, 210, 255, 0.12),
+    inset 0 1px 0 rgba(100, 210, 255, 0.08);
+}
+
+/* ── Glow States ─────────────────────────────────────────────────────────── */
+
+/* Ambient cyan glow — for hover states and active bento cells */
+.glass--glow-cyan {
+  box-shadow:
+    0 0 20px rgba(100, 210, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Ambient purple glow — for ops / archive panels */
+.glass--glow-purple {
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Strong hover glow — use on card :hover transitions */
+.glass--glow-hover {
+  box-shadow:
+    0 0 0 1px rgba(100, 210, 255, 0.2),
+    0 0 30px rgba(100, 210, 255, 0.12),
+    0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Inner Shimmer (Pseudo-element Helper) ───────────────────────────────── */
+/* Add .glass-shimmer to a parent with position: relative                    */
+/* It adds a subtle top-edge highlight line, simulating internal light refraction */
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(100, 210, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.12) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Grid Background (RPG / Sci-Fi aesthetic) ────────────────────────────── */
+/* Used inside card backgrounds to add the system-grid texture               */
+.glass-grid-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(rgba(100, 210, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 210, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Scan-Line Overlay ───────────────────────────────────────────────────── */
+/* Adds a CRT / holographic scan-line texture over any surface               */
+.glass-scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* ── Corner Accent Marks ─────────────────────────────────────────────────── */
+/* Utility class for the sci-fi "targeting bracket" corners                  */
+/* Requires 4 <span> children inside a .corner-marks wrapper                */
+.corner-marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.corner-marks span {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--text-accent);
+  border-style: solid;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.corner-marks span:nth-child(1) { top: 8px;    left: 8px;   border-width: 1px 0 0 1px; }
+.corner-marks span:nth-child(2) { top: 8px;    right: 8px;  border-width: 1px 1px 0 0; }
+.corner-marks span:nth-child(3) { bottom: 8px; left: 8px;   border-width: 0 0 1px 1px; }
+.corner-marks span:nth-child(4) { bottom: 8px; right: 8px;  border-width: 0 1px 1px 0; }
+
+/* Expand corner marks on parent hover */
+.glass-card:hover .corner-marks span {
+  opacity: 1;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Reusable Glass Card ─────────────────────────────────────────────────── */
+/* A ready-to-use composited card: glass surface + shimmer + hover glow      */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(100, 210, 255, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(100, 210, 255, 0.1),
+    0 0 24px rgba(100, 210, 255, 0.08),
+    0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Pseudo-element: the top-edge shimmer line */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure all content inside glass-card sits above pseudo-elements */
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Status Indicator Dot ────────────────────────────────────────────────── */
+/* Reusable blinking status dot for "SIGNAL ACTIVE", "ONLINE" indicators    */
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-success, #4ade80);
+  box-shadow: 0 0 6px var(--color-success, #4ade80);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.status-dot--cyan {
+  background-color: var(--text-accent);
+  box-shadow: 0 0 6px var(--text-accent);
+}
+
+.status-dot--warning {
+  background-color: var(--color-warning, #fbbf24);
+  box-shadow: 0 0 6px var(--color-warning, #fbbf24);
+}
+
+.status-dot--offline {
+  background-color: var(--text-secondary);
+  box-shadow: none;
+  animation: none;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ── Divider Lines ───────────────────────────────────────────────────────── */
+.glass-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--glass-border) 20%,
+    rgba(100, 210, 255, 0.15) 50%,
+    var(--glass-border) 80%,
+    transparent 100%
+  );
+  border: none;
+  margin: 0;
+}

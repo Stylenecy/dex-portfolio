@@ -1,0 +1,196 @@
+/* ==========================================================================
+   SYSTEM VARIABLES — Design Token Registry
+   The single source of truth for all visual constants.
+   Edit here → changes propagate across the entire system.
+   ========================================================================== */
+
+:root {
+
+  /* --------------------------------------------------------------------------
+     1. BACKGROUND LAYERS
+     -------------------------------------------------------------------------- */
+  --bg-void:          #050507;        /* Page root — near-black w/ blue hint   */
+  --bg-surface:       #0f1115;        /* Cards, panels, elevated surfaces       */
+  --bg-surface-2:     #13161c;        /* Second elevation (nested cards)        */
+  --bg-overlay:       rgba(5, 5, 7, 0.85); /* Modal / overlay backdrop         */
+
+  /* --------------------------------------------------------------------------
+     2. TEXT HIERARCHY
+     -------------------------------------------------------------------------- */
+  --text-primary:     #e2e4e9;        /* Main body — warm off-white             */
+  --text-secondary:   #9496a1;        /* Subdued labels, descriptions           */
+  --text-muted:       #7a7c86;        /* Disabled / placeholder (WCAG AA pass)  */
+  --text-accent:      #64d2ff;        /* Cyan highlight — links, tags, stats    */
+  --text-accent-alt:  #a78bfa;        /* Purple accent — secondary highlights   */
+
+  /* --------------------------------------------------------------------------
+     3. BRAND / ACCENT PALETTE
+     -------------------------------------------------------------------------- */
+  --cyan:             #64d2ff;        /* Primary accent                         */
+  --cyan-dim:         rgba(100, 210, 255, 0.12);  /* Subtle fill / bg           */
+  --cyan-glow:        rgba(100, 210, 255, 0.25);  /* Hover glow                 */
+
+  --purple:           #8b5cf6;        /* Secondary accent                       */
+  --purple-dim:       rgba(139, 92, 246, 0.12);   /* Subtle fill / bg           */
+  --purple-glow:      rgba(139, 92, 246, 0.25);   /* Hover glow                 */
+
+  --green:            #4ade80;        /* Status: online / active / success      */
+  --green-dim:        rgba(74, 222, 128, 0.12);
+
+  --orange:           #fb923c;        /* Rank A — warning / in-progress         */
+  --orange-dim:       rgba(251, 146, 60, 0.12);
+
+  --red:              #f87171;        /* Rank S — danger / critical             */
+  --red-dim:          rgba(248, 113, 113, 0.12);
+
+  /* --------------------------------------------------------------------------
+     4. AURORA / AMBIENT GLOW SYSTEM
+     Uses HSLA for easy opacity control via CSS overrides.
+     -------------------------------------------------------------------------- */
+  --glow-cyan:        hsla(190, 100%, 50%, 0.15);
+  --glow-purple:      hsla(250, 80%,  65%, 0.12);
+  --glow-mix:         radial-gradient(
+                        circle,
+                        hsla(190, 100%, 50%, 0.10),
+                        hsla(250, 80%,  65%, 0.08)
+                      );
+
+  /* --------------------------------------------------------------------------
+     5. GLASSMORPHISM SYSTEM
+     -------------------------------------------------------------------------- */
+  --glass-surface:    rgba(20, 22, 28, 0.60);     /* Card fill                  */
+  --glass-surface-hover: rgba(26, 29, 38, 0.75);  /* Card fill on hover         */
+  --glass-border:     rgba(255, 255, 255, 0.08);  /* Subtle white rim           */
+  --glass-border-hover: rgba(100, 210, 255, 0.20);/* Cyan rim on hover          */
+  --glass-blur:       12px;                        /* backdrop-filter blur value */
+
+  /* --------------------------------------------------------------------------
+     6. BORDERS & SEPARATORS
+     -------------------------------------------------------------------------- */
+  --border-subtle:    rgba(255, 255, 255, 0.05);
+  --border-default:   rgba(255, 255, 255, 0.08);
+  --border-accent:    rgba(100, 210, 255, 0.25);
+
+  /* --------------------------------------------------------------------------
+     7. BORDER RADIUS SCALE
+     -------------------------------------------------------------------------- */
+  --radius-sm:        6px;
+  --radius-md:        12px;
+  --radius-lg:        18px;
+  --radius-xl:        24px;
+  --radius-pill:      999px;
+
+  /* --------------------------------------------------------------------------
+     8. SPACING SCALE (8pt grid)
+     -------------------------------------------------------------------------- */
+  --space-1:          4px;
+  --space-2:          8px;
+  --space-3:          12px;
+  --space-4:          16px;
+  --space-5:          24px;
+  --space-6:          32px;
+  --space-7:          48px;
+  --space-8:          64px;
+
+  /* --------------------------------------------------------------------------
+     9. TYPOGRAPHY SCALE
+     -------------------------------------------------------------------------- */
+  --font-sans:        'Segoe UI', Inter, system-ui, sans-serif;
+  --font-mono:        'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+
+  --text-xs:          0.70rem;   /* 11px — tiny labels, log-tags               */
+  --text-sm:          0.80rem;   /* 13px — secondary body                      */
+  --text-base:        0.938rem;  /* 15px — primary body                        */
+  --text-md:          1.063rem;  /* 17px — sub-headings                        */
+  --text-lg:          1.25rem;   /* 20px — section labels                      */
+  --text-xl:          1.5rem;    /* 24px — section titles                      */
+  --text-2xl:         2rem;      /* 32px — hero headings                       */
+  --text-3xl:         2.75rem;   /* 44px — display text                        */
+
+  --weight-normal:    400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+
+  --leading-tight:    1.2;
+  --leading-normal:   1.6;
+  --leading-relaxed:  1.8;
+
+  /* --------------------------------------------------------------------------
+     10. LAYOUT — Dashboard Shell Dimensions
+     -------------------------------------------------------------------------- */
+  --sidebar-width:    260px;      /* Default sidebar width (can be resized)   */
+  --sidebar-min-width: 64px;      /* Collapsed icon-rail width                 */
+  --sidebar-max-width: 33vw;      /* Max width = 1/3 of viewport               */
+  --dock-height:      72px;       /* Fixed bottom navigation dock              */
+  --header-height:    56px;       /* Optional top status bar                   */
+  --center-max-width: 1100px;     /* Max width of the scrollable content area  */
+  --center-padding:   var(--space-6); /* Internal padding of center hub area   */
+
+  /* --------------------------------------------------------------------------
+     11. TRANSITIONS & ANIMATION TIMING
+     -------------------------------------------------------------------------- */
+  --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:      cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast:    150ms;
+  --duration-base:    300ms;
+  --duration-slow:    500ms;
+  --duration-crawl:   800ms;
+
+  /* --------------------------------------------------------------------------
+     12. Z-INDEX STACK
+     Establish a clear stacking order to avoid z-index wars.
+     -------------------------------------------------------------------------- */
+  --z-aurora:         -1;         /* Background ambient layer                  */
+  --z-base:            0;
+  --z-card:            10;
+  --z-sidebar:         50;
+  --z-dock:            100;
+  --z-overlay:         200;
+  --z-modal:           300;
+  --z-tooltip:         400;
+
+  /* --------------------------------------------------------------------------
+     13. HUB ACCENT OVERRIDES
+     Each hub can override these locally for themed glow/border colors.
+     -------------------------------------------------------------------------- */
+  --hub-accent:       var(--cyan);       /* Default; overridden per hub         */
+  --hub-accent-dim:   var(--cyan-dim);
+  --hub-accent-glow:  var(--cyan-glow);
+
+}
+
+/* ==========================================================================
+   HUB-SPECIFIC ACCENT THEMES
+   Applied to the hub wrapper element so all children inherit.
+   ========================================================================== */
+
+/* // SYSTEM_CORE — Cyan (tech / code) */
+[data-hub="system-core"] {
+  --hub-accent:       var(--cyan);
+  --hub-accent-dim:   var(--cyan-dim);
+  --hub-accent-glow:  var(--cyan-glow);
+}
+
+/* // OPERATIONS — Purple (leadership / strategy) */
+[data-hub="operations"] {
+  --hub-accent:       var(--purple);
+  --hub-accent-dim:   var(--purple-dim);
+  --hub-accent-glow:  var(--purple-glow);
+}
+
+/* // OPERATOR_METRICS — Orange/Red (physical / stats) */
+[data-hub="operator-metrics"] {
+  --hub-accent:       var(--orange);
+  --hub-accent-dim:   var(--orange-dim);
+  --hub-accent-glow:  rgba(251, 146, 60, 0.25);
+}
+
+/* // ARCHIVES — Green (history / gallery) */
+[data-hub="archives"] {
+  --hub-accent:       var(--green);
+  --hub-accent-dim:   var(--green-dim);
+  --hub-accent-glow:  rgba(74, 222, 128, 0.25);
+}

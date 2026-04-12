@@ -1,0 +1,611 @@
+/* =========================================
+   STAT-BLOCK.CSS — RPG Questism Stat Panel
+   The "questism-style-v3" component.
+   Inspired by Solo Leveling system screens.
+   Used in: // OPERATOR_METRICS hub
+   ========================================= */
+
+
+/* ─────────────────────────────────────────
+   1. OUTER SHELL — The Status Window
+   ───────────────────────────────────────── */
+
+.status-window {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  background: var(--glass-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+/* Cyan top-edge accent line */
+.status-window::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100, 210, 255, 0.5) 30%,
+    rgba(139, 92, 246, 0.4) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Ambient corner glow */
+.status-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at top left,
+    rgba(100, 210, 255, 0.05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   2. GRID BACKGROUND TEXTURE
+   ───────────────────────────────────────── */
+
+.quest-grid-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(rgba(100, 210, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 210, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   3. CONTENT LAYER
+   Sits above the grid bg pseudo-elements.
+   ───────────────────────────────────────── */
+
+.quest-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+/* ─────────────────────────────────────────
+   4. HEADER ROW (v3)
+   [Name Block] [Stats Block]
+   ───────────────────────────────────────── */
+
+.quest-header-v3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* ── Name Box ─── */
+.header-name-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label-tiny {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  opacity: 0.65;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.name-text-v3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(100, 210, 255, 0.2);
+}
+
+/* ── Stats Box (Height / Weight) ─── */
+.header-stats-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.p-row {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+
+/* ─────────────────────────────────────────
+   5. STATS GRID (v3)
+   Each row: [Label] [Rank Box] [Bar Box]
+   ───────────────────────────────────────── */
+
+.quest-stats-v3 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stat-row-v3 {
+  display: grid;
+  grid-template-columns: 120px 42px 1fr;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────
+   6. LABEL BOX
+   ───────────────────────────────────────── */
+
+.label-box {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-family: 'Consolas', 'Courier New', monospace;
+
+  /* Subtle left border for visual alignment */
+  padding-left: 8px;
+  border-left: 1px solid var(--glass-border);
+
+  transition: color 0.25s ease;
+}
+
+.stat-row-v3:hover .label-box {
+  color: var(--text-primary);
+}
+
+
+/* ─────────────────────────────────────────
+   7. RANK BOX
+   ───────────────────────────────────────── */
+
+.rank-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-family: 'Segoe UI', sans-serif;
+
+  border-radius: 6px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface-2, #13161c);
+
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sub-rank {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+/* ── Rank Color Variants ─── */
+.rank-s {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(248, 113, 113, 0.08);
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.15);
+  text-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+}
+
+.rank-a {
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.35);
+  background: rgba(251, 146, 60, 0.08);
+  box-shadow: 0 0 12px rgba(251, 146, 60, 0.12);
+  text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
+}
+
+.rank-b {
+  color: var(--text-accent);
+  border-color: rgba(100, 210, 255, 0.3);
+  background: rgba(100, 210, 255, 0.07);
+  box-shadow: 0 0 10px rgba(100, 210, 255, 0.1);
+  text-shadow: 0 0 10px rgba(100, 210, 255, 0.4);
+}
+
+.rank-c {
+  color: #a3e635;
+  border-color: rgba(163, 230, 53, 0.3);
+  background: rgba(163, 230, 53, 0.07);
+}
+
+.rank-d {
+  color: var(--text-secondary);
+  border-color: var(--glass-border);
+  background: var(--bg-surface-2, #13161c);
+}
+
+/* Rank glow intensifies on row hover */
+.stat-row-v3:hover .rank-s { box-shadow: 0 0 18px rgba(248, 113, 113, 0.3); }
+.stat-row-v3:hover .rank-a { box-shadow: 0 0 18px rgba(251, 146, 60, 0.25); }
+.stat-row-v3:hover .rank-b { box-shadow: 0 0 18px rgba(100, 210, 255, 0.2); }
+
+
+/* ─────────────────────────────────────────
+   8. BAR BOX — Segmented Progress Bar
+   ───────────────────────────────────────── */
+
+.bar-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  flex: 1;
+}
+
+/* ── Individual Segment (q-block) ─── */
+.q-block {
+  flex: 1;
+  height: 16px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Hover: subtle scale on inactive segments */
+.stat-row-v3:hover .q-block:not(.active) {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ── Active Segments — Color Variants ─── */
+
+/* Cyan — default / B rank */
+.q-block.active.cyan {
+  background: linear-gradient(
+    90deg,
+    rgba(100, 210, 255, 0.6),
+    rgba(100, 210, 255, 0.9)
+  );
+  border-color: rgba(100, 210, 255, 0.4);
+  box-shadow: 0 0 6px rgba(100, 210, 255, 0.3);
+}
+
+/* Red — S rank / peak power */
+.q-block.active.red {
+  background: linear-gradient(
+    90deg,
+    rgba(248, 113, 113, 0.65),
+    rgba(248, 113, 113, 0.95)
+  );
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.35);
+}
+
+/* Orange — A rank / advanced */
+.q-block.active.orange {
+  background: linear-gradient(
+    90deg,
+    rgba(251, 146, 60, 0.6),
+    rgba(251, 146, 60, 0.9)
+  );
+  border-color: rgba(251, 146, 60, 0.4);
+  box-shadow: 0 0 6px rgba(251, 146, 60, 0.3);
+}
+
+/* Green — growth / endurance */
+.q-block.active.green {
+  background: linear-gradient(
+    90deg,
+    rgba(74, 222, 128, 0.55),
+    rgba(74, 222, 128, 0.85)
+  );
+  border-color: rgba(74, 222, 128, 0.4);
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.28);
+}
+
+/* Purple — potential / hidden power */
+.q-block.active.purple {
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.6),
+    rgba(167, 139, 250, 0.9)
+  );
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 0 6px rgba(139, 92, 246, 0.35);
+}
+
+/* Hover: intensify glow on active blocks */
+.stat-row-v3:hover .q-block.active.cyan   { box-shadow: 0 0 10px rgba(100, 210, 255, 0.5); }
+.stat-row-v3:hover .q-block.active.red    { box-shadow: 0 0 10px rgba(248, 113, 113, 0.55); }
+.stat-row-v3:hover .q-block.active.orange { box-shadow: 0 0 10px rgba(251, 146, 60, 0.5); }
+.stat-row-v3:hover .q-block.active.green  { box-shadow: 0 0 10px rgba(74, 222, 128, 0.45); }
+.stat-row-v3:hover .q-block.active.purple { box-shadow: 0 0 10px rgba(139, 92, 246, 0.55); }
+
+
+/* ─────────────────────────────────────────
+   9. AWAKENED MODE — Special Row State
+   Used on rows that represent "awakened" or
+   "unlocked" hidden potential stats.
+   ───────────────────────────────────────── */
+
+.stat-row-v3.awakened-mode {
+  position: relative;
+}
+
+/* Pulsing rank box override when awakened */
+.awakened-mode .rank-box {
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.5);
+  background: rgba(139, 92, 246, 0.12);
+  box-shadow:
+    0 0 14px rgba(139, 92, 246, 0.3),
+    inset 0 0 8px rgba(139, 92, 246, 0.1);
+  animation: awakened-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes awakened-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 14px rgba(139, 92, 246, 0.3),
+      inset 0 0 8px rgba(139, 92, 246, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 28px rgba(139, 92, 246, 0.55),
+      inset 0 0 14px rgba(139, 92, 246, 0.2);
+  }
+}
+
+/* ─────────────────────────────────────────
+   10. AWAKENED OVERLAY
+   Floats over the bar-box on awakened rows.
+   Shows the "AWAKENED (覚醒)" glitch text.
+   ───────────────────────────────────────── */
+
+.awakened-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(167, 139, 250, 0.15),
+    rgba(139, 92, 246, 0.1)
+  );
+  border-radius: 4px;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Shimmer sweep over the overlay */
+.awakened-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 139, 250, 0.25),
+    transparent
+  );
+  animation: shimmer-sweep 3s linear infinite;
+}
+
+@keyframes shimmer-sweep {
+  0%   { left: -60%; }
+  100% { left: 140%; }
+}
+
+/* ── Glitch Text ─── */
+.glitch-text {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a78bfa;
+  font-family: 'Consolas', 'Courier New', monospace;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+
+  animation: glitch-flicker 4s steps(1) infinite;
+}
+
+@keyframes glitch-flicker {
+  0%, 90%, 100% {
+    opacity: 1;
+    transform: translateX(0);
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+  }
+  91% {
+    opacity: 0.6;
+    transform: translateX(-2px);
+    text-shadow: 2px 0 #ff4dca, -2px 0 var(--text-accent);
+  }
+  93% {
+    opacity: 1;
+    transform: translateX(2px);
+    text-shadow: -2px 0 #ff4dca, 2px 0 var(--text-accent);
+  }
+  95% {
+    opacity: 0.8;
+    transform: translateX(0);
+    text-shadow: 0 0 16px rgba(167, 139, 250, 0.9);
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   11. COMPACT STAT VARIANT
+   For smaller cards where full-width
+   stat rows don't fit.
+   ───────────────────────────────────────── */
+
+.stat-row-v3.compact {
+  grid-template-columns: 90px 34px 1fr;
+  gap: 8px;
+}
+
+.stat-row-v3.compact .rank-box {
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+}
+
+.stat-row-v3.compact .q-block {
+  height: 10px;
+}
+
+.stat-row-v3.compact .label-box {
+  font-size: 9px;
+}
+
+
+/* ─────────────────────────────────────────
+   12. TOTAL POWER SCORE
+   Summary row displayed at the bottom of
+   the stat block.
+   ───────────────────────────────────────── */
+
+.stat-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+  margin-top: 4px;
+}
+
+.stat-total__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.stat-total__value {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-accent);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 16px rgba(100, 210, 255, 0.35);
+}
+
+.stat-total__rank {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  background: var(--bg-surface-2, #13161c);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  text-transform: uppercase;
+}
+
+
+/* ─────────────────────────────────────────
+   13. OPERATOR ID FOOTER
+   Optional footer strip with system ID.
+   ───────────────────────────────────────── */
+
+.stat-block-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.stat-block-footer__id {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted, #5a5c66);
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.stat-block-footer__phase {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  opacity: 0.6;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+
+/* ─────────────────────────────────────────
+   14. RESPONSIVE ADJUSTMENTS
+   ───────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .stat-row-v3 {
+    grid-template-columns: 90px 36px 1fr;
+    gap: 8px;
+  }
+
+  .label-box {
+    font-size: 9px;
+  }
+
+  .rank-box {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .q-block {
+    height: 12px;
+  }
+
+  .name-text-v3 {
+    font-size: 17px;
+  }
+
+  .status-window {
+    padding: 20px 16px;
+  }
+}

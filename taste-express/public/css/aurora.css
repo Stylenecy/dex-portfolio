@@ -1,0 +1,103 @@
+/* =========================================
+   AURORA ENGINE — Ambient Background System
+   Role: Fixed animated glow blobs that live
+   permanently behind ALL dashboard content.
+   ========================================= */
+
+/* ── Container ──────────────────────────── */
+/* Must sit at z-index: -1, pointer-events
+   disabled so it never blocks interactions. */
+.aurora-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Base Blob Style ────────────────────── */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform; /* GPU-hint for smooth animation */
+  animation: float-ambient 22s infinite alternate ease-in-out;
+}
+
+/* ── Blob 1: Top-Left — Cyan Dominant ───── */
+.a1 {
+  width: 65vw;
+  height: 65vw;
+  background: var(--glow-cyan);
+  top: -22%;
+  left: -12%;
+  animation-duration: 22s;
+  animation-delay: 0s;
+}
+
+/* ── Blob 2: Bottom-Right — Purple Dominant  */
+.a2 {
+  width: 55vw;
+  height: 55vw;
+  background: var(--glow-purple);
+  bottom: -12%;
+  right: -12%;
+  animation-duration: 28s;
+  animation-delay: -6s;
+}
+
+/* ── Blob 3: Center-Stage — Subtle Mix ──── */
+.a3 {
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(
+    circle at center,
+    var(--glow-cyan),
+    var(--glow-purple)
+  );
+  top: 38%;
+  left: 28%;
+  opacity: 0.35;
+  animation-duration: 34s;
+  animation-delay: -12s;
+}
+
+/* ── Blob 4: Top-Right — Purple Accent ──── */
+/* New blob for the wider dashboard layout.  */
+.a4 {
+  width: 35vw;
+  height: 35vw;
+  background: var(--glow-purple);
+  top: -5%;
+  right: 5%;
+  opacity: 0.3;
+  animation-duration: 40s;
+  animation-delay: -20s;
+}
+
+/* ── Keyframe: Slow Drift ───────────────── */
+/* Subtle translate + scale gives the "living
+   atmosphere" feel without being distracting. */
+@keyframes float-ambient {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(3%, 6%) scale(1.05);
+  }
+  66% {
+    transform: translate(-2%, 4%) scale(0.97);
+  }
+  100% {
+    transform: translate(5%, 10%) scale(1.1);
+  }
+}
+
+/* ── Reduced Motion Override ────────────── */
+/* Respect the user's OS accessibility setting */
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none;
+  }
+}

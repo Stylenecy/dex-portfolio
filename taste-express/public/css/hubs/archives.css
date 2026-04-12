@@ -1,0 +1,1583 @@
+/* =====================================================
+   HUB: // ARCHIVES
+   Gaming Stats Panel + Lightroom Photography Masonry
+   Theme Accent: --green (#4ade80)
+   =====================================================
+   TABLE OF CONTENTS:
+   1.  Hub Root & Header
+   2.  Bento Grid Layout (Archives-specific)
+   3.  Section Divider Labels
+   4.  Gaming Stats Panel
+   5.  Game Card
+   6.  Achievement Badge Strip
+   7.  Stat Counter Block
+   8.  Currently Playing Widget
+   9.  Masonry Gallery Container
+   10. Masonry Gallery Items
+   11. Gallery Lightbox Overlay
+   12. Gallery Filter Tabs
+   13. Gallery Caption Overlay
+   14. Empty State / Placeholder
+   15. Responsive Overrides
+   ===================================================== */
+
+
+/* =====================================================
+   1. HUB ROOT & HEADER
+   ===================================================== */
+
+#hub-archives {
+  /* Inherit green accent theme from variables.css */
+  --hub-accent:      var(--green,      #4ade80);
+  --hub-accent-dim:  var(--green-dim,  rgba(74, 222, 128, 0.12));
+  --hub-accent-glow: rgba(74, 222, 128, 0.25);
+}
+
+/* Hub label tag: "// ARCHIVES" */
+#hub-archives .hub__label {
+  color: var(--green, #4ade80);
+}
+
+/* Subtle green tint on the hub title underline */
+#hub-archives .hub__title::after {
+  content: '';
+  display: block;
+  margin-top: 8px;
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--green, #4ade80),
+    transparent
+  );
+  border-radius: 999px;
+}
+
+
+/* =====================================================
+   2. BENTO GRID LAYOUT — Archives Specific
+   Desktop:
+     [gaming-panel (wide)] [currently-playing (narrow)]
+     [masonry-gallery (full width)]
+   ===================================================== */
+
+.archives-bento {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "gaming-panel  now-playing"
+    "gallery       gallery";
+  gap: 16px;
+  width: 100%;
+}
+
+.archives-bento__gaming    { grid-area: gaming-panel; }
+.archives-bento__playing   { grid-area: now-playing; }
+.archives-bento__gallery   { grid-area: gallery; }
+
+
+/* =====================================================
+   3. SECTION DIVIDER LABELS
+   Reusable label used to visually separate sub-sections
+   within a hub (e.g., "GAMING LOG" vs "GALLERY").
+   ===================================================== */
+
+.archives-section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.archives-section-label__text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green, #4ade80);
+  opacity: 0.8;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  white-space: nowrap;
+}
+
+.archives-section-label__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(74, 222, 128, 0.3),
+    transparent
+  );
+}
+
+
+/* =====================================================
+   4. GAMING STATS PANEL
+   The outer bento cell that wraps all gaming content.
+   ===================================================== */
+
+.gaming-panel {
+  background: var(--glass-surface, rgba(20, 22, 28, 0.60));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid rgba(74, 222, 128, 0.28); /* Green accent top edge */
+  border-radius: var(--radius-lg, 18px);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid bg texture inside the panel */
+.gaming-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(74, 222, 128, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 222, 128, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* Corner ambient glow */
+.gaming-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(74, 222, 128, 0.07),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gaming-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Panel header row ── */
+.gaming-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.gaming-panel__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #e2e4e9);
+  letter-spacing: 0.04em;
+}
+
+.gaming-panel__total-hours {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.gaming-panel__hours-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--green, #4ade80);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 16px rgba(74, 222, 128, 0.35);
+}
+
+.gaming-panel__hours-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #9496a1);
+}
+
+/* ── Game list ── */
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* =====================================================
+   5. GAME CARD
+   A single row item for each game in the log.
+   Layout: [cover] [name + bar] [hours]
+   ===================================================== */
+
+.game-card {
+  display: grid;
+  grid-template-columns: 48px 1fr 64px;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 12px);
+  cursor: default;
+  transition:
+    background   0.2s ease,
+    border-color 0.2s ease,
+    transform    0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.game-card:hover {
+  background: rgba(74, 222, 128, 0.05);
+  border-color: rgba(74, 222, 128, 0.2);
+  transform: translateX(4px);
+}
+
+/* ── Game Cover Thumbnail ── */
+.game-card__cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-surface-2, #13161c);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 7px;
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-card__cover img {
+  transform: scale(1.08);
+}
+
+/* Fallback icon when no image is provided */
+.game-card__cover-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-secondary, #9496a1);
+  opacity: 0.4;
+}
+
+/* ── Game Info (name + progress bar) ── */
+.game-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0; /* Prevent overflow */
+}
+
+.game-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #e2e4e9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.game-card:hover .game-card__name {
+  color: #fff;
+}
+
+.game-card__platform {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #9496a1);
+  opacity: 0.7;
+}
+
+/* Progress bar showing completion % */
+.game-card__progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.game-card__progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(74, 222, 128, 0.6),
+    rgba(74, 222, 128, 1)
+  );
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Color variant for incomplete / lower completion */
+.game-card__progress-fill--mid {
+  background: linear-gradient(
+    90deg,
+    rgba(251, 146, 60, 0.6),
+    rgba(251, 146, 60, 0.9)
+  );
+  box-shadow: 0 0 6px rgba(251, 146, 60, 0.3);
+}
+
+/* ── Hours Count ── */
+.game-card__hours {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.game-card__hours-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--green, #4ade80);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: text-shadow 0.2s ease;
+}
+
+.game-card:hover .game-card__hours-value {
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+}
+
+.game-card__hours-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #9496a1);
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+/* ── Status tag on game card ── */
+.game-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.game-card__status--playing {
+  color: var(--green, #4ade80);
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.25);
+}
+
+.game-card__status--completed {
+  color: var(--text-accent, #64d2ff);
+  background: rgba(100, 210, 255, 0.07);
+  border-color: rgba(100, 210, 255, 0.2);
+}
+
+.game-card__status--backlog {
+  color: var(--text-secondary, #9496a1);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--glass-border, rgba(255, 255, 255, 0.08));
+}
+
+.game-card__status--platinum {
+  color: #e9d5ff;
+  background: rgba(167, 139, 250, 0.1);
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.15);
+}
+
+
+/* =====================================================
+   6. ACHIEVEMENT BADGE STRIP
+   A horizontal scrollable row of trophy/achievement
+   icons shown below the game list.
+   ===================================================== */
+
+.achievement-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+
+  /* Hide scrollbar visually but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.achievement-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.achievement-badge {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: default;
+}
+
+.achievement-badge__icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  transition:
+    background   0.2s ease,
+    border-color 0.2s ease,
+    transform    0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.2s ease;
+}
+
+.achievement-badge:hover .achievement-badge__icon-wrap {
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.25);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.achievement-badge__label {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-secondary, #9496a1);
+  text-align: center;
+  max-width: 52px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.achievement-badge:hover .achievement-badge__label {
+  color: var(--text-primary, #e2e4e9);
+}
+
+/* Rarity tiers — border glow colors */
+.achievement-badge--gold   .achievement-badge__icon-wrap {
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.15);
+}
+
+.achievement-badge--silver .achievement-badge__icon-wrap {
+  border-color: rgba(203, 213, 225, 0.2);
+}
+
+.achievement-badge--platinum .achievement-badge__icon-wrap {
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.2);
+}
+
+.achievement-badge--locked  .achievement-badge__icon-wrap {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+
+/* =====================================================
+   7. STAT COUNTER BLOCK
+   A row of 3–4 large number KPIs (e.g., total games,
+   total hours, platinum trophies, completion rate).
+   ===================================================== */
+
+.stat-counter-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--glass-border, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.stat-counter {
+  background: var(--bg-surface, #0f1115);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: background 0.2s ease;
+}
+
+.stat-counter:hover {
+  background: var(--bg-surface-2, #13161c);
+}
+
+.stat-counter__value {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--green, #4ade80);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 14px rgba(74, 222, 128, 0.3);
+}
+
+/* Alternate color for variety */
+.stat-counter--cyan  .stat-counter__value { color: var(--text-accent, #64d2ff); text-shadow: 0 0 14px rgba(100, 210, 255, 0.3); }
+.stat-counter--purple .stat-counter__value { color: #a78bfa; text-shadow: 0 0 14px rgba(167, 139, 250, 0.3); }
+.stat-counter--gold  .stat-counter__value { color: #fbbf24; text-shadow: 0 0 14px rgba(251, 191, 36, 0.3); }
+
+.stat-counter__label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #9496a1);
+  text-align: center;
+}
+
+
+/* =====================================================
+   8. CURRENTLY PLAYING WIDGET
+   A single compact card showing the active game
+   with an animated "signal" status bar.
+   ===================================================== */
+
+.now-playing-card {
+  background: var(--glass-surface, rgba(20, 22, 28, 0.60));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid rgba(74, 222, 128, 0.28);
+  border-radius: var(--radius-lg, 18px);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Ambient glow behind card */
+.now-playing-card::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(74, 222, 128, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Status indicator row */
+.now-playing-card__status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.now-playing-card__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green, #4ade80);
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  flex-shrink: 0;
+  animation: now-playing-pulse 2s ease-in-out infinite;
+}
+
+@keyframes now-playing-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(74, 222, 128, 0.9),
+                0 0 24px rgba(74, 222, 128, 0.3);
+    opacity: 0.75;
+  }
+}
+
+.now-playing-card__status-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green, #4ade80);
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* Game artwork / cover (large) */
+.now-playing-card__art {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+  background: var(--bg-surface-2, #13161c);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  position: relative;
+}
+
+.now-playing-card__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.9);
+  transition: filter 0.4s ease;
+}
+
+.now-playing-card:hover .now-playing-card__art img {
+  filter: saturate(1.1) brightness(1);
+}
+
+/* Bottom gradient overlay on art */
+.now-playing-card__art::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 7, 0.7),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Game title and meta below the art */
+.now-playing-card__game-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary, #e2e4e9);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.now-playing-card__game-meta {
+  font-size: 11px;
+  color: var(--text-secondary, #9496a1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: -4px;
+}
+
+/* Session time progress bar */
+.now-playing-card__session {
+  margin-top: auto;
+}
+
+.now-playing-card__session-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.now-playing-card__session-label span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #9496a1);
+  font-family: 'Consolas', monospace;
+}
+
+.now-playing-card__session-label strong {
+  font-size: 11px;
+  color: var(--green, #4ade80);
+  font-family: 'Consolas', monospace;
+}
+
+.now-playing-card__session-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.now-playing-card__session-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(74, 222, 128, 0.5),
+    rgba(74, 222, 128, 1)
+  );
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+  /* Width is set via inline style on the element */
+}
+
+
+/* =====================================================
+   9. MASONRY GALLERY CONTAINER
+   CSS-native masonry-like layout using columns.
+   Falls back to a standard grid on browsers that
+   don't support columns (all do; this is safe).
+   ===================================================== */
+
+.gallery-section {
+  background: var(--glass-surface, rgba(20, 22, 28, 0.60));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: var(--radius-lg, 18px);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.gallery-section__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #e2e4e9);
+}
+
+.gallery-section__count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary, #9496a1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+/* Native CSS masonry columns */
+.masonry-grid {
+  columns: 3;
+  column-gap: 12px;
+  width: 100%;
+}
+
+/* Prevent items from splitting across columns */
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  display: block;
+}
+
+
+/* =====================================================
+   10. MASONRY GALLERY ITEMS
+   ===================================================== */
+
+.gallery-item {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md, 12px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  background: var(--bg-surface-2, #13161c);
+  cursor: pointer;
+
+  /* Group for child transitions */
+  transition:
+    border-color 0.3s ease,
+    box-shadow   0.3s ease,
+    transform    0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-item:hover {
+  border-color: rgba(74, 222, 128, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+/* The actual photo */
+.gallery-item__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  filter: saturate(0.75) brightness(0.92);
+  transition:
+    filter    0.4s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-item:hover .gallery-item__img {
+  filter: saturate(1.1) brightness(1.02);
+  transform: scale(1.04);
+}
+
+/* Placeholder when image src is empty */
+.gallery-item__placeholder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(74, 222, 128, 0.08),
+    rgba(100, 210, 255, 0.05)
+  );
+  color: var(--text-secondary, #9496a1);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Consolas', monospace;
+  min-height: 160px;
+}
+
+/* Aspect ratio helpers for placeholders */
+.gallery-item--tall   .gallery-item__placeholder { min-height: 280px; }
+.gallery-item--short  .gallery-item__placeholder { min-height: 110px; }
+
+
+/* =====================================================
+   11. GALLERY LIGHTBOX OVERLAY
+   Triggered by router.js / gallery JS on click.
+   ===================================================== */
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay, 200);
+  background: rgba(5, 5, 7, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+
+  /* Hidden by default — toggled by JS */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gallery-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.gallery-lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.gallery-lightbox__img {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+
+/* =====================================================
+   12. GALLERY FILTER TABS
+   ===================================================== */
+
+.gallery-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gallery-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Consolas', monospace;
+}
+
+.gallery-filter-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(74, 222, 128, 0.25);
+}
+
+.gallery-filter-btn--active {
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+
+/* =====================================================
+   13. GALLERY CAPTION OVERLAY
+   ===================================================== */
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 16px;
+  background: linear-gradient(to top, rgba(5, 5, 7, 0.85), transparent);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-caption {
+  opacity: 1;
+}
+
+.gallery-caption__title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.gallery-caption__meta {
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+}
+
+
+/* =====================================================
+   14. PLACEHOLDER BENTO CELLS
+   For sections not yet populated with real content.
+   ===================================================== */
+
+.placeholder-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.placeholder-cell--tall {
+  min-height: 220px;
+}
+
+.placeholder-cell--wide {
+  min-height: 200px;
+}
+
+.placeholder-icon {
+  width: 40px;
+  height: 40px;
+  stroke: var(--green);
+  opacity: 0.5;
+}
+
+.placeholder-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.placeholder-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.placeholder-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(74, 222, 128, 0.07);
+}
+
+
+/* =====================================================
+   15. RESPONSIVE OVERRIDES
+   ===================================================== */
+
+@media (max-width: 1024px) {
+  .archives-bento {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "gaming-panel"
+      "now-playing"
+      "gallery";
+  }
+
+  .masonry-grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .gaming-panel,
+  .gallery-section {
+    padding: 20px 16px;
+  }
+
+  .masonry-grid {
+    columns: 1;
+  }
+
+  .stat-counter-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .game-card {
+    grid-template-columns: 40px 1fr 52px;
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
+
+/* =====================================================
+   16. TABBED MEDIA GALLERY
+   Replacement for the old placeholder bento.
+   4 tabs: Design, Photography, Broadcast, Transmitter
+   ===================================================== */
+
+/* Gallery tabs container */
+.archives-gallery {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Tab navigation pills */
+.archives-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px;
+  background: rgba(5, 5, 7, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.archives-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: 'Consolas', monospace;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.archives-tab:hover {
+  color: var(--text-primary);
+  background: rgba(74, 222, 128, 0.05);
+}
+
+.archives-tab--active {
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.25);
+}
+
+.archives-tab svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Tab content panels */
+.archives-tab-panel {
+  display: none;
+  animation: archives-fade-in 0.35s ease;
+}
+
+.archives-tab-panel--active {
+  display: block;
+}
+
+@keyframes archives-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Design / Poster Grid ── */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.poster-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.poster-card:hover {
+  border-color: rgba(74, 222, 128, 0.25);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.poster-card__img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: saturate(0.8) brightness(0.9);
+  transition: filter 0.4s ease, transform 0.5s ease;
+}
+
+.poster-card:hover .poster-card__img {
+  filter: saturate(1.1) brightness(1);
+  transform: scale(1.03);
+}
+
+.poster-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 14px;
+  background: linear-gradient(to top, rgba(5, 5, 7, 0.9), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.poster-card:hover .poster-card__overlay {
+  opacity: 1;
+}
+
+.poster-card__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.poster-card__type {
+  font-size: 9.5px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Consolas', monospace;
+}
+
+/* ── Photography Masonry ── */
+.photo-masonry {
+  columns: 3;
+  column-gap: 12px;
+}
+
+.photo-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.photo-item:hover {
+  border-color: rgba(74, 222, 128, 0.25);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.photo-item__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: saturate(0.75) brightness(0.92);
+  transition: filter 0.4s ease, transform 0.5s ease;
+}
+
+.photo-item:hover .photo-item__img {
+  filter: saturate(1.1) brightness(1.02);
+  transform: scale(1.03);
+}
+
+/* ── Broadcast / YouTube ── */
+.broadcast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.broadcast-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.broadcast-card:hover {
+  border-color: rgba(74, 222, 128, 0.2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.broadcast-card__embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  background: var(--bg-void);
+}
+
+.broadcast-card__embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.broadcast-card__body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.broadcast-card__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.broadcast-card__desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Channel card */
+.broadcast-channel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s ease;
+}
+
+.broadcast-channel:hover {
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.broadcast-channel__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.broadcast-channel__icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #ff4444;
+  stroke-width: 2;
+  fill: none;
+}
+
+.broadcast-channel__body {
+  flex: 1;
+}
+
+.broadcast-channel__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.broadcast-channel__desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.broadcast-channel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg-void);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.8), rgba(74, 222, 128, 1));
+  border: none;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease;
+}
+
+.broadcast-channel__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Transmitter / Instagram ── */
+.transmitter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 28px;
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+
+.transmitter-card:hover {
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.transmitter-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(131, 58, 180, 0.15), rgba(253, 29, 29, 0.1), rgba(252, 176, 69, 0.1));
+  border: 1px solid rgba(131, 58, 180, 0.2);
+}
+
+.transmitter-card__icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: var(--green);
+  stroke-width: 1.8;
+  fill: none;
+}
+
+.transmitter-card__title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.transmitter-card__desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.transmitter-card__handle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  font-family: 'Consolas', monospace;
+  letter-spacing: 0.06em;
+}
+
+.transmitter-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg-void);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.8), rgba(74, 222, 128, 1));
+  border: none;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease;
+}
+
+.transmitter-card__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ── Responsive: Tabs ── */
+@media (max-width: 768px) {
+  .archives-tabs {
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .archives-tab {
+    padding: 6px 12px;
+    font-size: 9.5px;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .photo-masonry {
+    columns: 2;
+    column-gap: 10px;
+  }
+
+  .broadcast-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .poster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-masonry {
+    columns: 1;
+  }
+
+  .archives-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .archives-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .broadcast-channel {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .transmitter-card {
+    padding: 28px 20px;
+  }
+}

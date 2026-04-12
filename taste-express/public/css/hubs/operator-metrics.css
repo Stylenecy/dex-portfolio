@@ -1,0 +1,938 @@
+/* =====================================================
+   HUB: // OPERATOR_METRICS
+   Purpose: RPG-style stats, physical data, and
+            endurance tracking for the operator.
+   Accent:  --orange (#fb923c) + --red (#f87171)
+   Layout:  Bento grid — stat block + metrics panels
+   ===================================================== */
+
+
+/* ─────────────────────────────────────────────────────
+   HUB ACCENT THEME OVERRIDE
+   Cascade orange/red as the active hub accent
+   throughout this panel's scope.
+───────────────────────────────────────────────────── */
+#hub-operator-metrics {
+  --hub-accent:       var(--orange, #fb923c);
+  --hub-accent-dim:   var(--orange-dim, rgba(251, 146, 60, 0.12));
+  --hub-accent-glow:  rgba(251, 146, 60, 0.25);
+  --hub-accent-2:     var(--red, #f87171);
+  --hub-accent-2-dim: rgba(248, 113, 113, 0.1);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   1. HUB-LEVEL HEADER OVERRIDE
+   The label "// OPERATOR_METRICS" gets the orange tint.
+───────────────────────────────────────────────────── */
+#hub-operator-metrics .hub__label {
+  color: var(--orange, #fb923c);
+}
+
+#hub-operator-metrics .hub__title span {
+  color: var(--orange, #fb923c);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   2. METRICS BENTO GRID
+   Master layout for this hub.
+   Named areas allow precise placement of each cell.
+
+   Layout (desktop):
+   ┌──────────────────┬──────────────┐
+   │  stat-block      │  bio-panel   │
+   ├──────────┬───────┴──────────────┤
+   │ physical │    activity-log      │
+   └──────────┴─────────────────────┘
+───────────────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "stat-block  bio-panel"
+    "physical    activity-log";
+  gap: 16px;
+  width: 100%;
+}
+
+.metrics-cell--stat-block  { grid-area: stat-block;    }
+.metrics-cell--bio         { grid-area: bio-panel;     }
+.metrics-cell--physical    { grid-area: physical;      }
+.metrics-cell--activity    { grid-area: activity-log;  }
+
+
+/* ─────────────────────────────────────────────────────
+   3. GENERIC METRICS CELL BASE
+   Inherits .bento-cell styles; adds hub-specific
+   hover glow in the orange accent.
+───────────────────────────────────────────────────── */
+.metrics-cell {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md, 12px);
+  transition:
+    border-color 0.28s ease,
+    box-shadow   0.28s ease,
+    transform    0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.metrics-cell:hover {
+  border-color: rgba(251, 146, 60, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(251, 146, 60, 0.08),
+    0 0 24px rgba(251, 146, 60, 0.06),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Top-edge accent shimmer on hover */
+.metrics-cell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(251, 146, 60, 0.5) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.metrics-cell:hover::before {
+  opacity: 1;
+}
+
+/* Ambient corner glow (bottom-right) */
+.metrics-cell::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle at bottom right,
+    rgba(251, 146, 60, 0.06),
+    transparent 70%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   4. CELL HEADER ROW
+   Reusable header inside each metrics cell:
+   [icon] [title]   [badge/tag]
+───────────────────────────────────────────────────── */
+.metrics-cell__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metrics-cell__title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.metrics-cell__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--hub-accent-dim);
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  flex-shrink: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.metrics-cell:hover .metrics-cell__icon {
+  background: rgba(251, 146, 60, 0.16);
+  border-color: rgba(251, 146, 60, 0.35);
+}
+
+.metrics-cell__icon svg {
+  width: 17px;
+  height: 17px;
+  stroke: var(--orange, #fb923c);
+  stroke-width: 2;
+  fill: none;
+}
+
+.metrics-cell__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.metrics-cell__subtitle {
+  font-size: 10px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Corner badge (e.g., "REFORGING PHASE", "ACTIVE") */
+.metrics-cell__badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--orange, #fb923c);
+  background: rgba(251, 146, 60, 0.08);
+  border: 1px solid rgba(251, 146, 60, 0.22);
+  border-radius: 99px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   5. OPERATOR BIO PANEL
+   Compact identity card: avatar, name, phase status,
+   and the phase-evolution mini-tracker.
+───────────────────────────────────────────────────── */
+.metrics-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+/* Avatar + name row */
+.metrics-bio__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.metrics-bio__avatar {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  flex-shrink: 0;
+  transition: border-color 0.3s ease;
+}
+
+.metrics-bio__avatar:hover {
+  border-color: rgba(251, 146, 60, 0.4);
+}
+
+.metrics-bio__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(25%);
+  transition: filter 0.3s ease, transform 0.4s ease;
+}
+
+.metrics-bio__avatar:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+/* Scan overlay on avatar */
+.metrics-bio__avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(251, 146, 60, 0.03) 3px,
+    rgba(251, 146, 60, 0.03) 4px
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.metrics-bio__avatar:hover::after {
+  opacity: 1;
+}
+
+.metrics-bio__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metrics-bio__name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.metrics-bio__handle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange, #fb923c);
+  opacity: 0.75;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.metrics-bio__affiliation {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* System ID footer */
+.metrics-bio__id {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metrics-bio__id-code {
+  font-size: 9px;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.45;
+}
+
+.metrics-bio__phase-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange, #fb923c);
+  opacity: 0.7;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   6. PHYSICAL DATA TABLE
+   Displays raw physical stats:
+   HEIGHT, WEIGHT, SPORT, AFFILIATION etc.
+───────────────────────────────────────────────────── */
+.physical-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--glass-border);
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+}
+
+.physical-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-surface, #0f1115);
+  transition: background 0.2s ease;
+}
+
+.physical-row:hover {
+  background: var(--bg-surface-2, #13161c);
+}
+
+.physical-row__label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  font-family: 'Consolas', 'Courier New', monospace;
+  flex-shrink: 0;
+}
+
+.physical-row__value {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange, #fb923c);
+  letter-spacing: 0.06em;
+  font-family: 'Consolas', 'Courier New', monospace;
+  text-align: right;
+}
+
+/* Neutral value — used for non-physical entries */
+.physical-row__value.neutral {
+  color: var(--text-primary);
+}
+
+/* Highlighted value — used for key entries */
+.physical-row__value.highlight {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
+}
+
+
+/* ─────────────────────────────────────────────────────
+   7. PHYSICAL ENDURANCE SECTION
+   Shows sport activities with circular progress rings
+   and session frequency bars.
+───────────────────────────────────────────────────── */
+.endurance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+/* Individual endurance activity card */
+.endurance-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md, 12px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.endurance-card:hover {
+  border-color: rgba(251, 146, 60, 0.25);
+  background: rgba(251, 146, 60, 0.04);
+  transform: translateY(-3px);
+}
+
+/* Circular SVG progress ring */
+.endurance-ring {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.endurance-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* Start from top */
+}
+
+/* Track circle (background ring) */
+.endurance-ring__track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 5;
+}
+
+/* Progress circle */
+.endurance-ring__progress {
+  fill: none;
+  stroke: var(--orange, #fb923c);
+  stroke-width: 5;
+  stroke-linecap: round;
+
+  /* stroke-dasharray and stroke-dashoffset are set inline on the element */
+  /* Formula: circumference = 2 * π * r (r = ~28) ≈ 175.9 */
+  stroke-dasharray: 175.9;
+  stroke-dashoffset: 175.9; /* Default: 0% — JS or HTML inline attr sets actual value */
+
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* High intensity — use red for max-effort activities */
+.endurance-ring__progress.intensity-max {
+  stroke: var(--red, #f87171);
+  filter: drop-shadow(0 0 4px rgba(248, 113, 113, 0.5));
+}
+
+/* Moderate intensity — standard orange */
+.endurance-ring__progress.intensity-high {
+  stroke: var(--orange, #fb923c);
+  filter: drop-shadow(0 0 3px rgba(251, 146, 60, 0.45));
+}
+
+/* Low / maintenance activity */
+.endurance-ring__progress.intensity-moderate {
+  stroke: var(--cyan, #64d2ff);
+  filter: drop-shadow(0 0 3px rgba(100, 210, 255, 0.35));
+}
+
+/* Center label inside the ring */
+.endurance-ring__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
+.endurance-ring__percent {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.endurance-ring__unit {
+  font-size: 8px;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Activity name below the ring */
+.endurance-card__name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Frequency string e.g., "3x / week" */
+.endurance-card__freq {
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   8. ACTIVITY LOG PANEL
+   A vertical list of recent training / activity
+   entries with timestamps and status tags.
+───────────────────────────────────────────────────── */
+.activity-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-log__entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  transition: padding-left 0.2s ease;
+}
+
+.activity-log__entry:last-child {
+  border-bottom: none;
+}
+
+.activity-log__entry:hover {
+  padding-left: 4px;
+}
+
+/* Colored left indicator bar */
+.activity-log__entry::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--glass-border);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.activity-log__entry:hover::before {
+  opacity: 1;
+  background: var(--orange, #fb923c);
+}
+
+/* Activity icon dot */
+.activity-log__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange, #fb923c);
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  margin-top: 4px;
+  flex-shrink: 0;
+  transition: box-shadow 0.2s ease;
+}
+
+.activity-log__entry:hover .activity-log__dot {
+  box-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
+}
+
+/* Different colors for activity types */
+.activity-log__dot--rest {
+  background: var(--text-secondary);
+  border-color: var(--glass-border);
+}
+
+.activity-log__dot--peak {
+  background: var(--red, #f87171);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.activity-log__dot--recovery {
+  background: var(--cyan, #64d2ff);
+  border-color: rgba(100, 210, 255, 0.35);
+}
+
+.activity-log__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-log__title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-log__meta {
+  font-size: 10px;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.activity-log__time {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 0.55;
+  white-space: nowrap;
+  font-family: 'Consolas', 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 3px;
+}
+
+/* Active variant — accent color */
+.activity-log__time--active {
+  color: var(--orange, #fb923c);
+  opacity: 1;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   9. OVERALL POWER SCORE BANNER
+   A full-width card at the top of the hub showing
+   the combined system power level — the "headline stat."
+───────────────────────────────────────────────────── */
+.power-banner {
+  position: relative;
+  overflow: hidden;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(251, 146, 60, 0.08) 0%,
+    rgba(248, 113, 113, 0.06) 40%,
+    rgba(15, 17, 21, 0.4) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  border-radius: var(--radius-lg, 18px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Radial glow behind the score number */
+.power-banner::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 146, 60, 0.12),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* Grid texture */
+.power-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(251, 146, 60, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 146, 60, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.power-banner__left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.power-banner__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange, #fb923c);
+  opacity: 0.75;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.power-banner__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.power-banner__desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  max-width: 380px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+
+.power-banner__score-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.power-banner__score {
+  font-size: 54px;
+  font-weight: 900;
+  color: var(--orange, #fb923c);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow:
+    0 0 20px rgba(251, 146, 60, 0.4),
+    0 0 40px rgba(251, 146, 60, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.power-banner__score-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.power-banner__rank-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red, #f87171);
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
+  margin-top: 2px;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   10. SECTION DIVIDER — "PHYSICAL ENDURANCE MODULE"
+   A labeled divider between the stats block and
+   the endurance tracking section.
+───────────────────────────────────────────────────── */
+.metrics-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.metrics-divider__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange, #fb923c);
+  opacity: 0.6;
+  white-space: nowrap;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.metrics-divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 146, 60, 0.3),
+    transparent
+  );
+}
+
+.metrics-divider__line--right {
+  background: linear-gradient(
+    270deg,
+    rgba(251, 146, 60, 0.3),
+    transparent
+  );
+}
+
+
+/* ─────────────────────────────────────────────────────
+   10b. BIO FRAGMENT PARAGRAPH
+   Styled text block for the operator bio narrative.
+───────────────────────────────────────────────────── */
+.bio-fragment {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-top: 12px;
+}
+
+.bio-fragment strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+
+/* ─────────────────────────────────────────────────────
+   11. RESPONSIVE BREAKPOINTS
+───────────────────────────────────────────────────── */
+
+/* Tablet — collapse to single column */
+@media (max-width: 1024px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "stat-block"
+      "bio-panel"
+      "physical"
+      "activity-log";
+  }
+
+  .power-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .power-banner__score-wrap {
+    align-items: flex-start;
+  }
+
+  .power-banner__score {
+    font-size: 42px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .endurance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .power-banner {
+    padding: 20px;
+  }
+
+  .power-banner__score {
+    font-size: 36px;
+  }
+
+  .metrics-cell {
+    padding: 18px 16px;
+  }
+
+  .physical-row__label,
+  .physical-row__value {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .endurance-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .endurance-card {
+    padding: 12px 8px;
+  }
+
+  .endurance-ring {
+    width: 60px;
+    height: 60px;
+  }
+
+  .endurance-ring__percent {
+    font-size: 13px;
+  }
+
+  .power-banner {
+    padding: 16px;
+  }
+
+  .power-banner__title {
+    font-size: 18px;
+  }
+
+  .power-banner__score {
+    font-size: 30px;
+  }
+}
