@@ -1,24 +1,21 @@
 {
-  "name": "taste-express",
+  "name": "dex-portfolio",
   "version": "1.0.0",
   "description": "Dex Bennett // System OS — A personal portfolio dashboard with glassmorphism UI, hub-based navigation, and aurora ambient background.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
+    "start": "npx serve public",
+    "dev": "npx serve public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "portfolio",
     "dashboard",
     "glassmorphism",
-    "express",
+    "static-site",
     "vanilla-js"
   ],
   "author": "Dex Bennett",
   "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "express": "^5.2.1"
-  }
+  "type": "commonjs"
 }
