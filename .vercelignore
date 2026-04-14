@@ -1,7 +1,0 @@
-# Exclude heavy/reference folders from Vercel deployment
-.agent/
-.qodo/
-node_modules/
-.git/
-*.md
-!README.md
