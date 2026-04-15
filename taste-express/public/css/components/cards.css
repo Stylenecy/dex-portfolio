@@ -1,6 +1,9 @@
 /* =========================================
    CARDS.CSS — Arsenal Cards, Tech Tags & Mission Items
    Part of the Dex Bennett // System OS Design System
+
+   Upgraded: multi-layer shadows, inset highlights,
+   refined easing, better visual depth.
    =========================================
    TABLE OF CONTENTS:
    1. Arsenal Cards (Skills Grid)
@@ -8,19 +11,19 @@
    3. Mission Items (Project Log)
    4. Mission Visual Thumbnails
    5. Mission Status Badges
-   6. Mission Links & Buttons
-   7. Mini Tech Stack (inside Mission Items)
+   6. Mission Content & Links
+   7. Mini Tech Stack
+   8. Responsive
    ========================================= */
 
 
 /* =========================================
    1. ARSENAL CARDS — Technical Skill Grid
-   .arsenal-grid > .arsenal-card
    ========================================= */
 
 .arsenal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
   gap: 16px;
   width: 100%;
 }
@@ -28,76 +31,71 @@
 .arsenal-card {
   position: relative;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  padding: 24px 22px;
+  gap: 14px;
+  padding: 26px 24px;
 
   background: var(--glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
 
+  /* Multi-layer depth shadow */
+  box-shadow: var(--shadow-sm);
+
   transition:
-    transform    0.30s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.30s ease,
-    box-shadow   0.30s ease;
+    transform    var(--duration-base) var(--ease-responsive),
+    box-shadow   var(--duration-base) var(--ease-responsive),
+    border-color var(--duration-base) ease;
+
+  will-change: transform;
 }
 
-/* Top-edge shimmer — simulates internal glass light */
+/* Glass bevel — top edge highlight */
 .arsenal-card::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 8%;
+  right: 8%;
   height: 1px;
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    rgba(100, 210, 255, 0.0) 20%,
-    rgba(100, 210, 255, 0.4) 50%,
-    rgba(100, 210, 255, 0.0) 80%,
-    transparent 100%
+    transparent,
+    rgba(255, 255, 255, 0.09) 30%,
+    rgba(100, 210, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.09) 70%,
+    transparent
   );
-  opacity: 0;
-  transition: opacity 0.35s ease;
+  opacity: 0.5;
+  transition: opacity var(--duration-base) ease;
   pointer-events: none;
 }
 
-/* Bottom-left corner dot accent */
+/* Face sheen — subtle gradient on card face */
 .arsenal-card::after {
   content: '';
   position: absolute;
-  bottom: 14px;
-  right: 14px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--text-accent);
-  opacity: 0.15;
-  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.025) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
 }
 
 .arsenal-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(100, 210, 255, 0.25);
-  box-shadow:
-    0 0 0 1px rgba(100, 210, 255, 0.08),
-    0 0 28px rgba(100, 210, 255, 0.07),
-    0 20px 48px rgba(0, 0, 0, 0.45);
+  transform: translateY(-5px);
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.22));
+  box-shadow: var(--hub-shadow-hover, var(--shadow-hover-cyan));
 }
 
 .arsenal-card:hover::before {
   opacity: 1;
-}
-
-.arsenal-card:hover::after {
-  opacity: 0.6;
-  box-shadow: 0 0 8px var(--text-accent);
 }
 
 /* ── Card Icon ─────────────────────────────── */
@@ -105,46 +103,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 44px;
   height: 44px;
   border-radius: var(--radius-sm);
-
-  background: rgba(100, 210, 255, 0.07);
-  border: 1px solid rgba(100, 210, 255, 0.15);
-  color: var(--text-accent);
-
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.07));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.16));
+  color: var(--hub-accent, var(--cyan));
   flex-shrink: 0;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 0 16px var(--hub-accent-glow, var(--cyan-glow));
+  transition:
+    background var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
 }
 
 .arsenal-card:hover .card-icon {
   background: rgba(100, 210, 255, 0.12);
-  border-color: rgba(100, 210, 255, 0.3);
+  border-color: rgba(100, 210, 255, 0.32);
+  box-shadow: 0 0 24px var(--hub-accent-glow, var(--cyan-glow));
 }
 
 .card-icon svg {
   width: 20px;
   height: 20px;
-  stroke: var(--text-accent);
+  stroke: var(--hub-accent, var(--cyan));
   stroke-width: 1.75;
 }
 
 /* ── Card Heading ──────────────────────────── */
-.arsenal-card h3 {
-  font-size: 15px;
+.arsenal-card-title,
+.arsenal-card h3,
+.arsenal-card h4 {
+  font-size: 14.5px;
   font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   line-height: 1.3;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Card Description ──────────────────────── */
 .card-desc {
   font-size: 12.5px;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
   flex-grow: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Tech Stack Tags (inside arsenal-card) ─── */
@@ -154,66 +160,67 @@
   gap: 6px;
   margin-top: auto;
   padding-top: 4px;
+  position: relative;
+  z-index: 1;
 }
 
 
 /* =========================================
    2. TECH TAGS — Skill / Stack Badges
-   Used in arsenal-card .tech-stack and
-   mission-item .tech-stack-mini
    ========================================= */
 
 .tech-tag {
   display: inline-flex;
   align-items: center;
-
   padding: 3px 9px;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-
-  color: var(--text-accent);
-  background: rgba(100, 210, 255, 0.07);
-  border: 1px solid rgba(100, 210, 255, 0.18);
+  font-family: var(--font-mono);
+  color: var(--hub-accent, var(--cyan));
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.07));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.18));
   border-radius: var(--radius-pill);
-
   line-height: 1.5;
   white-space: nowrap;
-
+  box-shadow: var(--shadow-xs);
   transition:
-    background   0.2s ease,
-    border-color 0.2s ease,
-    color        0.2s ease,
-    transform    0.2s ease;
+    background   var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color        var(--duration-fast) ease,
+    transform    var(--duration-fast) var(--ease-responsive);
 }
 
 .tech-tag:hover {
   background: rgba(100, 210, 255, 0.14);
-  border-color: rgba(100, 210, 255, 0.35);
+  border-color: rgba(100, 210, 255, 0.38);
   transform: translateY(-1px);
 }
 
-/* Variant: purple tint — for ops/leadership tags */
+/* Variants */
 .tech-tag--purple {
-  color: #a78bfa;
-  background: rgba(139, 92, 246, 0.08);
-  border-color: rgba(139, 92, 246, 0.22);
+  color: var(--purple);
+  background: var(--purple-dim);
+  border-color: var(--purple-border);
 }
-
 .tech-tag--purple:hover {
-  background: rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.16);
+  border-color: rgba(139, 92, 246, 0.42);
 }
 
-/* Variant: green tint — for completed/archived items */
 .tech-tag--green {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.07);
-  border-color: rgba(74, 222, 128, 0.2);
+  color: var(--green);
+  background: var(--green-dim);
+  border-color: rgba(74, 222, 128, 0.22);
 }
 
-/* Variant: muted — for plain metadata */
+.tech-tag--orange {
+  color: var(--orange);
+  background: var(--orange-dim);
+  border-color: rgba(251, 146, 60, 0.22);
+}
+
 .tech-tag--muted {
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.03);
@@ -223,52 +230,52 @@
 
 /* =========================================
    3. MISSION ITEMS — Project Log Cards
-   .mission-container > .mission-item
-   Uses an alternating zig-zag layout on wide
-   screens; stacks vertically on mobile.
    ========================================= */
 
 .mission-container {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
   width: 100%;
 }
 
 .mission-item {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1fr 1.45fr;
   gap: 32px;
   align-items: start;
-
   padding: 28px;
+
   background: var(--glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
 
   position: relative;
   overflow: hidden;
 
+  /* Multi-layer shadow */
+  box-shadow: var(--shadow-sm);
+
   transition:
-    border-color 0.3s ease,
-    box-shadow   0.3s ease,
-    transform    0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    border-color var(--duration-base) ease,
+    box-shadow   var(--duration-base) var(--ease-responsive),
+    transform    var(--duration-base) var(--ease-responsive);
+
+  will-change: transform;
 }
 
-/* Alternate: even items flip the column order */
+/* Alternate zig-zag layout */
 .mission-item:nth-child(even) {
-  grid-template-columns: 1.4fr 1fr;
-  direction: rtl; /* Flip column order */
+  grid-template-columns: 1.45fr 1fr;
+  direction: rtl;
 }
-
-/* Reset text direction for all children in flipped items */
 .mission-item:nth-child(even) > * {
   direction: ltr;
 }
 
-/* Top-edge glow shimmer */
+/* Top-edge accent glow */
 .mission-item::before {
   content: '';
   position: absolute;
@@ -279,23 +286,42 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(100, 210, 255, 0.3),
+    var(--hub-accent-glow, rgba(100, 210, 255, 0.3)),
     transparent
   );
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity var(--duration-base) ease;
+  pointer-events: none;
+}
+
+/* Face sheen */
+.mission-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.020) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mission-item:hover {
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.20));
+  box-shadow: var(--hub-shadow-hover, var(--shadow-hover-cyan));
+  transform: translateY(-3px);
 }
 
 .mission-item:hover::before {
   opacity: 1;
 }
 
-.mission-item:hover {
-  border-color: rgba(100, 210, 255, 0.2);
-  box-shadow:
-    0 0 0 1px rgba(100, 210, 255, 0.06),
-    0 24px 56px rgba(0, 0, 0, 0.45);
-  transform: translateY(-2px);
+.mission-item > * {
+  position: relative;
+  z-index: 1;
 }
 
 
@@ -307,16 +333,15 @@
   position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
-
   aspect-ratio: 16 / 10;
-  background: var(--bg-surface-2, #13161c);
+  background: var(--bg-surface-2);
   border: 1px solid var(--glass-border);
-
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.4s var(--ease-out);
 }
 
 .mission-visual:hover {
-  transform: scale(1.02);
+  transform: scale(1.025);
 }
 
 .mission-visual-img {
@@ -326,65 +351,45 @@
   height: 100%;
   object-fit: cover;
   object-position: top center;
-
-  opacity: 0.85;
-  filter: saturate(0.8) brightness(0.9);
-  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.5s ease;
+  opacity: 0.82;
+  filter: saturate(0.85) brightness(0.92);
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.5s var(--ease-out);
 }
 
 .mission-item:hover .mission-visual-img {
   opacity: 1;
   filter: saturate(1.05) brightness(1);
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
-/* Gradient placeholder fallback (shown when image is loading or absent) */
+/* Gradient placeholder fills */
 .visual-placeholder {
   position: absolute;
   inset: 0;
   z-index: 0;
   opacity: 0.6;
 }
-
-/* These gradient classes correspond to each project entry */
 .gradient-1 {
-  background: linear-gradient(
-    135deg,
-    rgba(100, 210, 255, 0.25) 0%,
-    rgba(139, 92, 246, 0.15) 100%
-  );
+  background: linear-gradient(135deg, rgba(100, 210, 255, 0.22) 0%, rgba(139, 92, 246, 0.14) 100%);
 }
-
 .gradient-2 {
-  background: linear-gradient(
-    135deg,
-    rgba(251, 146, 60, 0.2) 0%,
-    rgba(100, 210, 255, 0.1) 100%
-  );
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.18) 0%, rgba(100, 210, 255, 0.10) 100%);
 }
-
 .gradient-3 {
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.2) 0%,
-    rgba(74, 222, 128, 0.1) 100%
-  );
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(74, 222, 128, 0.10) 100%);
 }
 
-/* Bottom-fade overlay on every visual thumbnail */
+/* Bottom-fade overlay */
 .mission-visual::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 40%;
-  background: linear-gradient(to top, rgba(5, 5, 7, 0.6), transparent);
+  background: linear-gradient(to top, rgba(8, 8, 16, 0.65), transparent);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Wide variant — 16/8 aspect ratio for event cards */
 .mission-visual--wide {
   aspect-ratio: 16 / 8;
   margin: 8px 0;
@@ -393,58 +398,48 @@
 
 /* =========================================
    5. MISSION STATUS BADGES
-   Colored pill shown above the project title.
-   States: active | completed | archived
    ========================================= */
 
 .mission-status {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-
+  font-family: var(--font-mono);
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
-
   margin-bottom: 10px;
+  box-shadow: var(--shadow-xs);
 }
 
-/* Active / In-progress — cyan */
 .mission-status.active {
-  color: var(--text-accent);
-  background: rgba(100, 210, 255, 0.08);
-  border-color: rgba(100, 210, 255, 0.22);
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border-color: rgba(100, 210, 255, 0.24);
 }
-
-/* Completed / Prototype — green */
 .mission-status.completed {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.08);
-  border-color: rgba(74, 222, 128, 0.22);
+  color: var(--green);
+  background: var(--green-dim);
+  border-color: rgba(74, 222, 128, 0.24);
 }
-
-/* Archived / Past — purple */
 .mission-status.archived {
-  color: #a78bfa;
-  background: rgba(139, 92, 246, 0.08);
-  border-color: rgba(139, 92, 246, 0.22);
+  color: var(--purple);
+  background: var(--purple-dim);
+  border-color: rgba(139, 92, 246, 0.24);
 }
-
-/* Locked / Upcoming — muted */
 .mission-status.locked {
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border-color: var(--glass-border);
 }
 
 
 /* =========================================
-   6. MISSION CONTENT — Text & Actions Area
+   6. MISSION CONTENT
    ========================================= */
 
 .mission-content {
@@ -454,16 +449,18 @@
   padding: 4px 0;
 }
 
-.mission-content h3 {
+.mission-content h3,
+.mission-content h4 {
   font-size: 19px;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  transition: color 0.2s ease;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  transition: color var(--duration-fast) ease;
 }
 
-.mission-item:hover .mission-content h3 {
+.mission-item:hover .mission-content h3,
+.mission-item:hover .mission-content h4 {
   color: #fff;
 }
 
@@ -479,7 +476,6 @@
    7. MINI TECH STACK & LINKS
    ========================================= */
 
-/* Mini tech stack — smaller badges inside mission items */
 .tech-stack-mini {
   display: flex;
   flex-wrap: wrap;
@@ -490,24 +486,22 @@
 .tech-stack-mini span {
   display: inline-flex;
   align-items: center;
-
   padding: 2px 8px;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-
+  font-family: var(--font-mono);
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
-
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
 }
 
 .mission-item:hover .tech-stack-mini span {
-  color: var(--text-accent);
-  border-color: rgba(100, 210, 255, 0.18);
+  color: var(--hub-accent, var(--cyan));
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.20));
 }
 
 /* Mission action links row */
@@ -519,36 +513,37 @@
   margin-top: 8px;
 }
 
-/* Outline button — primary CTA */
+/* Outline button */
 .btn-outline {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-
   padding: 8px 18px;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-
-  color: var(--text-accent);
-  background: rgba(100, 210, 255, 0.06);
-  border: 1px solid rgba(100, 210, 255, 0.25);
+  font-family: var(--font-mono);
+  color: var(--hub-accent, var(--cyan));
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.06));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.24));
   border-radius: var(--radius-pill);
-
+  box-shadow: var(--shadow-xs);
   transition:
-    background   0.2s ease,
-    border-color 0.2s ease,
-    color        0.2s ease,
-    transform    0.2s ease,
-    box-shadow   0.2s ease;
+    background   var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color        var(--duration-fast) ease,
+    transform    var(--duration-fast) var(--ease-responsive),
+    box-shadow   var(--duration-fast) ease;
 }
 
 .btn-outline:hover {
   background: rgba(100, 210, 255, 0.12);
-  border-color: rgba(100, 210, 255, 0.5);
-  box-shadow: 0 0 16px rgba(100, 210, 255, 0.12);
-  transform: translateY(-1px);
+  border-color: rgba(100, 210, 255, 0.52);
+  box-shadow:
+    var(--shadow-xs),
+    0 0 20px rgba(100, 210, 255, 0.14);
+  transform: translateY(-2px);
   color: #fff;
 }
 
@@ -556,24 +551,24 @@
 .link-text {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-
-  font-size: 11.5px;
+  gap: 5px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text-secondary);
   padding: 8px 4px;
-
-  transition: color 0.2s ease, gap 0.2s ease;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  transition: color var(--duration-fast) ease, gap var(--duration-fast) ease;
 }
 
 .link-text:hover {
-  color: var(--text-accent);
-  gap: 8px;
+  color: var(--hub-accent, var(--cyan));
+  gap: 9px;
 }
 
 
 /* =========================================
-   8. RESPONSIVE OVERRIDES
+   8. RESPONSIVE
    ========================================= */
 
 @media (max-width: 900px) {
@@ -582,40 +577,16 @@
     grid-template-columns: 1fr;
     direction: ltr;
   }
-
-  .mission-item:nth-child(even) > * {
-    direction: ltr;
-  }
-
-  .mission-visual {
-    aspect-ratio: 16 / 8;
-  }
-
-  .mission-content p {
-    max-width: 100%;
-  }
+  .mission-item:nth-child(even) > * { direction: ltr; }
+  .mission-visual { aspect-ratio: 16 / 8; }
+  .mission-content p { max-width: 100%; }
 }
 
 @media (max-width: 600px) {
-  .arsenal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .arsenal-card {
-    padding: 20px 18px;
-  }
-
-  .mission-item {
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .mission-content h3 {
-    font-size: 17px;
-  }
-
-  .mission-links {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  .arsenal-grid { grid-template-columns: 1fr; }
+  .arsenal-card { padding: 20px 18px; }
+  .mission-item { padding: 20px; gap: 20px; }
+  .mission-content h3,
+  .mission-content h4 { font-size: 17px; }
+  .mission-links { flex-direction: column; align-items: flex-start; }
 }

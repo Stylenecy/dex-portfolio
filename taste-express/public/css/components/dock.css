@@ -50,18 +50,15 @@
   padding: 10px 16px;
 
   /* Glassmorphism surface */
-  background: rgba(10, 11, 15, 0.72);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  background: rgba(7, 8, 14, 0.78);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
 
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px; /* Full pill shape */
 
-  /* Ambient glow underneath */
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 2px 0 rgba(255, 255, 255, 0.04) inset,
-    0 0 0 1px rgba(255, 255, 255, 0.03);
+  /* Multi-layer dock shadow */
+  box-shadow: var(--shadow-dock);
 
   /* Re-enable pointer events on the pill itself */
   pointer-events: auto;

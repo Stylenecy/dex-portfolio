@@ -15,10 +15,11 @@
   overflow: hidden;
   padding: 28px;
   background: var(--glass-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 /* Cyan top-edge accent line */
@@ -113,7 +114,7 @@
   text-transform: uppercase;
   color: var(--text-accent);
   opacity: 0.65;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .name-text-v3 {
@@ -138,7 +139,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--text-secondary);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 
@@ -171,7 +172,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 
   /* Subtle left border for visual alignment */
   padding-left: 8px;
@@ -200,7 +201,7 @@
   font-size: 17px;
   font-weight: 900;
   letter-spacing: -0.02em;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
 
   border-radius: 6px;
   border: 1px solid var(--glass-border);
@@ -443,7 +444,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #a78bfa;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
   text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
 
   animation: glitch-flicker 4s steps(1) infinite;
@@ -520,7 +521,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .stat-total__value {
@@ -563,7 +564,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-muted, #5a5c66);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .stat-block-footer__phase {
@@ -573,7 +574,7 @@
   text-transform: uppercase;
   color: var(--text-accent);
   opacity: 0.6;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 

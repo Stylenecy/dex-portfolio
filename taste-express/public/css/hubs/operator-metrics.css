@@ -13,11 +13,13 @@
    throughout this panel's scope.
 ───────────────────────────────────────────────────── */
 #hub-operator-metrics {
-  --hub-accent:       var(--orange, #fb923c);
-  --hub-accent-dim:   var(--orange-dim, rgba(251, 146, 60, 0.12));
-  --hub-accent-glow:  rgba(251, 146, 60, 0.25);
-  --hub-accent-2:     var(--red, #f87171);
-  --hub-accent-2-dim: rgba(248, 113, 113, 0.1);
+  --hub-accent:        var(--orange, #fb923c);
+  --hub-accent-dim:    var(--orange-dim, rgba(251, 146, 60, 0.10));
+  --hub-accent-glow:   rgba(251, 146, 60, 0.22);
+  --hub-accent-border: rgba(251, 146, 60, 0.22);
+  --hub-shadow-hover:  var(--shadow-hover-orange);
+  --hub-accent-2:      var(--red, #f87171);
+  --hub-accent-2-dim:  rgba(248, 113, 113, 0.10);
 }
 
 
@@ -73,10 +75,12 @@
   overflow: hidden;
   padding: 24px;
   background: var(--glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md, 12px);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  will-change: transform;
   transition:
     border-color 0.28s ease,
     box-shadow   0.28s ease,
@@ -84,12 +88,9 @@
 }
 
 .metrics-cell:hover {
-  border-color: rgba(251, 146, 60, 0.22);
-  box-shadow:
-    0 0 0 1px rgba(251, 146, 60, 0.08),
-    0 0 24px rgba(251, 146, 60, 0.06),
-    0 16px 40px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
+  border-color: rgba(251, 146, 60, 0.24);
+  box-shadow: var(--shadow-hover-orange);
+  transform: translateY(-3px);
 }
 
 /* Top-edge accent shimmer on hover */
@@ -298,7 +299,7 @@
   text-transform: uppercase;
   color: var(--orange, #fb923c);
   opacity: 0.75;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .metrics-bio__affiliation {
@@ -319,7 +320,7 @@
 
 .metrics-bio__id-code {
   font-size: 9px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-secondary);
@@ -333,7 +334,7 @@
   text-transform: uppercase;
   color: var(--orange, #fb923c);
   opacity: 0.7;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 
@@ -371,7 +372,7 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--text-secondary);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
   flex-shrink: 0;
 }
 
@@ -380,7 +381,7 @@
   font-weight: 700;
   color: var(--orange, #fb923c);
   letter-spacing: 0.06em;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
   text-align: right;
 }
 
@@ -500,7 +501,7 @@
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .endurance-ring__unit {
@@ -636,7 +637,7 @@
   color: var(--text-secondary);
   opacity: 0.55;
   white-space: nowrap;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.06em;
   flex-shrink: 0;
   align-self: flex-start;
@@ -723,7 +724,7 @@
   text-transform: uppercase;
   color: var(--orange, #fb923c);
   opacity: 0.75;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .power-banner__title {
@@ -761,7 +762,7 @@
   text-shadow:
     0 0 20px rgba(251, 146, 60, 0.4),
     0 0 40px rgba(251, 146, 60, 0.15);
-  font-family: 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
 }
 
 .power-banner__score-label {
@@ -812,7 +813,7 @@
   color: var(--orange, #fb923c);
   opacity: 0.6;
   white-space: nowrap;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .metrics-divider__line {

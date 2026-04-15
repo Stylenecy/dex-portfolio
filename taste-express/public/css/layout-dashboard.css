@@ -54,10 +54,11 @@
   overflow-x: hidden;
 
   /* Glass panel surface */
-  background: var(--glass-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(8, 9, 16, 0.82);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
   border-right: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
 
   /* Position relative for resize handle & toggle button */
   position: relative;
@@ -89,19 +90,21 @@
 }
 
 .sidebar__brand-tag {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
-  color: var(--text-accent);
-  opacity: 0.7;
+  color: var(--cyan);
+  opacity: 0.65;
+  font-family: var(--font-mono);
 }
 
 .sidebar__brand-title {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .sidebar__brand-title span {
@@ -109,10 +112,11 @@
 }
 
 .sidebar__brand-sub {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-secondary);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   margin-top: 2px;
+  font-family: var(--font-mono);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -365,7 +369,7 @@
   text-transform: uppercase;
   color: var(--text-secondary);
   opacity: 0.5;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   text-align: center;
   transition: opacity 0.2s ease;
 }
@@ -441,28 +445,30 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: rgba(100, 210, 255, 0.05);
-  border: 1px solid rgba(100, 210, 255, 0.15);
-  border-radius: 8px;
+  background: rgba(74, 222, 128, 0.05);
+  border: 1px solid rgba(74, 222, 128, 0.16);
+  border-radius: var(--radius-sm);
   width: 100%;
+  box-shadow: var(--shadow-xs), 0 0 20px rgba(74, 222, 128, 0.05);
 }
 
 .sidebar__status-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green-glow);
   flex-shrink: 0;
   animation: blink-pulse 2.5s ease-in-out infinite;
 }
 
 .sidebar__status-label {
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #4ade80;
+  color: var(--green);
   font-weight: 600;
+  font-family: var(--font-mono);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -478,30 +484,34 @@
 }
 
 .sidebar__nav-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-secondary);
-  opacity: 0.6;
+  color: var(--text-muted);
   padding-left: 4px;
   margin-bottom: 4px;
+  font-family: var(--font-mono);
 }
 
 .sidebar__nav-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   text-decoration: none;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   border: 1px solid transparent;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background var(--duration-fast) ease,
+    color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease;
 }
 
 .sidebar__nav-item svg {
@@ -512,19 +522,22 @@
 }
 
 .sidebar__nav-item:hover {
-  background: rgba(100, 210, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
-  border-color: var(--glass-border);
+  border-color: var(--glass-border-bright);
 }
 
 .sidebar__nav-item.active {
-  background: rgba(100, 210, 255, 0.1);
-  color: var(--text-accent);
-  border-color: rgba(100, 210, 255, 0.2);
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.10));
+  color: var(--hub-accent, var(--cyan));
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.22));
+  box-shadow:
+    0 0 0 1px var(--hub-accent-border, rgba(100, 210, 255, 0.10)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .sidebar__nav-item.active svg {
-  stroke: var(--text-accent);
+  stroke: var(--hub-accent, var(--cyan));
 }
 
 /* ─────────────────────────────────────────────────────
@@ -618,38 +631,59 @@
    Pattern: [label tag] + [H1 title] + [description]
 ───────────────────────────────────────────────────── */
 .hub__header {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .hub__label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-accent);
-  opacity: 0.8;
+  color: var(--hub-accent, var(--cyan));
+  opacity: 0.75;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
-  /* Terminal prefix "// " is decorative */
-  font-family: 'Consolas', 'Courier New', monospace;
+/* Animated leading "// " blip */
+.hub__label::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--hub-accent, var(--cyan));
+  box-shadow: 0 0 8px var(--hub-accent-glow, var(--cyan-glow));
+  flex-shrink: 0;
+  animation: hub-label-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hub-label-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(0.78); }
 }
 
 .hub__title {
-  font-size: 32px;
+  font-size: clamp(28px, 3.6vw, 48px);
   font-weight: 800;
   color: var(--text-primary);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-feature-settings: var(--font-features-sans, normal);
 }
 
 .hub__desc {
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--text-secondary);
-  max-width: 560px;
-  line-height: 1.65;
-  margin-top: 4px;
+  max-width: 580px;
+  line-height: 1.7;
+  margin-top: 2px;
+  font-weight: 400;
 }
 
 /* ─────────────────────────────────────────────────────
@@ -679,38 +713,66 @@
 /* Generic bento cell */
 .bento-cell {
   background: var(--glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 24px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--duration-base) ease,
+    transform    var(--duration-base) var(--ease-responsive),
+    box-shadow   var(--duration-base) var(--ease-responsive);
+  will-change: transform;
 }
 
 .bento-cell:hover {
-  border-color: rgba(100, 210, 255, 0.18);
-  transform: translateY(-2px);
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.20));
+  transform: translateY(-3px);
+  box-shadow: var(--hub-shadow-hover, var(--shadow-hover-cyan));
 }
 
-/* Glow shimmer on hover (top edge) */
+/* Top-edge shimmer line */
 .bento-cell::before {
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
+  top: 0;
+  left: 8%;
+  right: 8%;
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(100, 210, 255, 0.35),
+    var(--hub-accent-glow, var(--cyan-glow)),
     transparent
   );
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-base) ease;
+  pointer-events: none;
 }
 .bento-cell:hover::before {
   opacity: 1;
+}
+
+/* Subtle face gradient (like reference's glass sheen) */
+.bento-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.024) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.bento-cell > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Span helpers for grid cells */

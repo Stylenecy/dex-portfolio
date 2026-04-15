@@ -25,19 +25,17 @@
 ───────────────────────────────────────────────────── */
 
 #hub-operations {
-  --hub-accent:       #8b5cf6;
-  --hub-accent-dim:   rgba(139, 92, 246, 0.12);
-  --hub-accent-glow:  rgba(139, 92, 246, 0.25);
-  --hub-accent-border: rgba(139, 92, 246, 0.22);
+  --hub-accent:        var(--purple, #8b5cf6);
+  --hub-accent-dim:    var(--purple-dim, rgba(139, 92, 246, 0.10));
+  --hub-accent-glow:   var(--purple-glow, rgba(139, 92, 246, 0.22));
+  --hub-accent-border: var(--purple-border, rgba(139, 92, 246, 0.22));
+  --hub-shadow-hover:  var(--shadow-hover-purple);
 }
 
 /* Hub entrance — inherits hub--active animation from layout */
 #hub-operations .bento-cell:hover {
-  border-color: rgba(139, 92, 246, 0.22);
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.08),
-    0 0 28px rgba(139, 92, 246, 0.07),
-    0 20px 48px rgba(0, 0, 0, 0.45);
+  border-color: rgba(139, 92, 246, 0.24);
+  box-shadow: var(--shadow-hover-purple);
 }
 
 /* Override shimmer line color for this hub */
@@ -129,10 +127,13 @@
   flex-direction: column;
   gap: 16px;
 
+  box-shadow: var(--shadow-md);
+  will-change: transform;
+
   transition:
-    border-color 0.3s ease,
-    box-shadow   0.3s ease,
-    transform    0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    border-color var(--duration-base) ease,
+    box-shadow   var(--duration-base) var(--ease-responsive),
+    transform    var(--duration-base) var(--ease-responsive);
 }
 
 /* Purple top-edge accent */
@@ -174,12 +175,9 @@
 }
 
 .ops-role-card:hover {
-  border-color: rgba(139, 92, 246, 0.35);
-  transform: translateY(-3px);
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.1),
-    0 0 32px rgba(139, 92, 246, 0.10),
-    0 24px 56px rgba(0, 0, 0, 0.45);
+  border-color: rgba(139, 92, 246, 0.38);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover-purple);
 }
 
 /* ── Role Card: System Tag (e.g., "CURRENT ROLE") ── */
@@ -190,7 +188,7 @@
   text-transform: uppercase;
   color: var(--hub-accent);
   opacity: 0.75;
-  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 /* ── Role Card: Title ─── */
@@ -313,7 +311,7 @@
   text-transform: uppercase;
   color: var(--hub-accent);
   opacity: 0.7;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   padding-bottom: 12px;
   border-bottom: 1px solid var(--glass-border);
 }
@@ -421,7 +419,7 @@
   text-transform: uppercase;
   color: var(--hub-accent);
   opacity: 0.8;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .ops-event-card__type::before {
@@ -470,7 +468,7 @@
   font-weight: 600;
   color: var(--text-secondary);
   letter-spacing: 0.08em;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .ops-event-card__scope {
@@ -566,7 +564,7 @@
   font-size: 10px;
   color: var(--text-secondary);
   opacity: 0.55;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.06em;
 }
 
@@ -777,7 +775,7 @@
   text-transform: uppercase;
   color: var(--hub-accent);
   opacity: 0.8;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   white-space: nowrap;
 }
 
@@ -971,7 +969,7 @@
   font-weight: 600;
   color: var(--text-secondary);
   letter-spacing: 0.08em;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .ops-cert-card__view {
@@ -1028,7 +1026,7 @@
   transition:
     background 0.2s ease,
     border-color 0.2s ease;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .ops-section-toggle:hover {

@@ -27,10 +27,11 @@
    ===================================================== */
 
 #hub-archives {
-  /* Inherit green accent theme from variables.css */
-  --hub-accent:      var(--green,      #4ade80);
-  --hub-accent-dim:  var(--green-dim,  rgba(74, 222, 128, 0.12));
-  --hub-accent-glow: rgba(74, 222, 128, 0.25);
+  --hub-accent:        var(--green, #4ade80);
+  --hub-accent-dim:    var(--green-dim, rgba(74, 222, 128, 0.10));
+  --hub-accent-glow:   var(--green-glow, rgba(74, 222, 128, 0.22));
+  --hub-accent-border: rgba(74, 222, 128, 0.20);
+  --hub-shadow-hover:  var(--shadow-hover-green);
 }
 
 /* Hub label tag: "// ARCHIVES" */
@@ -97,7 +98,7 @@
   text-transform: uppercase;
   color: var(--green, #4ade80);
   opacity: 0.8;
-  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-family: var(--font-mono);
   white-space: nowrap;
 }
 
@@ -634,7 +635,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--green, #4ade80);
-  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 /* Game artwork / cover (large) */
@@ -712,13 +713,13 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-secondary, #9496a1);
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .now-playing-card__session-label strong {
   font-size: 11px;
   color: var(--green, #4ade80);
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .now-playing-card__session-track {
@@ -861,7 +862,7 @@
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   min-height: 160px;
 }
 
@@ -954,7 +955,7 @@
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 .gallery-filter-btn:hover {
@@ -1141,7 +1142,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   cursor: pointer;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
@@ -1256,7 +1257,7 @@
   color: var(--green);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
 }
 
 /* ── Photography Masonry ── */
@@ -1497,7 +1498,7 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--green);
-  font-family: 'Consolas', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.06em;
 }
 

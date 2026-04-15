@@ -9,79 +9,161 @@
   /* --------------------------------------------------------------------------
      1. BACKGROUND LAYERS
      -------------------------------------------------------------------------- */
-  --bg-void:          #050507;        /* Page root — near-black w/ blue hint   */
-  --bg-surface:       #0f1115;        /* Cards, panels, elevated surfaces       */
-  --bg-surface-2:     #13161c;        /* Second elevation (nested cards)        */
-  --bg-overlay:       rgba(5, 5, 7, 0.85); /* Modal / overlay backdrop         */
+  --bg-void:          #080810;        /* Page root — deep dark w/ blue-black hint */
+  --bg-surface:       #0d0f17;        /* Cards, panels, elevated surfaces         */
+  --bg-surface-2:     #12141e;        /* Second elevation (nested cards)          */
+  --bg-surface-3:     #181b26;        /* Third elevation (inputs, chips)          */
+  --bg-overlay:       rgba(8, 8, 16, 0.90); /* Modal / overlay backdrop          */
 
   /* --------------------------------------------------------------------------
      2. TEXT HIERARCHY
      -------------------------------------------------------------------------- */
-  --text-primary:     #e2e4e9;        /* Main body — warm off-white             */
-  --text-secondary:   #9496a1;        /* Subdued labels, descriptions           */
-  --text-muted:       #7a7c86;        /* Disabled / placeholder (WCAG AA pass)  */
-  --text-accent:      #64d2ff;        /* Cyan highlight — links, tags, stats    */
-  --text-accent-alt:  #a78bfa;        /* Purple accent — secondary highlights   */
+  --text-primary:     #eceef3;        /* Main body — crisp near-white             */
+  --text-secondary:   #8b8fa8;        /* Subdued labels, descriptions             */
+  --text-muted:       #5c6080;        /* Disabled / placeholder (WCAG AA pass)    */
+  --text-accent:      #64d2ff;        /* Cyan highlight — links, tags, stats      */
+  --text-accent-alt:  #a78bfa;        /* Purple accent — secondary highlights     */
 
   /* --------------------------------------------------------------------------
      3. BRAND / ACCENT PALETTE
      -------------------------------------------------------------------------- */
-  --cyan:             #64d2ff;        /* Primary accent                         */
-  --cyan-dim:         rgba(100, 210, 255, 0.12);  /* Subtle fill / bg           */
-  --cyan-glow:        rgba(100, 210, 255, 0.25);  /* Hover glow                 */
+  --cyan:             #64d2ff;
+  --cyan-dim:         rgba(100, 210, 255, 0.10);
+  --cyan-glow:        rgba(100, 210, 255, 0.22);
+  --cyan-border:      rgba(100, 210, 255, 0.20);
 
-  --purple:           #8b5cf6;        /* Secondary accent                       */
-  --purple-dim:       rgba(139, 92, 246, 0.12);   /* Subtle fill / bg           */
-  --purple-glow:      rgba(139, 92, 246, 0.25);   /* Hover glow                 */
+  --purple:           #8b5cf6;
+  --purple-dim:       rgba(139, 92, 246, 0.10);
+  --purple-glow:      rgba(139, 92, 246, 0.22);
+  --purple-border:    rgba(139, 92, 246, 0.22);
 
-  --green:            #4ade80;        /* Status: online / active / success      */
-  --green-dim:        rgba(74, 222, 128, 0.12);
+  --green:            #4ade80;
+  --green-dim:        rgba(74, 222, 128, 0.10);
+  --green-glow:       rgba(74, 222, 128, 0.22);
 
-  --orange:           #fb923c;        /* Rank A — warning / in-progress         */
-  --orange-dim:       rgba(251, 146, 60, 0.12);
+  --orange:           #fb923c;
+  --orange-dim:       rgba(251, 146, 60, 0.10);
+  --orange-glow:      rgba(251, 146, 60, 0.22);
 
-  --red:              #f87171;        /* Rank S — danger / critical             */
-  --red-dim:          rgba(248, 113, 113, 0.12);
+  --red:              #f87171;
+  --red-dim:          rgba(248, 113, 113, 0.10);
 
   /* --------------------------------------------------------------------------
      4. AURORA / AMBIENT GLOW SYSTEM
-     Uses HSLA for easy opacity control via CSS overrides.
      -------------------------------------------------------------------------- */
-  --glow-cyan:        hsla(190, 100%, 50%, 0.15);
-  --glow-purple:      hsla(250, 80%,  65%, 0.12);
-  --glow-mix:         radial-gradient(
-                        circle,
-                        hsla(190, 100%, 50%, 0.10),
-                        hsla(250, 80%,  65%, 0.08)
-                      );
+  --glow-cyan:        hsla(198, 100%, 56%, 0.14);
+  --glow-purple:      hsla(258, 80%, 65%, 0.10);
+  --glow-orange:      hsla(24, 96%, 62%, 0.06);
 
   /* --------------------------------------------------------------------------
      5. GLASSMORPHISM SYSTEM
      -------------------------------------------------------------------------- */
-  --glass-surface:    rgba(20, 22, 28, 0.60);     /* Card fill                  */
-  --glass-surface-hover: rgba(26, 29, 38, 0.75);  /* Card fill on hover         */
-  --glass-border:     rgba(255, 255, 255, 0.08);  /* Subtle white rim           */
-  --glass-border-hover: rgba(100, 210, 255, 0.20);/* Cyan rim on hover          */
-  --glass-blur:       12px;                        /* backdrop-filter blur value */
+  --glass-surface:    rgba(13, 15, 23, 0.65);
+  --glass-surface-2:  rgba(18, 20, 30, 0.72);
+  --glass-surface-hover: rgba(22, 25, 38, 0.80);
+  --glass-border:     rgba(255, 255, 255, 0.07);
+  --glass-border-bright: rgba(255, 255, 255, 0.10);
+  --glass-border-hover: rgba(100, 210, 255, 0.22);
+  --glass-blur:       14px;
+  --glass-blur-heavy: 28px;
 
   /* --------------------------------------------------------------------------
-     6. BORDERS & SEPARATORS
+     6. SHADOW SYSTEM — Multi-layer depth (inspired by high-end portfolio refs)
      -------------------------------------------------------------------------- */
-  --border-subtle:    rgba(255, 255, 255, 0.05);
-  --border-default:   rgba(255, 255, 255, 0.08);
-  --border-accent:    rgba(100, 210, 255, 0.25);
+
+  /* Thin border outline (level 0) */
+  --shadow-border:    0px 0px 0px 0.5px rgba(255, 255, 255, 0.06);
+
+  /* Subtle depth — for chips, badges, tags */
+  --shadow-xs:
+    0px 0px 0px 0.5px rgba(255, 255, 255, 0.05),
+    0px 1px 2px rgba(0, 0, 0, 0.25);
+
+  /* Standard card shadow */
+  --shadow-sm:
+    0px 0px 0px 0.5px rgba(255, 255, 255, 0.06),
+    0px 1px 2px rgba(0, 0, 0, 0.18),
+    0px 4px 12px rgba(0, 0, 0, 0.28),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.05);
+
+  /* Elevated card / panel */
+  --shadow-md:
+    0px 0px 0px 0.5px rgba(255, 255, 255, 0.06),
+    0px 1px 3px rgba(0, 0, 0, 0.15),
+    0px 6px 20px rgba(0, 0, 0, 0.30),
+    0px 16px 48px rgba(0, 0, 0, 0.22),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.06);
+
+  /* Large modal / floating */
+  --shadow-lg:
+    0px 0px 0px 0.5px rgba(255, 255, 255, 0.07),
+    0px 2px 4px rgba(0, 0, 0, 0.12),
+    0px 8px 24px rgba(0, 0, 0, 0.28),
+    0px 24px 64px rgba(0, 0, 0, 0.35),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.07);
+
+  /* Hover state — adds accent glow */
+  --shadow-hover-cyan:
+    0px 0px 0px 0.5px rgba(100, 210, 255, 0.14),
+    0px 2px 6px rgba(0, 0, 0, 0.12),
+    0px 8px 28px rgba(0, 0, 0, 0.28),
+    0px 20px 56px rgba(0, 0, 0, 0.30),
+    0px 0px 48px rgba(100, 210, 255, 0.07),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.08);
+
+  /* Hub-specific hover shadows */
+  --shadow-hover-purple:
+    0px 0px 0px 0.5px rgba(139, 92, 246, 0.15),
+    0px 2px 6px rgba(0, 0, 0, 0.12),
+    0px 8px 28px rgba(0, 0, 0, 0.28),
+    0px 20px 56px rgba(0, 0, 0, 0.30),
+    0px 0px 48px rgba(139, 92, 246, 0.07),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.08);
+
+  --shadow-hover-orange:
+    0px 0px 0px 0.5px rgba(251, 146, 60, 0.14),
+    0px 2px 6px rgba(0, 0, 0, 0.12),
+    0px 8px 28px rgba(0, 0, 0, 0.28),
+    0px 20px 56px rgba(0, 0, 0, 0.30),
+    0px 0px 48px rgba(251, 146, 60, 0.06),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.08);
+
+  --shadow-hover-green:
+    0px 0px 0px 0.5px rgba(74, 222, 128, 0.13),
+    0px 2px 6px rgba(0, 0, 0, 0.12),
+    0px 8px 28px rgba(0, 0, 0, 0.28),
+    0px 20px 56px rgba(0, 0, 0, 0.30),
+    0px 0px 48px rgba(74, 222, 128, 0.06),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.08);
+
+  /* Dock specific shadow */
+  --shadow-dock:
+    0 2px 0 rgba(255,255,255,0.04) inset,
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 8px 32px rgba(0,0,0,0.55),
+    0 24px 64px rgba(0,0,0,0.30);
 
   /* --------------------------------------------------------------------------
-     7. BORDER RADIUS SCALE
+     7. BORDERS & SEPARATORS
      -------------------------------------------------------------------------- */
+  --border-subtle:    rgba(255, 255, 255, 0.04);
+  --border-default:   rgba(255, 255, 255, 0.07);
+  --border-bright:    rgba(255, 255, 255, 0.11);
+  --border-accent:    rgba(100, 210, 255, 0.22);
+
+  /* --------------------------------------------------------------------------
+     8. BORDER RADIUS SCALE
+     -------------------------------------------------------------------------- */
+  --radius-xs:        4px;
   --radius-sm:        6px;
   --radius-md:        12px;
   --radius-lg:        18px;
   --radius-xl:        24px;
+  --radius-2xl:       32px;
   --radius-pill:      999px;
 
   /* --------------------------------------------------------------------------
-     8. SPACING SCALE (8pt grid)
+     9. SPACING SCALE (8pt grid)
      -------------------------------------------------------------------------- */
   --space-1:          4px;
   --space-2:          8px;
@@ -91,59 +173,76 @@
   --space-6:          32px;
   --space-7:          48px;
   --space-8:          64px;
+  --space-9:          80px;
 
   /* --------------------------------------------------------------------------
-     9. TYPOGRAPHY SCALE
+     10. TYPOGRAPHY
      -------------------------------------------------------------------------- */
-  --font-sans:        'Segoe UI', Inter, system-ui, sans-serif;
-  --font-mono:        'Cascadia Code', 'Fira Code', 'Consolas', monospace;
 
-  --text-xs:          0.70rem;   /* 11px — tiny labels, log-tags               */
-  --text-sm:          0.80rem;   /* 13px — secondary body                      */
-  --text-base:        0.938rem;  /* 15px — primary body                        */
-  --text-md:          1.063rem;  /* 17px — sub-headings                        */
+  /* Font families — curated, loaded via Google Fonts */
+  --font-sans:        'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:        'Geist Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+
+  /* Font feature settings for Inter */
+  --font-features-sans: "cv02" on, "cv03" on, "cv04" on, "cv09" on, "ss01" on;
+
+  /* Size scale */
+  --text-2xs:         0.65rem;   /* 10px — micro labels                        */
+  --text-xs:          0.72rem;   /* 11.5px — tiny labels, log-tags             */
+  --text-sm:          0.813rem;  /* 13px — secondary body                      */
+  --text-base:        0.9375rem; /* 15px — primary body                        */
+  --text-md:          1.0625rem; /* 17px — sub-headings                        */
   --text-lg:          1.25rem;   /* 20px — section labels                      */
   --text-xl:          1.5rem;    /* 24px — section titles                      */
-  --text-2xl:         2rem;      /* 32px — hero headings                       */
-  --text-3xl:         2.75rem;   /* 44px — display text                        */
+  --text-2xl:         2rem;      /* 32px — large titles                        */
+  --text-3xl:         2.75rem;   /* 44px — hub headings                        */
+  --text-4xl:         3.5rem;    /* 56px — display text                        */
 
+  /* Weight scale */
+  --weight-light:     300;
   --weight-normal:    400;
   --weight-medium:    500;
   --weight-semibold:  600;
   --weight-bold:      700;
+  --weight-extrabold: 800;
+  --weight-black:     900;
 
-  --leading-tight:    1.2;
+  /* Leading */
+  --leading-none:     1.0;
+  --leading-tight:    1.15;
+  --leading-snug:     1.35;
   --leading-normal:   1.6;
-  --leading-relaxed:  1.8;
+  --leading-relaxed:  1.75;
 
   /* --------------------------------------------------------------------------
-     10. LAYOUT — Dashboard Shell Dimensions
+     11. LAYOUT — Dashboard Shell Dimensions
      -------------------------------------------------------------------------- */
-  --sidebar-width:    260px;      /* Default sidebar width (can be resized)   */
-  --sidebar-min-width: 64px;      /* Collapsed icon-rail width                 */
-  --sidebar-max-width: 33vw;      /* Max width = 1/3 of viewport               */
-  --dock-height:      72px;       /* Fixed bottom navigation dock              */
-  --header-height:    56px;       /* Optional top status bar                   */
-  --center-max-width: 1100px;     /* Max width of the scrollable content area  */
-  --center-padding:   var(--space-6); /* Internal padding of center hub area   */
+  --sidebar-width:    268px;
+  --sidebar-min-width: 64px;
+  --sidebar-max-width: 33vw;
+  --dock-height:      72px;
+  --header-height:    56px;
+  --center-max-width: 1100px;
+  --center-padding:   var(--space-6);
 
   /* --------------------------------------------------------------------------
-     11. TRANSITIONS & ANIMATION TIMING
+     12. TRANSITIONS & ANIMATION TIMING
      -------------------------------------------------------------------------- */
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out:      cubic-bezier(0.45, 0, 0.55, 1);
   --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-responsive:  cubic-bezier(0.2, 0.8, 0.2, 1);  /* From reference — bouncy + fast */
 
-  --duration-fast:    150ms;
-  --duration-base:    300ms;
-  --duration-slow:    500ms;
-  --duration-crawl:   800ms;
+  --duration-instant: 80ms;
+  --duration-fast:    160ms;
+  --duration-base:    280ms;
+  --duration-slow:    480ms;
+  --duration-crawl:   700ms;
 
   /* --------------------------------------------------------------------------
-     12. Z-INDEX STACK
-     Establish a clear stacking order to avoid z-index wars.
+     13. Z-INDEX STACK
      -------------------------------------------------------------------------- */
-  --z-aurora:         -1;         /* Background ambient layer                  */
+  --z-aurora:         -1;
   --z-base:            0;
   --z-card:            10;
   --z-sidebar:         50;
@@ -153,44 +252,53 @@
   --z-tooltip:         400;
 
   /* --------------------------------------------------------------------------
-     13. HUB ACCENT OVERRIDES
-     Each hub can override these locally for themed glow/border colors.
+     14. HUB ACCENT OVERRIDES
+     Each hub overrides these locally for themed glow/border colors.
      -------------------------------------------------------------------------- */
-  --hub-accent:       var(--cyan);       /* Default; overridden per hub         */
+  --hub-accent:       var(--cyan);
   --hub-accent-dim:   var(--cyan-dim);
   --hub-accent-glow:  var(--cyan-glow);
+  --hub-accent-border: var(--cyan-border);
+  --hub-shadow-hover: var(--shadow-hover-cyan);
 
 }
 
 /* ==========================================================================
    HUB-SPECIFIC ACCENT THEMES
-   Applied to the hub wrapper element so all children inherit.
    ========================================================================== */
 
-/* // SYSTEM_CORE — Cyan (tech / code) */
+/* // SYSTEM_CORE — Cyan */
 [data-hub="system-core"] {
-  --hub-accent:       var(--cyan);
-  --hub-accent-dim:   var(--cyan-dim);
-  --hub-accent-glow:  var(--cyan-glow);
+  --hub-accent:        var(--cyan);
+  --hub-accent-dim:    var(--cyan-dim);
+  --hub-accent-glow:   var(--cyan-glow);
+  --hub-accent-border: var(--cyan-border);
+  --hub-shadow-hover:  var(--shadow-hover-cyan);
 }
 
-/* // OPERATIONS — Purple (leadership / strategy) */
+/* // OPERATIONS — Purple */
 [data-hub="operations"] {
-  --hub-accent:       var(--purple);
-  --hub-accent-dim:   var(--purple-dim);
-  --hub-accent-glow:  var(--purple-glow);
+  --hub-accent:        var(--purple);
+  --hub-accent-dim:    var(--purple-dim);
+  --hub-accent-glow:   var(--purple-glow);
+  --hub-accent-border: var(--purple-border);
+  --hub-shadow-hover:  var(--shadow-hover-purple);
 }
 
-/* // OPERATOR_METRICS — Orange/Red (physical / stats) */
+/* // OPERATOR_METRICS — Orange */
 [data-hub="operator-metrics"] {
-  --hub-accent:       var(--orange);
-  --hub-accent-dim:   var(--orange-dim);
-  --hub-accent-glow:  rgba(251, 146, 60, 0.25);
+  --hub-accent:        var(--orange);
+  --hub-accent-dim:    var(--orange-dim);
+  --hub-accent-glow:   var(--orange-glow);
+  --hub-accent-border: rgba(251, 146, 60, 0.22);
+  --hub-shadow-hover:  var(--shadow-hover-orange);
 }
 
-/* // ARCHIVES — Green (history / gallery) */
+/* // ARCHIVES — Green */
 [data-hub="archives"] {
-  --hub-accent:       var(--green);
-  --hub-accent-dim:   var(--green-dim);
-  --hub-accent-glow:  rgba(74, 222, 128, 0.25);
+  --hub-accent:        var(--green);
+  --hub-accent-dim:    var(--green-dim);
+  --hub-accent-glow:   var(--green-glow);
+  --hub-accent-border: rgba(74, 222, 128, 0.20);
+  --hub-shadow-hover:  var(--shadow-hover-green);
 }

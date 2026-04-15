@@ -2,11 +2,13 @@
    AURORA ENGINE — Ambient Background System
    Role: Fixed animated glow blobs that live
    permanently behind ALL dashboard content.
+
+   Updated: richer, warmer multi-color aurora
+   with slightly more opacity and a hint of
+   orange warmth for visual interest.
    ========================================= */
 
 /* ── Container ──────────────────────────── */
-/* Must sit at z-index: -1, pointer-events
-   disabled so it never blocks interactions. */
 .aurora-container {
   position: fixed;
   inset: 0;
@@ -19,83 +21,98 @@
 .aurora {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.55;
-  will-change: transform; /* GPU-hint for smooth animation */
-  animation: float-ambient 22s infinite alternate ease-in-out;
+  filter: blur(80px);
+  will-change: transform;
+  animation: float-ambient 24s infinite alternate ease-in-out;
 }
 
 /* ── Blob 1: Top-Left — Cyan Dominant ───── */
 .a1 {
-  width: 65vw;
-  height: 65vw;
-  background: var(--glow-cyan);
-  top: -22%;
-  left: -12%;
-  animation-duration: 22s;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(198, 100%, 56%, 0.18) 0%,
+    hsla(198, 100%, 56%, 0.06) 60%,
+    transparent 100%
+  );
+  top: -28%;
+  left: -16%;
+  opacity: 1;
+  animation-duration: 24s;
   animation-delay: 0s;
 }
 
-/* ── Blob 2: Bottom-Right — Purple Dominant  */
+/* ── Blob 2: Bottom-Right — Purple Dominant */
 .a2 {
-  width: 55vw;
-  height: 55vw;
-  background: var(--glow-purple);
-  bottom: -12%;
-  right: -12%;
-  animation-duration: 28s;
-  animation-delay: -6s;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(258, 80%, 65%, 0.14) 0%,
+    hsla(258, 80%, 65%, 0.05) 60%,
+    transparent 100%
+  );
+  bottom: -16%;
+  right: -14%;
+  opacity: 1;
+  animation-duration: 30s;
+  animation-delay: -7s;
 }
 
-/* ── Blob 3: Center-Stage — Subtle Mix ──── */
+/* ── Blob 3: Center-Stage — Cyan-Purple Mix */
 .a3 {
-  width: 45vw;
-  height: 45vw;
+  width: 48vw;
+  height: 48vw;
   background: radial-gradient(
-    circle at center,
-    var(--glow-cyan),
-    var(--glow-purple)
+    ellipse at center,
+    hsla(198, 100%, 56%, 0.08) 0%,
+    hsla(258, 80%, 65%, 0.06) 50%,
+    transparent 100%
   );
-  top: 38%;
-  left: 28%;
-  opacity: 0.35;
-  animation-duration: 34s;
-  animation-delay: -12s;
+  top: 35%;
+  left: 25%;
+  opacity: 1;
+  animation-duration: 36s;
+  animation-delay: -14s;
 }
 
 /* ── Blob 4: Top-Right — Purple Accent ──── */
-/* New blob for the wider dashboard layout.  */
 .a4 {
-  width: 35vw;
-  height: 35vw;
-  background: var(--glow-purple);
-  top: -5%;
-  right: 5%;
-  opacity: 0.3;
-  animation-duration: 40s;
-  animation-delay: -20s;
+  width: 38vw;
+  height: 38vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(258, 80%, 65%, 0.10) 0%,
+    transparent 100%
+  );
+  top: -8%;
+  right: 2%;
+  opacity: 1;
+  animation-duration: 42s;
+  animation-delay: -21s;
 }
 
 /* ── Keyframe: Slow Drift ───────────────── */
-/* Subtle translate + scale gives the "living
-   atmosphere" feel without being distracting. */
 @keyframes float-ambient {
   0% {
     transform: translate(0, 0) scale(1);
   }
-  33% {
-    transform: translate(3%, 6%) scale(1.05);
+  25% {
+    transform: translate(2%, 5%) scale(1.04);
   }
-  66% {
-    transform: translate(-2%, 4%) scale(0.97);
+  50% {
+    transform: translate(4%, 2%) scale(0.97);
+  }
+  75% {
+    transform: translate(-1%, 7%) scale(1.06);
   }
   100% {
-    transform: translate(5%, 10%) scale(1.1);
+    transform: translate(5%, 9%) scale(1.02);
   }
 }
 
 /* ── Reduced Motion Override ────────────── */
-/* Respect the user's OS accessibility setting */
 @media (prefers-reduced-motion: reduce) {
   .aurora {
     animation: none;

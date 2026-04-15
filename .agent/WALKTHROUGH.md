@@ -332,6 +332,23 @@ The existing timeline needs to be EXPANDED to include ALL events from certificat
 
 **Status:** ✅ Complete
 
+### 2026-04-15 — Full Visual Overhaul *(COMPLETED)*
+**Author:** Claude Sonnet 4.6
+**Scope:** Complete design system upgrade — typography, shadows, depth, aurora
+
+**Changes:**
+- **Google Fonts added** to `index.html`: Inter (variable, 300–900) + Geist Mono (all weights)
+- **`variables.css`** — Rewrote design tokens: richer dark palette, 14 multi-layer shadow tokens (`--shadow-xs/sm/md/lg`, `--shadow-hover-*` per hub), new `--ease-responsive` easing, `--hub-shadow-hover` cascade variable per hub
+- **`glassmorphism.css`** — Multi-layer shadows on `.glass-card`, noise texture helper (`.glass-noise`), inset bevel highlight on top edge, hub-accent-aware hover state
+- **`aurora.css`** — Richer radial gradients, smoother 5-stop keyframe drift
+- **`reset.css`** — Body now uses `--font-sans`, `font-optical-sizing: auto`, `text-rendering: optimizeLegibility`
+- **`layout-dashboard.css`** — Hub titles: `clamp(28px, 3.6vw, 48px)` weight 800, -0.03em spacing. Hub labels: animated pulse dot + Geist Mono. Bento cells: multi-layer shadows, face sheen, hub-aware hover. Sidebar: frosted glass, Geist Mono labels
+- **`cards.css`** — Full rewrite: multi-layer shadows, face sheen, `will-change: transform`, hub-aware accent borders
+- **Hub CSS files** — All 4 hubs: `--hub-shadow-hover` token wired up, bento cell shadows use token system
+- **All CSS files** — Zero legacy font references: all Consolas/Courier New/Cascadia/Segoe UI → `var(--font-mono)` / `var(--font-sans)`
+
+**Status:** ✅ Complete
+
 ### 2026-04-11 — Content Implementation: Archives Media Gallery *(COMPLETED)*
 **Author:** AI Assistant (Qwen Code)
 **Scope:** Full Archives hub — 4 tabbed categories populated
@@ -368,9 +385,12 @@ The existing timeline needs to be EXPANDED to include ALL events from certificat
 | # | Task | Hub | Complexity | Notes |
 |---|------|-----|-----------|-------|
 | 9 | Replace inline SVGs with sprite `<use>` refs | All | Medium | 29 SVGs, performance thing |
-| 10 | Stat counter animations on RPG numbers | Operator Metrics | Low | Add `data-target` attrs |
-| 11 | Narrative language polish on hub headers | All | Low | More Questism-flavored text |
-| 12 | Certificate dates on timeline | Operations | Low | After user uploads to LinkedIn |
+| 10 | Stat counter animations on RPG numbers | Operator Metrics | Low | `data-target` attrs, stat-counter.js module ready |
+| 11 | Narrative language polish on hub headers | All | Low | Deeper Questism-flavored text |
+| 12 | Certificate dates on timeline | Operations | Low | After user adds dates to LinkedIn |
+| 13 | Add new projects: Sowan.id, VR Inclusive Tourism | System Core | Medium | With Problem→Thinking→Decision→Result framework |
+| 14 | Prasaja game project entry | System Core | Low | Personal/emotional — Dex decides how to present |
+| 15 | Upgrade to React/Next.js | Architecture | High | If OS-experience feel needs to be snappier |
 
 ### 📋 Future Enhancements (when needed)
 - PDF viewer modal (currently opens in new tab)
@@ -378,6 +398,7 @@ The existing timeline needs to be EXPANDED to include ALL events from certificat
 - Photo captions/names for Lightroom gallery
 - Instagram embedded posts instead of link-out card
 - Animated stat counters on RPG stats block
+- Angel's Space as a private/template project entry (when ready)
 
 ---
 
