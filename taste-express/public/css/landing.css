@@ -106,15 +106,20 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  /* Profile photo background — face-focused, dark overlay for readability */
-  background:
+  /* Fallback: solid void color if image fails to load */
+  background-color: var(--bg-void);
+  /* Profile photo — path is ../images/ relative to css/ folder */
+  background-image:
     linear-gradient(
       to right,
-      rgba(8, 8, 16, 0.88) 0%,
-      rgba(8, 8, 16, 0.65) 50%,
-      rgba(8, 8, 16, 0.78) 100%
+      rgba(8, 8, 16, 0.92) 0%,
+      rgba(8, 8, 16, 0.72) 50%,
+      rgba(8, 8, 16, 0.85) 100%
     ),
-    url('images/profile-dex.jpg') center 8% / cover no-repeat;
+    url('../images/profile-dex.jpg');
+  background-position: center, center 8%;
+  background-size: auto, cover;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 4.5vw, 3.5rem);
@@ -122,17 +127,19 @@
   will-change: transform;
 }
 
-/* Mobile: ensure face is fully visible */
+/* Mobile: center the face, slightly less dark overlay */
 @media (max-width: 640px) {
   #lp-overlay {
-    background:
+    background-image:
       linear-gradient(
         to bottom,
-        rgba(8, 8, 16, 0.72) 0%,
-        rgba(8, 8, 16, 0.55) 40%,
-        rgba(8, 8, 16, 0.85) 100%
+        rgba(8, 8, 16, 0.78) 0%,
+        rgba(8, 8, 16, 0.60) 40%,
+        rgba(8, 8, 16, 0.90) 100%
       ),
-      url('images/profile-dex.jpg') 50% 5% / cover no-repeat;
+      url('../images/profile-dex.jpg');
+    background-position: center, 50% 5%;
+    background-size: auto, cover;
   }
 }
 

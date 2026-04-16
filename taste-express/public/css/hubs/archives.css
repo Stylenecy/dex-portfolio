@@ -1218,13 +1218,47 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  filter: saturate(0.8) brightness(0.9);
-  transition: filter 0.4s ease, transform 0.5s ease;
+  /* Always full color */
+  filter: none;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .poster-card:hover .poster-card__img {
-  filter: saturate(1.1) brightness(1);
   transform: scale(1.03);
+}
+
+/* Rotating glowing border on hover — same technique as .photo-item */
+.poster-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--photo-angle),
+    transparent 0%,
+    rgba(74, 222, 128, 0.95) 18%,
+    rgba(100, 210, 255, 0.75) 38%,
+    rgba(74, 222, 128, 0.4) 55%,
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.poster-card:hover::after {
+  opacity: 1;
+  animation: rotate-photo-border 2.2s linear infinite;
 }
 
 .poster-card__overlay {

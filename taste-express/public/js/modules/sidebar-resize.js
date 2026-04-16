@@ -254,6 +254,11 @@ const SidebarResize = (() => {
       }
     });
 
+    // Photo lightbox — close when switching hubs via dock or sidebar nav
+    document.querySelectorAll('[data-hub]').forEach(el => {
+      el.addEventListener('click', () => _closePhotoLightbox());
+    });
+
     // Resize handle — mousedown to start drag
     if (_resizeHandle) {
       _resizeHandle.addEventListener('mousedown', _onResizeStart);

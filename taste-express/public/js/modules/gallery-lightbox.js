@@ -97,6 +97,17 @@ const GalleryLightbox = (() => {
       });
     });
 
+    // Poster/design card clicks — same lightbox treatment
+    document.querySelectorAll('.poster-card').forEach((item) => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('.poster-card__img');
+        const title = item.querySelector('.poster-card__title');
+        if (img && img.src) {
+          open(img.src, title ? title.textContent.trim() : '');
+        }
+      });
+    });
+
     // Close button
     if (_closeBtn) {
       _closeBtn.addEventListener('click', close);
