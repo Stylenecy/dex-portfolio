@@ -1,8 +1,9 @@
 # CLAUDE.md — Project Context for AI Assistants
 
-Sebelum ngapa-ngapain, baca dua file ini:
-1. `.agent/AI-HANDOFF.md` — arsitektur, design system, aturan CSS, state terkini
-2. `.agent/Dex.md` — siapa Dex, cara dia mikir, preferensinya
+Sebelum ngapa-ngapain, baca file-file ini (urutan ini penting):
+1. `.agent/Protocol.md` — **WAJIB PERTAMA** — known bugs, traps, good patterns, session log
+2. `.agent/AI-HANDOFF.md` — arsitektur, design system, aturan CSS, state terkini
+3. `.agent/Dex.md` — siapa Dex, cara dia mikir, preferensinya
 
 Kalau mau tau full history dan pending tasks: `.agent/WALKTHROUGH.md`
 

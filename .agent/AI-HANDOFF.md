@@ -3,6 +3,10 @@
 > **Paste this entire file at the start of a new conversation.**
 > You are continuing work on Dex Bennett's personal portfolio.
 > Everything you need to know is here. Read it fully before doing anything.
+>
+> ⚠️ **ALSO READ: `.agent/Protocol.md` BEFORE doing any work.**
+> Protocol.md contains known bugs, traps, and patterns from real sessions.
+> Skipping it means repeating mistakes that already happened.
 
 ---
 
