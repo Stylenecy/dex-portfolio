@@ -542,33 +542,34 @@
 
 
 /* --------------------------------------------------------------------------
-   10. REDUCED MOTION — always respect the user's OS preference
+   10. REDUCED MOTION — softer handling: instant state, not invisible state
+   Standard `animation: none` on a portfolio kills the whole experience.
+   Instead: animate at 0.01ms (instant) so elements reach final state,
+   and the cursor + exit still work. User's visual state is always correct.
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+  /* Entrance animations: complete instantly (no delay, no duration) */
   .lp-name-line:nth-child(1) .lp-name__word,
-  .lp-name-line:nth-child(2) .lp-name__word {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
+  .lp-name-line:nth-child(2) .lp-name__word,
   .lp-topbar,
   .lp-descriptor,
   .lp-footer {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
   }
 
-  .lp-cursor.is-visible { animation: none; opacity: 1; }
-  .lp-badge__dot        { animation: none; }
-  .lp-orb               { animation: none; }
-  .lp-scan-beam         { animation: none; opacity: 0; }
-  .lp-boot-bar          { animation: none; width: 100%; }
+  /* Infinite/looping effects: disable cleanly */
+  .lp-badge__dot  { animation: none; opacity: 1; }
+  .lp-orb         { animation: none; }
+  .lp-scan-beam   { animation: none; opacity: 0; }
+  .lp-boot-bar    { animation: none; width: 100%; opacity: 1; }
 
+  /* Cursor: visible immediately, no blink */
+  .lp-cursor.is-visible { animation: none; opacity: 1; }
+
+  /* Exit: instant */
   #lp-overlay.lp-exit {
-    animation: none;
-    transform: translateY(-100%);
+    animation-duration: 0.01ms !important;
   }
 }

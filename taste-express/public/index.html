@@ -2760,6 +2760,15 @@
             var overlay = document.getElementById('lp-overlay');
             if (!overlay) return;
 
+            // ── Reduced motion diagnostic ────────────────────────────────
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                console.warn(
+                    '[LANDING] prefers-reduced-motion: reduce is ACTIVE.\n' +
+                    'Animations are suppressed by your OS setting.\n' +
+                    'To enable: Windows Settings → Accessibility → Visual effects → turn ON "Animation effects"'
+                );
+            }
+
             // ── Timestamp ────────────────────────────────────────────────
             var tsEl = overlay.querySelector('.lp-timestamp');
             if (tsEl) {
