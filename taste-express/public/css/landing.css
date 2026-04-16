@@ -2,24 +2,21 @@
    LANDING.CSS — System Boot Overlay
    Full-screen intro page before the dashboard.
 
-   Design refs:
-     - bohdan_design.html : massive viewport typography, Geist Mono badge,
-                            blur-backdrop chip, tight letter-spacing
-     - elsye-residence.html: full-screen hero, name left + descriptor right,
-                             text-from-below entrance, thin footer nav-line,
-                             staggered GSAP-style sequence (CSS-only here)
+   FIX NOTE: Never use var() inside animation: shorthand timing-function slot.
+   CSS custom properties are NOT resolved there in most browsers.
+   All easing is hardcoded: --ease-out = cubic-bezier(0.22,1,0.36,1)
    ========================================================================== */
 
 
 /* --------------------------------------------------------------------------
-   1. KEYFRAMES
+   1. KEYFRAMES — entrance, atmosphere, exit
    -------------------------------------------------------------------------- */
 
-/* Primary entrance — text slides up from below (elsye hero approach) */
+/* Name words — slide up from below (elsye hero char animation, line-level) */
 @keyframes lp-slide-up {
   from {
-    transform: translateY(110%);
-    opacity: 0.5;
+    transform: translateY(112%);
+    opacity: 0;
   }
   to {
     transform: translateY(0);
@@ -27,11 +24,11 @@
   }
 }
 
-/* Secondary entrance — fade + rise (badge, descriptor, footer) */
+/* Badge, descriptor, footer — gentle fade-rise */
 @keyframes lp-fade-up {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px);
   }
   to {
     opacity: 1;
@@ -39,11 +36,11 @@
   }
 }
 
-/* Right-side descriptor — slides in from right (bohdan detail panel feel) */
-@keyframes lp-fade-in-right {
+/* Right descriptor — comes in from the right (bohdan detail panel) */
+@keyframes lp-fade-right {
   from {
     opacity: 0;
-    transform: translateX(28px);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
@@ -51,25 +48,51 @@
   }
 }
 
-/* Cursor blink — step-end for sharp digital look */
+/* Cursor blink — step-end = sharp, digital */
 @keyframes lp-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
-/* Aurora orb gentle drift */
+/* Badge dot pulse — smooth glow pulse */
+@keyframes lp-pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 6px rgba(100, 210, 255, 0.9), 0 0 12px rgba(100, 210, 255, 0.4);
+  }
+  50% {
+    opacity: 0.35;
+    box-shadow: 0 0 3px rgba(100, 210, 255, 0.3);
+  }
+}
+
+/* Aurora orb — slow drift A */
 @keyframes lp-drift-a {
-  0%   { transform: translate(0,   0)   scale(1.00); }
-  100% { transform: translate(-3%, 6%)  scale(1.04); }
+  0%   { transform: translate(0, 0)    scale(1.00); }
+  100% { transform: translate(-4%, 7%) scale(1.05); }
 }
 
+/* Aurora orb — slow drift B */
 @keyframes lp-drift-b {
   0%   { transform: translate(0, 0)    scale(1.00); }
-  100% { transform: translate(4%, -5%) scale(0.96); }
+  100% { transform: translate(5%, -5%) scale(0.95); }
 }
 
-/* Exit — whole overlay sweeps up (like elsye's page transitions) */
-@keyframes lp-exit-up {
+/* Scan beam — thin cyan line sweeps down continuously */
+@keyframes lp-scan-beam {
+  from { top: -4px; }
+  to   { top: 100%; }
+}
+
+/* Boot bar — fills left to right while you're on the landing */
+@keyframes lp-boot-progress {
+  from { width: 0%; opacity: 1; }
+  92%  { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+/* Exit — whole overlay sweeps upward off screen */
+@keyframes lp-exit-sweep {
   from { transform: translateY(0); }
   to   { transform: translateY(-100%); }
 }
@@ -88,59 +111,81 @@
   flex-direction: column;
   padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 4.5vw, 3.5rem);
   overflow: hidden;
-  /* Transition for exit */
-  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
 }
 
+/* When JS adds this class — plays the sweep-up exit animation */
 #lp-overlay.lp-exit {
-  transform: translateY(-100%);
+  animation: lp-exit-sweep 0.85s cubic-bezier(0.76, 0, 0.24, 1) forwards;
   pointer-events: none;
 }
 
 
 /* --------------------------------------------------------------------------
-   3. AMBIENT ATMOSPHERE — aurora orbs inside overlay
+   3. ATMOSPHERE — aurora orbs, scan beam, scan-line texture, boot bar
    -------------------------------------------------------------------------- */
 
+/* Orb base */
 .lp-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(80px);
   pointer-events: none;
   will-change: transform;
+  z-index: 0;
 }
 
-/* Top-right cyan glow */
+/* Top-right cyan orb */
 .lp-orb--cyan {
-  width: clamp(300px, 44vw, 640px);
-  height: clamp(300px, 44vw, 640px);
+  width: clamp(280px, 42vw, 600px);
+  height: clamp(280px, 42vw, 600px);
   background: radial-gradient(
     circle,
-    rgba(100, 210, 255, 0.13) 0%,
-    rgba(100, 210, 255, 0.05) 45%,
+    rgba(100, 210, 255, 0.16) 0%,
+    rgba(100, 210, 255, 0.06) 40%,
     transparent 70%
   );
-  top: -20%;
+  top: -15%;
   right: -8%;
-  animation: lp-drift-a 13s ease-in-out infinite alternate;
+  animation: lp-drift-a 14s ease-in-out infinite alternate;
 }
 
-/* Bottom-left purple glow */
+/* Bottom-left purple orb */
 .lp-orb--purple {
-  width: clamp(200px, 34vw, 480px);
-  height: clamp(200px, 34vw, 480px);
+  width: clamp(200px, 32vw, 460px);
+  height: clamp(200px, 32vw, 460px);
   background: radial-gradient(
     circle,
-    rgba(139, 92, 246, 0.10) 0%,
+    rgba(139, 92, 246, 0.12) 0%,
     rgba(139, 92, 246, 0.04) 45%,
     transparent 70%
   );
-  bottom: -12%;
-  left: -4%;
-  animation: lp-drift-b 16s ease-in-out infinite alternate;
+  bottom: -10%;
+  left: -3%;
+  animation: lp-drift-b 18s ease-in-out infinite alternate;
 }
 
-/* CRT scan-line texture — from bohdan's noise texture approach */
+/* Moving scan beam — the "active" line that sweeps */
+.lp-scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(100, 210, 255, 0.07) 20%,
+    rgba(100, 210, 255, 0.14) 50%,
+    rgba(100, 210, 255, 0.07) 80%,
+    transparent 100%
+  );
+  top: -4px;
+  pointer-events: none;
+  z-index: 1;
+  animation: lp-scan-beam 5s linear 0.8s infinite;
+}
+
+/* Static CRT horizontal scan-line texture (very subtle) */
 .lp-scanline {
   position: absolute;
   inset: 0;
@@ -148,11 +193,30 @@
     0deg,
     transparent 0px,
     transparent 2px,
-    rgba(255, 255, 255, 0.011) 2px,
-    rgba(255, 255, 255, 0.011) 4px
+    rgba(255, 255, 255, 0.009) 2px,
+    rgba(255, 255, 255, 0.009) 4px
   );
   pointer-events: none;
   z-index: 0;
+}
+
+/* Boot progress bar — fills bottom edge of topbar area */
+.lp-boot-bar {
+  position: absolute;
+  bottom: 0;
+  left: clamp(1.5rem, 4.5vw, 3.5rem);
+  right: clamp(1.5rem, 4.5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--cyan),
+    rgba(100, 210, 255, 0.4) 70%,
+    transparent
+  );
+  width: 0%;
+  /* Starts after 0.4s, fills over 2.8s, fades at end */
+  animation: lp-boot-progress 3.2s cubic-bezier(0.4, 0, 0.6, 1) 0.4s forwards;
+  z-index: 3;
 }
 
 
@@ -166,10 +230,11 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  animation: lp-fade-up 0.55s var(--ease-out) 0.1s both;
+  /* FIX: hardcoded cubic-bezier — no var() in animation timing slot */
+  animation: lp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
 
-/* Badge — from bohdan: blur backdrop + accent color + Geist Mono */
+/* Badge — bohdan "BUILT TO PERFORM" chip style, adapted cyan */
 .lp-badge {
   display: inline-flex;
   align-items: center;
@@ -178,7 +243,7 @@
   background: rgba(100, 210, 255, 0.07);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 210, 255, 0.22);
+  border: 1px solid rgba(100, 210, 255, 0.25);
   border-radius: var(--radius-xs);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -188,14 +253,14 @@
   user-select: none;
 }
 
+/* Pulsing glow dot */
 .lp-badge__dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--cyan);
-  box-shadow: 0 0 8px rgba(100, 210, 255, 0.8);
-  animation: lp-blink 2s ease-in-out infinite;
   flex-shrink: 0;
+  animation: lp-pulse-glow 1.8s ease-in-out infinite;
 }
 
 .lp-topbar__right {
@@ -215,8 +280,7 @@
 
 
 /* --------------------------------------------------------------------------
-   5. HERO SECTION — name left, descriptor right
-      Based on elsye's hero-wrap: heading block + hero-right split
+   5. HERO — name block left, descriptor right
    -------------------------------------------------------------------------- */
 
 .lp-hero {
@@ -232,7 +296,7 @@
 
 
 /* --------------------------------------------------------------------------
-   6. NAME BLOCK — massive viewport typography (bohdan-style)
+   6. NAME BLOCK — bohdan massive type + elsye slide-from-below
    -------------------------------------------------------------------------- */
 
 .lp-name-block {
@@ -241,24 +305,25 @@
   gap: 0;
 }
 
-/* Overflow hidden creates the "wipe up from below" clipping box — elsye approach */
+/* overflow:hidden is the clip box for the slide-up animation */
 .lp-name-line {
   overflow: hidden;
-  line-height: 0.85;
+  line-height: 0.87;
   display: flex;
   align-items: baseline;
 }
 
-/* Each word animated in sequence (staggered via nth-child delays) */
+/* "DEX" animates first */
 .lp-name-line:nth-child(1) .lp-name__word {
-  animation: lp-slide-up 0.9s var(--ease-out) 0.45s both;
+  animation: lp-slide-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
 
+/* "BENNETT" follows 250ms later */
 .lp-name-line:nth-child(2) .lp-name__word {
-  animation: lp-slide-up 0.9s var(--ease-out) 0.7s both;
+  animation: lp-slide-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
 }
 
-/* Base word style — Inter Display weight 800, very tight (bohdan's approach) */
+/* Base word style — Inter weight 800, very tight tracking (bohdan) */
 .lp-name__word {
   font-family: var(--font-sans);
   font-weight: 800;
@@ -269,22 +334,19 @@
   font-feature-settings: "cv02" on, "cv03" on;
 }
 
-/* "DEX" — massive filled */
+/* "DEX" — filled, massive */
 .lp-name__word--dex {
   font-size: clamp(5.5rem, 21vw, 25rem);
 }
 
-/* "BENNETT" — slightly smaller, outline-only for visual contrast */
-/* text-stroke creates the hollow/outline effect — very design-y */
+/* "BENNETT" — outline/stroke only, visual contrast with filled DEX */
 .lp-name__word--bennett {
   font-size: clamp(3rem, 10.5vw, 12.5rem);
-  -webkit-text-stroke: 1.5px rgba(236, 238, 243, 0.72);
+  -webkit-text-stroke: 1.5px rgba(236, 238, 243, 0.7);
   color: transparent;
 }
 
-/* Blinking cursor character — cyan, monospace, system aesthetic
-   Inline after BENNETT. No translateY → stays in place, just opacity:0 initially.
-   overflow:hidden on parent clips BENNETT word (translateY), not the cursor. */
+/* Cursor — inline after BENNETT, revealed by JS after animations settle */
 .lp-cursor {
   font-family: var(--font-mono);
   font-size: clamp(2rem, 7.5vw, 9rem);
@@ -294,17 +356,17 @@
   display: inline-block;
   vertical-align: bottom;
   margin-left: 0.04em;
-  opacity: 0; /* revealed by JS after BENNETT animation completes */
+  opacity: 0; /* JS adds .is-visible after 1.5s */
 }
 
 .lp-cursor.is-visible {
-  animation: lp-blink 1.1s step-end infinite;
   opacity: 1;
+  animation: lp-blink 1.1s step-end infinite;
 }
 
 
 /* --------------------------------------------------------------------------
-   7. RIGHT DESCRIPTOR — bohdan's "BUILT TO PERFORM" + tagline pattern
+   7. RIGHT DESCRIPTOR — bohdan label + tagline pattern
    -------------------------------------------------------------------------- */
 
 .lp-descriptor {
@@ -316,11 +378,11 @@
   text-align: right;
   flex-shrink: 0;
   padding-bottom: 0.25rem;
-  animation: lp-fade-in-right 0.75s var(--ease-out) 1.0s both;
+  /* FIX: hardcoded cubic-bezier */
+  animation: lp-fade-right 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
 }
 
-/* "CREATIVE TECHNOLOGIST" — Geist Mono, cyan, small caps style */
-/* Direct port of bohdan's "BUILT TO PERFORM" chip label */
+/* "CREATIVE TECHNOLOGIST" — from bohdan's "BUILT TO PERFORM" chip label */
 .lp-descriptor__role {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -330,14 +392,13 @@
   line-height: 1;
 }
 
-/* Thin right-aligned divider line (from elsye's hero-right separators) */
+/* Thin right-aligned gradient divider (from elsye's hero-right separator) */
 .lp-descriptor__divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(to left, rgba(100, 210, 255, 0.35), transparent);
+  background: linear-gradient(to left, rgba(100, 210, 255, 0.4), transparent);
 }
 
-/* Tagline — Inter, secondary color, slightly larger for legibility */
 .lp-descriptor__tagline {
   font-family: var(--font-sans);
   font-size: clamp(0.85rem, 1.1vw, 1rem);
@@ -349,7 +410,7 @@
 
 
 /* --------------------------------------------------------------------------
-   8. FOOTER BAR — from elsye's "SCROLL" indicator + bohdan's details row
+   8. FOOTER BAR — elsye "SCROLL" + bohdan CTA
    -------------------------------------------------------------------------- */
 
 .lp-footer {
@@ -360,19 +421,19 @@
   z-index: 2;
   padding-top: 1.125rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  animation: lp-fade-up 0.55s var(--ease-out) 1.15s both;
+  /* FIX: hardcoded cubic-bezier */
+  animation: lp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
 }
 
-/* Metadata — Geist Mono, muted, uppercase */
 .lp-footer__meta {
   display: flex;
   align-items: center;
-  gap: 0;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: 0.11em;
   color: var(--text-muted);
   text-transform: uppercase;
+  gap: 0;
 }
 
 .lp-footer__meta span + span::before {
@@ -381,8 +442,7 @@
   opacity: 0.35;
 }
 
-/* INITIALIZE SYSTEM button — bordered, Geist Mono, cyan hover */
-/* From elsye's "SCROLL" / bohdan's CTA approach */
+/* INITIALIZE SYSTEM button */
 .lp-enter-btn {
   display: inline-flex;
   align-items: center;
@@ -397,20 +457,21 @@
   color: var(--text-primary);
   cursor: pointer;
   text-transform: uppercase;
+  /* FIX: hardcoded duration + easing in transition (no var() in timing-fn) */
   transition:
-    background  var(--duration-base) var(--ease-responsive),
-    border-color var(--duration-base) var(--ease-responsive),
-    color       var(--duration-base) var(--ease-responsive),
-    box-shadow  var(--duration-base) var(--ease-responsive);
+    background  280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color       280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow  280ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .lp-enter-btn:hover,
 .lp-enter-btn:focus-visible {
   background: rgba(100, 210, 255, 0.08);
-  border-color: rgba(100, 210, 255, 0.65);
+  border-color: rgba(100, 210, 255, 0.7);
   color: var(--cyan);
-  box-shadow: 0 0 22px rgba(100, 210, 255, 0.14),
-              inset 0 0 12px rgba(100, 210, 255, 0.04);
+  box-shadow: 0 0 24px rgba(100, 210, 255, 0.16),
+              inset 0 0 12px rgba(100, 210, 255, 0.05);
   outline: none;
 }
 
@@ -419,7 +480,6 @@
   transform: translateX(5px);
 }
 
-/* Arrow icon */
 .lp-enter-btn__arrow {
   width: 15px;
   height: 15px;
@@ -429,7 +489,8 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   flex-shrink: 0;
-  transition: transform var(--duration-base) var(--ease-spring);
+  /* FIX: hardcoded easing */
+  transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 
@@ -437,18 +498,11 @@
    9. RESPONSIVE
    -------------------------------------------------------------------------- */
 
-/* Tablet: tighten layout */
 @media (max-width: 900px) {
-  .lp-hero {
-    gap: 1.25rem;
-  }
-
-  .lp-descriptor {
-    max-width: clamp(160px, 28vw, 240px);
-  }
+  .lp-hero { gap: 1.25rem; }
+  .lp-descriptor { max-width: clamp(160px, 28vw, 240px); }
 }
 
-/* Mobile: stack vertically */
 @media (max-width: 640px) {
   #lp-overlay {
     padding: 1.25rem 1.25rem 1.5rem;
@@ -468,49 +522,37 @@
   }
 
   .lp-descriptor__divider {
-    /* On mobile, gradient goes left → right */
-    background: linear-gradient(to right, rgba(100, 210, 255, 0.35), transparent);
+    background: linear-gradient(to right, rgba(100, 210, 255, 0.4), transparent);
   }
 
-  /* Hide secondary info on small screens */
-  .lp-topbar__right {
-    display: none;
-  }
+  .lp-topbar__right { display: none; }
+  .lp-footer__meta  { display: none; }
 
-  .lp-footer__meta {
-    display: none;
-  }
-
-  /* Slightly bigger footer button on mobile */
   .lp-enter-btn {
     padding: 10px 20px;
     margin-left: auto;
   }
 }
 
-/* Very small screens */
 @media (max-width: 380px) {
-  .lp-name__word--dex {
-    font-size: clamp(4.5rem, 26vw, 7rem);
-  }
-
-  .lp-name__word--bennett {
-    font-size: clamp(2.5rem, 13vw, 4rem);
-  }
-
-  .lp-cursor {
-    font-size: clamp(1.5rem, 9vw, 3rem);
-  }
+  .lp-name__word--dex     { font-size: clamp(4.5rem, 26vw, 7rem); }
+  .lp-name__word--bennett { font-size: clamp(2.5rem, 13vw, 4rem); }
+  .lp-cursor              { font-size: clamp(1.5rem, 9vw, 3rem);  }
 }
 
 
 /* --------------------------------------------------------------------------
-   10. REDUCED MOTION — always respect user preference
+   10. REDUCED MOTION — always respect the user's OS preference
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   .lp-name-line:nth-child(1) .lp-name__word,
-  .lp-name-line:nth-child(2) .lp-name__word,
+  .lp-name-line:nth-child(2) .lp-name__word {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
   .lp-topbar,
   .lp-descriptor,
   .lp-footer {
@@ -519,20 +561,14 @@
     transform: none;
   }
 
-  .lp-cursor.is-visible {
-    animation: none;
-    opacity: 1;
-  }
+  .lp-cursor.is-visible { animation: none; opacity: 1; }
+  .lp-badge__dot        { animation: none; }
+  .lp-orb               { animation: none; }
+  .lp-scan-beam         { animation: none; opacity: 0; }
+  .lp-boot-bar          { animation: none; width: 100%; }
 
-  .lp-badge__dot {
+  #lp-overlay.lp-exit {
     animation: none;
-  }
-
-  .lp-orb {
-    animation: none;
-  }
-
-  #lp-overlay {
-    transition: none;
+    transform: translateY(-100%);
   }
 }

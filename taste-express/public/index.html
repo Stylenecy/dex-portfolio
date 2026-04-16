@@ -139,10 +139,12 @@
          Design refs: bohdan_design.html + elsye-residence.html
     ═══════════════════════════════════════════════════════════ -->
     <div id="lp-overlay" role="dialog" aria-modal="true" aria-label="System Initialization Screen">
-        <!-- Atmosphere -->
+        <!-- Atmosphere: orbs, moving scan beam, static scanlines, boot progress -->
         <div class="lp-orb lp-orb--cyan" aria-hidden="true"></div>
         <div class="lp-orb lp-orb--purple" aria-hidden="true"></div>
+        <div class="lp-scan-beam" aria-hidden="true"></div>
         <div class="lp-scanline" aria-hidden="true"></div>
+        <div class="lp-boot-bar" aria-hidden="true"></div>
 
         <!-- Top bar: badge + timestamp -->
         <header class="lp-topbar">
@@ -2758,41 +2760,57 @@
             var overlay = document.getElementById('lp-overlay');
             if (!overlay) return;
 
-            // Fill live timestamp in top bar
+            // ── Timestamp ────────────────────────────────────────────────
             var tsEl = overlay.querySelector('.lp-timestamp');
             if (tsEl) {
-                var d = new Date();
-                var yyyy = d.getFullYear();
-                var mm   = String(d.getMonth() + 1).padStart(2, '0');
-                var dd   = String(d.getDate()).padStart(2, '0');
-                tsEl.textContent = yyyy + '.' + mm + '.' + dd;
+                var d  = new Date();
+                var yy = d.getFullYear();
+                var mm = String(d.getMonth() + 1).padStart(2, '0');
+                var dd = String(d.getDate()).padStart(2, '0');
+                tsEl.textContent = yy + '.' + mm + '.' + dd;
             }
 
-            // Reveal cursor after BENNETT animation settles (~1.6s total)
+            // ── Cursor reveal after name animations finish (~1.55s) ───────
             var cursor = overlay.querySelector('.lp-cursor');
             if (cursor) {
-                setTimeout(function () {
-                    cursor.classList.add('is-visible');
-                }, 1600);
+                setTimeout(function () { cursor.classList.add('is-visible'); }, 1550);
             }
 
-            // Enter button — sweep overlay up, then remove from DOM
-            var btn = document.getElementById('lp-enter-btn');
+            // ── Exit handler ─────────────────────────────────────────────
+            // Uses CSS animation (lp-exit-sweep) — more reliable than transition.
+            // setTimeout fallback ensures removal even if animationend misfires.
+            var exiting = false;
             function enter() {
+                if (exiting) return;
+                exiting = true;
+
                 overlay.classList.add('lp-exit');
-                overlay.addEventListener('transitionend', function () {
-                    overlay.remove();
-                    // Restore focus to main content
-                    var main = document.getElementById('main-content');
-                    if (main) main.focus();
+
+                // Primary: remove on animation end
+                overlay.addEventListener('animationend', function (e) {
+                    if (e.animationName === 'lp-exit-sweep') {
+                        cleanup();
+                    }
                 }, { once: true });
+
+                // Fallback: remove after animation duration + buffer
+                setTimeout(cleanup, 950);
             }
 
+            function cleanup() {
+                if (!overlay.parentNode) return; // already removed
+                overlay.remove();
+                var main = document.getElementById('main-content');
+                if (main) main.focus();
+            }
+
+            // ── Button ───────────────────────────────────────────────────
+            var btn = document.getElementById('lp-enter-btn');
             if (btn) btn.addEventListener('click', enter);
 
-            // Keyboard shortcut: Enter or Space to initialize
+            // ── Keyboard: Enter or Space ──────────────────────────────────
             document.addEventListener('keydown', function (e) {
-                if ((e.key === 'Enter' || e.key === ' ') && document.getElementById('lp-overlay')) {
+                if ((e.key === 'Enter' || e.key === ' ') && !exiting) {
                     e.preventDefault();
                     enter();
                 }
