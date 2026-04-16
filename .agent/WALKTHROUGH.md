@@ -1,9 +1,10 @@
 # WALKTHROUGH — Dex Bennett // System OS Portfolio
 
-> **Last Updated:** 2026-04-11 (ALL HUBS COMPLETE — Full content implementation done)
-> **Current Phase:** Phase 4 — Polish & Refinement
+> **Last Updated:** 2026-04-15
+> **Current Phase:** Phase 5 — Content Accuracy + Visual Polish
 > **Narrative Direction:** "The Operator" — Full Questism/System OS aesthetic
-> **Status:** 🟢 All 4 Hubs Populated (optional polish items remaining)
+> **Status:** 🟢 Visual overhaul complete, content fixes applied, pushed to Vercel
+> **Live:** dex.web-portofolio.com | **Commit:** `5d6b647`
 
 ---
 
@@ -270,6 +271,7 @@ The existing timeline needs to be EXPANDED to include ALL events from certificat
 #### 🏆 COMPETITIONS (Clearance Class: ARENA)
 | File | System Name | Category |
 |------|------------|----------|
+| Dex Bennett (EURECA-Top 15 Semifinalist).pdf + .png | BPC EURECA 2026 — Top 15 Semifinalist | Arena |
 | Juara Harapan III Victus Campus Heroes.pdf | Arena Record — 3rd Place Victus | Arena |
 | Turnamen Valorant.png | Valorant Arena Log | Arena |
 
@@ -391,6 +393,20 @@ The existing timeline needs to be EXPANDED to include ALL events from certificat
 | 13 | Add new projects: Sowan.id, VR Inclusive Tourism | System Core | Medium | With Problem→Thinking→Decision→Result framework |
 | 14 | Prasaja game project entry | System Core | Low | Personal/emotional — Dex decides how to present |
 | 15 | Upgrade to React/Next.js | Architecture | High | If OS-experience feel needs to be snappier |
+
+### 2026-04-16 — Certificate Update: EURECA Top 15 Semifinalist
+**Author:** Claude Sonnet 4.6
+**Scope:** Added separate Top 15 Semifinalist certificate from BPC EURECA 2026
+
+**Changes:**
+- Files copied: `Dex Bennett (EURECA-Top 15 Semifinalist).pdf + .png` → `public/certificates/` + `public/images/certificates/`
+- **System Core (Mission Log):** Sowan.id card now uses the Top 15 Semifinalist image + cert link (more specific/prestigious than the general participant cert)
+- **Operations (Arena Records):** New card added — "BPC EURECA 2026" with TOP 15 SEMI-FINALIST label in purple
+- **WALKTHROUGH.md:** Certificate Registry updated — EURECA Top 15 Semifinalist added under ARENA category
+
+**Status:** ✅ Complete
+
+---
 
 ### 📋 Future Enhancements (when needed)
 - PDF viewer modal (currently opens in new tab)

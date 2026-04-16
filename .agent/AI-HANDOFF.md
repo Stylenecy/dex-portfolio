@@ -131,12 +131,12 @@ Cards and bento cells automatically inherit these. You don't need to hardcode co
 
 ---
 
-## 5. CURRENT STATE (as of 2026-04-15)
+## 5. CURRENT STATE (as of 2026-04-16)
 
 ### What's done
 - ✅ All 4 hubs: content complete
 - ✅ Visual overhaul: Inter + Geist Mono fonts, multi-layer shadow system, hub-aware accent cascade
-- ✅ All assets in `public/images/` and `public/certificates/`
+- ✅ All assets in `public/images/` and `public/certificates/` (incl. EURECA Top 15 Semifinalist cert)
 - ✅ Aurora engine, glassmorphism system, dock, stat block, gallery lightbox
 
 ### What's NOT done yet (pending)
