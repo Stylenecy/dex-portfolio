@@ -1,0 +1,538 @@
+/* ==========================================================================
+   LANDING.CSS — System Boot Overlay
+   Full-screen intro page before the dashboard.
+
+   Design refs:
+     - bohdan_design.html : massive viewport typography, Geist Mono badge,
+                            blur-backdrop chip, tight letter-spacing
+     - elsye-residence.html: full-screen hero, name left + descriptor right,
+                             text-from-below entrance, thin footer nav-line,
+                             staggered GSAP-style sequence (CSS-only here)
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. KEYFRAMES
+   -------------------------------------------------------------------------- */
+
+/* Primary entrance — text slides up from below (elsye hero approach) */
+@keyframes lp-slide-up {
+  from {
+    transform: translateY(110%);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Secondary entrance — fade + rise (badge, descriptor, footer) */
+@keyframes lp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Right-side descriptor — slides in from right (bohdan detail panel feel) */
+@keyframes lp-fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Cursor blink — step-end for sharp digital look */
+@keyframes lp-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Aurora orb gentle drift */
+@keyframes lp-drift-a {
+  0%   { transform: translate(0,   0)   scale(1.00); }
+  100% { transform: translate(-3%, 6%)  scale(1.04); }
+}
+
+@keyframes lp-drift-b {
+  0%   { transform: translate(0, 0)    scale(1.00); }
+  100% { transform: translate(4%, -5%) scale(0.96); }
+}
+
+/* Exit — whole overlay sweeps up (like elsye's page transitions) */
+@keyframes lp-exit-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+
+/* --------------------------------------------------------------------------
+   2. OVERLAY CONTAINER
+   -------------------------------------------------------------------------- */
+
+#lp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg-void);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 4.5vw, 3.5rem);
+  overflow: hidden;
+  /* Transition for exit */
+  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#lp-overlay.lp-exit {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. AMBIENT ATMOSPHERE — aurora orbs inside overlay
+   -------------------------------------------------------------------------- */
+
+.lp-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Top-right cyan glow */
+.lp-orb--cyan {
+  width: clamp(300px, 44vw, 640px);
+  height: clamp(300px, 44vw, 640px);
+  background: radial-gradient(
+    circle,
+    rgba(100, 210, 255, 0.13) 0%,
+    rgba(100, 210, 255, 0.05) 45%,
+    transparent 70%
+  );
+  top: -20%;
+  right: -8%;
+  animation: lp-drift-a 13s ease-in-out infinite alternate;
+}
+
+/* Bottom-left purple glow */
+.lp-orb--purple {
+  width: clamp(200px, 34vw, 480px);
+  height: clamp(200px, 34vw, 480px);
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.10) 0%,
+    rgba(139, 92, 246, 0.04) 45%,
+    transparent 70%
+  );
+  bottom: -12%;
+  left: -4%;
+  animation: lp-drift-b 16s ease-in-out infinite alternate;
+}
+
+/* CRT scan-line texture — from bohdan's noise texture approach */
+.lp-scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.011) 2px,
+    rgba(255, 255, 255, 0.011) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. TOP BAR
+   -------------------------------------------------------------------------- */
+
+.lp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  animation: lp-fade-up 0.55s var(--ease-out) 0.1s both;
+}
+
+/* Badge — from bohdan: blur backdrop + accent color + Geist Mono */
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  background: rgba(100, 210, 255, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 210, 255, 0.22);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.lp-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px rgba(100, 210, 255, 0.8);
+  animation: lp-blink 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.lp-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.10em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.lp-topbar__sep {
+  opacity: 0.3;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. HERO SECTION — name left, descriptor right
+      Based on elsye's hero-wrap: heading block + hero-right split
+   -------------------------------------------------------------------------- */
+
+.lp-hero {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. NAME BLOCK — massive viewport typography (bohdan-style)
+   -------------------------------------------------------------------------- */
+
+.lp-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Overflow hidden creates the "wipe up from below" clipping box — elsye approach */
+.lp-name-line {
+  overflow: hidden;
+  line-height: 0.85;
+  display: flex;
+  align-items: baseline;
+}
+
+/* Each word animated in sequence (staggered via nth-child delays) */
+.lp-name-line:nth-child(1) .lp-name__word {
+  animation: lp-slide-up 0.9s var(--ease-out) 0.45s both;
+}
+
+.lp-name-line:nth-child(2) .lp-name__word {
+  animation: lp-slide-up 0.9s var(--ease-out) 0.7s both;
+}
+
+/* Base word style — Inter Display weight 800, very tight (bohdan's approach) */
+.lp-name__word {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  display: block;
+  font-feature-settings: "cv02" on, "cv03" on;
+}
+
+/* "DEX" — massive filled */
+.lp-name__word--dex {
+  font-size: clamp(5.5rem, 21vw, 25rem);
+}
+
+/* "BENNETT" — slightly smaller, outline-only for visual contrast */
+/* text-stroke creates the hollow/outline effect — very design-y */
+.lp-name__word--bennett {
+  font-size: clamp(3rem, 10.5vw, 12.5rem);
+  -webkit-text-stroke: 1.5px rgba(236, 238, 243, 0.72);
+  color: transparent;
+}
+
+/* Blinking cursor character — cyan, monospace, system aesthetic
+   Inline after BENNETT. No translateY → stays in place, just opacity:0 initially.
+   overflow:hidden on parent clips BENNETT word (translateY), not the cursor. */
+.lp-cursor {
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 7.5vw, 9rem);
+  font-weight: 300;
+  color: var(--cyan);
+  line-height: 1;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 0.04em;
+  opacity: 0; /* revealed by JS after BENNETT animation completes */
+}
+
+.lp-cursor.is-visible {
+  animation: lp-blink 1.1s step-end infinite;
+  opacity: 1;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. RIGHT DESCRIPTOR — bohdan's "BUILT TO PERFORM" + tagline pattern
+   -------------------------------------------------------------------------- */
+
+.lp-descriptor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.875rem;
+  max-width: clamp(200px, 22vw, 300px);
+  text-align: right;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+  animation: lp-fade-in-right 0.75s var(--ease-out) 1.0s both;
+}
+
+/* "CREATIVE TECHNOLOGIST" — Geist Mono, cyan, small caps style */
+/* Direct port of bohdan's "BUILT TO PERFORM" chip label */
+.lp-descriptor__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Thin right-aligned divider line (from elsye's hero-right separators) */
+.lp-descriptor__divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to left, rgba(100, 210, 255, 0.35), transparent);
+}
+
+/* Tagline — Inter, secondary color, slightly larger for legibility */
+.lp-descriptor__tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+
+/* --------------------------------------------------------------------------
+   8. FOOTER BAR — from elsye's "SCROLL" indicator + bohdan's details row
+   -------------------------------------------------------------------------- */
+
+.lp-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  padding-top: 1.125rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  animation: lp-fade-up 0.55s var(--ease-out) 1.15s both;
+}
+
+/* Metadata — Geist Mono, muted, uppercase */
+.lp-footer__meta {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.11em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.lp-footer__meta span + span::before {
+  content: ' · ';
+  white-space: pre;
+  opacity: 0.35;
+}
+
+/* INITIALIZE SYSTEM button — bordered, Geist Mono, cyan hover */
+/* From elsye's "SCROLL" / bohdan's CTA approach */
+.lp-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  background: transparent;
+  border: 1px solid rgba(100, 210, 255, 0.28);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition:
+    background  var(--duration-base) var(--ease-responsive),
+    border-color var(--duration-base) var(--ease-responsive),
+    color       var(--duration-base) var(--ease-responsive),
+    box-shadow  var(--duration-base) var(--ease-responsive);
+}
+
+.lp-enter-btn:hover,
+.lp-enter-btn:focus-visible {
+  background: rgba(100, 210, 255, 0.08);
+  border-color: rgba(100, 210, 255, 0.65);
+  color: var(--cyan);
+  box-shadow: 0 0 22px rgba(100, 210, 255, 0.14),
+              inset 0 0 12px rgba(100, 210, 255, 0.04);
+  outline: none;
+}
+
+.lp-enter-btn:hover .lp-enter-btn__arrow,
+.lp-enter-btn:focus-visible .lp-enter-btn__arrow {
+  transform: translateX(5px);
+}
+
+/* Arrow icon */
+.lp-enter-btn__arrow {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+/* Tablet: tighten layout */
+@media (max-width: 900px) {
+  .lp-hero {
+    gap: 1.25rem;
+  }
+
+  .lp-descriptor {
+    max-width: clamp(160px, 28vw, 240px);
+  }
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 640px) {
+  #lp-overlay {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .lp-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 1.25rem;
+  }
+
+  .lp-descriptor {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .lp-descriptor__divider {
+    /* On mobile, gradient goes left → right */
+    background: linear-gradient(to right, rgba(100, 210, 255, 0.35), transparent);
+  }
+
+  /* Hide secondary info on small screens */
+  .lp-topbar__right {
+    display: none;
+  }
+
+  .lp-footer__meta {
+    display: none;
+  }
+
+  /* Slightly bigger footer button on mobile */
+  .lp-enter-btn {
+    padding: 10px 20px;
+    margin-left: auto;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 380px) {
+  .lp-name__word--dex {
+    font-size: clamp(4.5rem, 26vw, 7rem);
+  }
+
+  .lp-name__word--bennett {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+  }
+
+  .lp-cursor {
+    font-size: clamp(1.5rem, 9vw, 3rem);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. REDUCED MOTION — always respect user preference
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-name-line:nth-child(1) .lp-name__word,
+  .lp-name-line:nth-child(2) .lp-name__word,
+  .lp-topbar,
+  .lp-descriptor,
+  .lp-footer {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .lp-cursor.is-visible {
+    animation: none;
+    opacity: 1;
+  }
+
+  .lp-badge__dot {
+    animation: none;
+  }
+
+  .lp-orb {
+    animation: none;
+  }
+
+  #lp-overlay {
+    transition: none;
+  }
+}

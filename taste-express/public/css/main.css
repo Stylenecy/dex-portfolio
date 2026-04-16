@@ -29,6 +29,9 @@
 @import url('variables.css');
 @import url('reset.css');
 
+/* Landing overlay — loads after variables/reset so it can use all tokens */
+@import url('landing.css');
+
 
 /* --------------------------------------------------------------------------
    LAYER 2 — AMBIENT BACKGROUND

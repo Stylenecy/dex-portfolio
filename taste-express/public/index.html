@@ -134,6 +134,72 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
+         LANDING OVERLAY — System Boot Screen
+         Full-screen intro. Dismissed on "INITIALIZE SYSTEM" click.
+         Design refs: bohdan_design.html + elsye-residence.html
+    ═══════════════════════════════════════════════════════════ -->
+    <div id="lp-overlay" role="dialog" aria-modal="true" aria-label="System Initialization Screen">
+        <!-- Atmosphere -->
+        <div class="lp-orb lp-orb--cyan" aria-hidden="true"></div>
+        <div class="lp-orb lp-orb--purple" aria-hidden="true"></div>
+        <div class="lp-scanline" aria-hidden="true"></div>
+
+        <!-- Top bar: badge + timestamp -->
+        <header class="lp-topbar">
+            <div class="lp-badge">
+                <span class="lp-badge__dot" aria-hidden="true"></span>
+                <span>OPERATOR ONLINE</span>
+            </div>
+            <div class="lp-topbar__right" aria-hidden="true">
+                <span>// SYSTEM BOOT</span>
+                <span class="lp-topbar__sep">·</span>
+                <span class="lp-timestamp"></span>
+            </div>
+        </header>
+
+        <!-- Hero: massive name left, descriptor right -->
+        <main class="lp-hero">
+            <!-- Giant name block — bohdan massive type + elsye clip-from-below -->
+            <div class="lp-name-block">
+                <div class="lp-name-line">
+                    <span class="lp-name__word lp-name__word--dex">DEX</span>
+                </div>
+                <div class="lp-name-line lp-name-line--bennett">
+                    <span class="lp-name__word lp-name__word--bennett">BENNETT</span>
+                    <!-- Cursor stays inline; opacity:0 initially, no translateY → won't be clipped -->
+                    <span class="lp-cursor" aria-hidden="true">_</span>
+                </div>
+            </div>
+
+            <!-- Right descriptor — bohdan "BUILT TO PERFORM" + tagline -->
+            <div class="lp-descriptor">
+                <span class="lp-descriptor__role">Creative Technologist</span>
+                <div class="lp-descriptor__divider" aria-hidden="true"></div>
+                <p class="lp-descriptor__tagline">
+                    I build systems that<br>
+                    don't just function —<br>
+                    but feel alive.
+                </p>
+            </div>
+        </main>
+
+        <!-- Footer bar: meta + enter button (elsye "SCROLL" + bohdan CTA) -->
+        <footer class="lp-footer">
+            <div class="lp-footer__meta" aria-hidden="true">
+                <span>UKDW</span>
+                <span>IS · SEM 6</span>
+                <span>Yogyakarta</span>
+            </div>
+            <button class="lp-enter-btn" id="lp-enter-btn" type="button" aria-label="Initialize and enter the system">
+                <span>INITIALIZE SYSTEM</span>
+                <svg class="lp-enter-btn__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
          DASHBOARD SHELL
          Grid: [sidebar 280px] [center 1fr]
          The shell itself never scrolls — only .dashboard__center does.
@@ -2681,6 +2747,57 @@
                 });
             });
         });
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LANDING OVERLAY — Controller Script
+         Handles: timestamp fill, cursor reveal, enter animation
+    ═══════════════════════════════════════════════════════════ -->
+    <script>
+        (function () {
+            var overlay = document.getElementById('lp-overlay');
+            if (!overlay) return;
+
+            // Fill live timestamp in top bar
+            var tsEl = overlay.querySelector('.lp-timestamp');
+            if (tsEl) {
+                var d = new Date();
+                var yyyy = d.getFullYear();
+                var mm   = String(d.getMonth() + 1).padStart(2, '0');
+                var dd   = String(d.getDate()).padStart(2, '0');
+                tsEl.textContent = yyyy + '.' + mm + '.' + dd;
+            }
+
+            // Reveal cursor after BENNETT animation settles (~1.6s total)
+            var cursor = overlay.querySelector('.lp-cursor');
+            if (cursor) {
+                setTimeout(function () {
+                    cursor.classList.add('is-visible');
+                }, 1600);
+            }
+
+            // Enter button — sweep overlay up, then remove from DOM
+            var btn = document.getElementById('lp-enter-btn');
+            function enter() {
+                overlay.classList.add('lp-exit');
+                overlay.addEventListener('transitionend', function () {
+                    overlay.remove();
+                    // Restore focus to main content
+                    var main = document.getElementById('main-content');
+                    if (main) main.focus();
+                }, { once: true });
+            }
+
+            if (btn) btn.addEventListener('click', enter);
+
+            // Keyboard shortcut: Enter or Space to initialize
+            document.addEventListener('keydown', function (e) {
+                if ((e.key === 'Enter' || e.key === ' ') && document.getElementById('lp-overlay')) {
+                    e.preventDefault();
+                    enter();
+                }
+            });
+        })();
     </script>
 </body>
 
