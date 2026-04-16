@@ -893,6 +893,26 @@
   opacity: 0.35;
 }
 
+/* PDF preview iframe — auto-injected by JS for cert cards with no image */
+.cert-pdf-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Scale a 400% iframe down to fill the card thumbnail exactly */
+  width: 400%;
+  height: 400%;
+  transform: scale(0.25);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+  background: #fff;
+}
+
+/* Remove desaturation from cert images — show full color always */
+.ops-cert-card__thumb img {
+  filter: none;
+}
+
 /* Category badge overlaid on thumbnail */
 .ops-cert-card__badge {
   position: absolute;

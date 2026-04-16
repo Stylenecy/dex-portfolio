@@ -76,13 +76,23 @@ const GalleryLightbox = (() => {
    * Bind click listeners to gallery items and close button
    */
   function _bindListeners() {
-    // Gallery item clicks
+    // Gallery item clicks (poster/design grid)
     document.querySelectorAll('.gallery-item').forEach((item) => {
       item.addEventListener('click', () => {
         const img = item.querySelector('.gallery-item__img');
         const caption = item.querySelector('.gallery-caption__title');
         if (img && img.src) {
           open(img.src, caption ? caption.textContent : '');
+        }
+      });
+    });
+
+    // Photo masonry item clicks — opens full-size lightbox (not a new tab)
+    document.querySelectorAll('.photo-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('.photo-item__img');
+        if (img && img.src) {
+          open(img.src, '');
         }
       });
     });

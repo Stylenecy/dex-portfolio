@@ -133,8 +133,8 @@
 
 .sidebar__avatar-frame {
   position: relative;
-  width: var(--sidebar-avatar-size, 100px);
-  height: var(--sidebar-avatar-size, 100px);
+  width: var(--sidebar-avatar-size, 140px);
+  height: var(--sidebar-avatar-size, 140px);
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--glass-border);

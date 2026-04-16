@@ -35,10 +35,10 @@ const SidebarResize = (() => {
   const MAX_WIDTH_RATIO = 0.33;    // 33% of viewport width
   const DEFAULT_WIDTH = 260;       // px — default sidebar width
 
-  // Avatar size scales proportionally: ~38% of sidebar width
-  const AVATAR_SIZE_RATIO = 0.38;
+  // Avatar size scales proportionally: ~54% of sidebar width
+  const AVATAR_SIZE_RATIO = 0.54;
   const AVATAR_MIN_SIZE = 40;      // px — minimum avatar in collapsed
-  const AVATAR_MAX_SIZE = 120;     // px — maximum avatar size
+  const AVATAR_MAX_SIZE = 200;     // px — maximum avatar size
 
   const STORAGE_KEY_WIDTH = 'sidebar-width';
   const STORAGE_KEY_COLLAPSED = 'sidebar-collapsed';
