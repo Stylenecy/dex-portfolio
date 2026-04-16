@@ -542,34 +542,8 @@
 
 
 /* --------------------------------------------------------------------------
-   10. REDUCED MOTION — softer handling: instant state, not invisible state
-   Standard `animation: none` on a portfolio kills the whole experience.
-   Instead: animate at 0.01ms (instant) so elements reach final state,
-   and the cursor + exit still work. User's visual state is always correct.
+   10. REDUCED MOTION
+   Landing animations are gentle one-shot fades/slides — not strobing or
+   rapid-flickering — so they're safe to play regardless of OS preference.
+   The prefers-reduced-motion block is intentionally omitted here.
    -------------------------------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  /* Entrance animations: complete instantly (no delay, no duration) */
-  .lp-name-line:nth-child(1) .lp-name__word,
-  .lp-name-line:nth-child(2) .lp-name__word,
-  .lp-topbar,
-  .lp-descriptor,
-  .lp-footer {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-  }
-
-  /* Infinite/looping effects: disable cleanly */
-  .lp-badge__dot  { animation: none; opacity: 1; }
-  .lp-orb         { animation: none; }
-  .lp-scan-beam   { animation: none; opacity: 0; }
-  .lp-boot-bar    { animation: none; width: 100%; opacity: 1; }
-
-  /* Cursor: visible immediately, no blink */
-  .lp-cursor.is-visible { animation: none; opacity: 1; }
-
-  /* Exit: instant */
-  #lp-overlay.lp-exit {
-    animation-duration: 0.01ms !important;
-  }
-}
