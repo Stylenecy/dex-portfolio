@@ -513,7 +513,37 @@ the main portfolio codebase. Rules:
 
 ---
 
-## 7. SESSION LOG — Ongoing Recap
+## 7. SESSION CHANGELOG — Wajib Setiap Sesi Besar
+
+Setiap sesi yang melibatkan penambahan data besar, restrukturisasi konten portfolio,
+atau perubahan signifikan pada file proyek — buat 1 file terpisah di `.agent/changelogs/`.
+
+**Kapan dibuat:** Sesi yang melakukan salah satu dari ini:
+- Tambah konten baru masif (proyek baru, cert baru, role baru, prestasi baru)
+- Reorganisasi HTML/CSS/struktur file portfolio
+- Update protocol/instruksi AI (Protocol.md, AI-HANDOFF.md, WALKTHROUGH.md)
+- Visual overhaul atau redesign komponen
+
+**Nama file:** `SESSION_CHANGELOG_[YYYY-MM-DD].md`
+
+**Format wajib:**
+```markdown
+# Session Changelog — [Tanggal]
+**AI:** [Nama model]
+
+## Apa yang Berubah
+- [item] — [sebelumnya] → [sesudahnya]
+
+## File Dimodifikasi
+- `path/file` — [dibuat / dimodifikasi / dihapus]
+
+## Yang Perlu Dex Tahu
+[Poin penting yang tidak obvious]
+```
+
+---
+
+## 8. SESSION LOG — Ongoing Recap
 
 Each AI session should add a brief entry here after completing work.
 Format: date, AI used, what was done, what was learned (good or bad).
