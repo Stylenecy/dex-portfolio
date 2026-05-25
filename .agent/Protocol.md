@@ -239,7 +239,129 @@ Types: `feat`, `fix`, `style`, `refactor`, `chore`
 
 ---
 
-## 5. TIPS FOR ANY AI (especially lower-capability models)
+## 5. HOW TO ACTUALLY WORK WITH DEX — Read This Carefully
+
+> This section was written by Claude Opus 4.6 after a successful session where
+> Dex asked for a complex design synthesis task. It exists to teach ANY AI
+> — MiniMax, Gemini, Qwen, GPT, Claude Haiku, whoever — how to understand
+> what Dex needs and deliver at a high level. **This is the most important
+> section in this file if you are not a frontier model.**
+
+---
+
+### 5.1 · Understanding How Dex Communicates
+
+Dex does NOT give you a Jira ticket with acceptance criteria. He speaks naturally,
+mixes Indonesian and English, and expects you to **infer the real intent** from
+context. Here's how to decode his requests:
+
+| What Dex says | What he actually means |
+|---|---|
+| "Combine these two references" | Extract the DESIGN LANGUAGE from both, don't copy-paste code. Synthesize the visual DNA into something new. |
+| "Change the subject to Dex" | Use his real data from `Dex.md` — name, projects, competitions, links, colors, philosophy. Don't use placeholder "Lorem ipsum" content. |
+| "Separated from the project's codes" | Create a standalone file that doesn't touch any existing CSS/HTML/JS. Self-contained, opens in a browser on its own. |
+| "I find it hard for X to comprehend" | He's warning you about complexity. Don't promise you'll nail it. Focus on capturing the essence, not pixel-perfect replication. |
+| "Make it more alive / give it soul" | Add motion, interactivity, scroll-driven reveals, hover states. Static = dead. But don't go overboard — elegant, not chaotic. |
+| "I don't want a traditional scrolling website" | Think system interface, dashboard, game UI. NOT a corporate landing page or a resume template. |
+
+**Golden rule:** When in doubt, read `Dex.md`. It tells you everything about who
+he is, how he thinks, and what he considers "good." If your output could belong
+to any generic developer's portfolio, you've failed.
+
+---
+
+### 5.2 · The Design Reference Workflow (Critical for Design Tasks)
+
+Dex frequently provides HTML files as visual references (saved from Framer, Webflow,
+Awwwards sites, etc.). These files are MASSIVE — 1MB+, 3000+ lines, full of
+framework-specific code. **You cannot and should not copy this code.**
+
+Here is the correct workflow:
+
+#### Step 1: Extract the Design DNA (not the code)
+
+For each reference file, identify:
+1. **Color palette** — exact hex values, how they're used (bg, accent, text hierarchy)
+2. **Typography** — fonts, sizes (especially hero headings), line-height, letter-spacing, weight
+3. **Layout system** — grid columns, gap sizes, responsive approach
+4. **Signature motifs** — what makes THIS design unique (e.g., corner brackets, clip-paths, specific border treatments)
+5. **Animation patterns** — scroll-driven, entrance, hover, exit. What library (GSAP, CSS, Framer Motion)?
+6. **Content structure** — how many sections, what order, what hierarchy
+
+If the file is too large to read at once, **read it in chunks** (500 lines at a time)
+or use a subagent/search to find the key structural parts. Focus on:
+- The `<style>` blocks and CSS custom properties
+- The `<body>` structure (section by section)
+- The `<script>` blocks (animation logic)
+- Skip font-face declarations, SVG paths, and framework boilerplate
+
+#### Step 2: Identify what to take from each reference
+
+Don't blend 50/50. Decide what each reference contributes:
+- Reference A might have the better typography and layout grid
+- Reference B might have the better animation system and scroll interactions
+- Pick the strongest elements from each
+
+#### Step 3: Adapt for Dex's identity
+
+Replace the subject matter completely:
+- Use Dex's color system: Cyan `#64d2ff`, Purple `#8b5cf6`, Orange `#fb923c`, Green `#4ade80`
+- Use his "System OS / The Operator" language
+- Use his real data (projects, competitions, org roles, contact)
+- Use dark mode always — `#0a0a0b` or similar near-black
+- Include monospace elements — Dex's aesthetic is techy
+
+#### Step 4: Build self-contained
+
+For design explorations (Build-Idea tasks), create a single HTML file with:
+- All CSS inline (in `<style>` tags)
+- Fonts loaded from Google Fonts or CDN
+- Libraries (GSAP, etc.) loaded from CDN
+- All content hardcoded — no external dependencies except CDN links
+- Must open directly in a browser by double-clicking the file
+
+---
+
+### 5.3 · How to Handle Tasks Above Your Capability
+
+Be honest. Dex respects honesty about limitations more than broken output.
+
+**If you can't read a large file:**
+Say "This file is too large for me to process at once. Let me read it in sections."
+Then read 300-500 lines at a time and take notes.
+
+**If you can't do complex GSAP/animation work:**
+Focus on the static design first — layout, typography, colors, spacing.
+Add simple CSS animations (fade-in, slide-up) instead of complex scroll-driven timelines.
+Tell Dex: "I've built the structure and visual design. The scroll animations
+would need a model with stronger JS capabilities to implement fully."
+
+**If the task is genuinely beyond you:**
+Say so. Dex would rather know upfront than waste time debugging bad output.
+Offer what you CAN do — maybe the HTML structure, the CSS design tokens,
+or a simpler version of the concept.
+
+---
+
+### 5.4 · Quality Signals — How Dex Judges Your Output
+
+Dex will look at your work and instantly judge it. Here's what separates "good" from "mid":
+
+| Good output | Mid output |
+|---|---|
+| Dark background, proper contrast hierarchy | White background or generic Bootstrap colors |
+| Monospace labels + sans-serif body text | Single font throughout |
+| Tight letter-spacing on headings (-0.03 to -0.06em) | Default browser letter-spacing |
+| Hover states on interactive elements | No hover feedback |
+| Scroll-driven motion (even simple opacity fades) | Completely static page |
+| System OS language ("Deployed Modules", "Arena Records") | Generic language ("My Projects", "Contact Me") |
+| Real data from Dex.md | Placeholder content |
+| Consistent accent color usage (cyan for this project) | Random colors or too many colors |
+| Proper text hierarchy (primary → secondary → muted → dim) | All text same color/weight |
+
+---
+
+## 6. TIPS FOR ANY AI (especially lower-capability models)
 
 These tips exist because Dex sometimes uses Gemini, MiniMax, or Qwen.
 If you are not Claude Sonnet 4.6+, these rules will help you not make mistakes.
@@ -337,10 +459,97 @@ If an animation doesn't run, don't rewrite it. Check:
 
 ---
 
-## 6. SESSION LOG — Ongoing Recap
+### TIP-11 · Design references are for extraction, not replication
+
+When Dex gives you reference HTML files (from Framer, Webflow, Awwwards, etc.),
+your job is NOT to copy the code. Those files have 3000+ lines of framework-
+specific garbage. Your job is to:
+1. Read and extract the design language (see Section 5.2)
+2. Identify what makes the reference visually impressive
+3. Rebuild the essence using clean, modern HTML/CSS/JS
+4. Adapt everything to Dex's identity and color system
+
+If you try to copy-paste from reference files, you will produce broken output.
+
+---
+
+### TIP-12 · Dex's design references (`.agent/FE-idea-v2/`)
+
+These are the key visual references Dex uses to communicate his taste:
+
+- **`bohdan_design.html`** — Framer site. "Technical luxury" aesthetic.
+  Key elements: massive typography (200px+ headings, -0.06em tracking),
+  corner bracket motifs (4 L-shaped corners on cards/buttons in accent color),
+  12-column grid, glassmorphism (backdrop-filter blur + tinted overlay),
+  monospace labels (Geist Mono uppercase), dark canvas with single accent color,
+  scroll-driven parallax. Fonts: Inter Display + Geist Mono.
+
+- **`elsye-residence.html`** — Webflow site. "Luxury editorial" aesthetic.
+  Key elements: GSAP ScrollTrigger scroll-driven reveals, fluid rem scaling
+  (`calc(16px * (100vw / 1920))`), SplitText character/word animations,
+  30-slice gradient mask reveals, sticky sections, parallax layering,
+  editorial parenthesized labels `(About)`, counter animations. Libraries:
+  GSAP + ScrollTrigger + SplitText + Splide.js.
+
+When Dex says "use Bohdan and Elsye as reference," he means combine:
+- Bohdan's visual chrome (brackets, typography, grid, mono labels)
+- Elsye's motion language (scroll-driven, GSAP, parallax, text reveals)
+- His own identity (cyan accent, System OS concept, real data)
+
+---
+
+### TIP-13 · For build-idea / design exploration tasks
+
+These go in `.agent/Build-Idea/`. They are standalone prototypes, NOT part of
+the main portfolio codebase. Rules:
+
+- Single self-contained HTML file (all CSS and JS inline/CDN)
+- Must open by double-clicking in a browser — no build step
+- Use CDN for libraries: Google Fonts, GSAP, Splide, etc.
+- Use Dex's real information (from `Dex.md`), not placeholders
+- Dark mode always, near-black background
+- Naming: `dex-landing-v1.html`, `dex-dashboard-v2.html`, etc.
+- These are creative explorations — be ambitious, not conservative
+
+---
+
+## 7. SESSION LOG — Ongoing Recap
 
 Each AI session should add a brief entry here after completing work.
 Format: date, AI used, what was done, what was learned (good or bad).
+
+---
+
+### 2026-04-17 — Claude Opus 4.6
+
+**Work done:**
+- Created `dex-landing-v1.html` in `.agent/Build-Idea/` — a standalone landing page
+  combining the design DNA of Bohdan (corner brackets, massive type, 12-col grid,
+  glassmorphism, mono labels) and Elsye (GSAP ScrollTrigger, scroll-driven word
+  reveals, sticky phrase sections, parallax, fluid rem scaling, editorial labels)
+- Subject: Dex Bennett — Creative Technologist, using real data from `Dex.md`
+- Sections: Hero (massive "DEX BENNETT"), Manifesto (word-by-word reveal), Identity
+  (stats + cards), Sticky Phrase, Projects (row list), Spotlight (Sowan.id feature),
+  Arena (competition cards), Signal (contact channels), Footer
+
+**Key technique — design reference extraction:**
+- Both reference files were too large to read at once (1MB+ Framer export, 3600-line Webflow export)
+- Used parallel subagents to extract design DNA from each file independently
+- Each subagent read the file in 500-line chunks and produced a comprehensive analysis
+- Then synthesized the two analyses into a combined design, adapted for Dex's identity
+
+**Updated Protocol.md with:**
+- Section 5: "How to Actually Work with Dex" — teaching any AI model (MiniMax, Gemini, Qwen, etc.) how to understand Dex's communication style, handle design reference tasks, manage tasks above their capability, and what quality signals Dex looks for
+- Section 5.2: The complete design reference extraction workflow
+- Section 5.4: Quality comparison table (good vs mid output)
+- TIP-11 through TIP-13: Design reference handling, Bohdan/Elsye summaries, build-idea task rules
+
+**What future AI should know:**
+- Dex communicates naturally (mixed ID/EN), expects you to infer real intent
+- Design reference files are for extraction, NEVER for code copying
+- "Give it soul" means motion + interactivity + authentic identity, not flashy effects
+- Dark mode + monospace + tight tracking + system-OS language = Dex's aesthetic DNA
+- If a task is above your capability, say so — Dex respects honesty over broken output
 
 ---
 
