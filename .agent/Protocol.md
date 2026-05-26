@@ -550,6 +550,34 @@ Format: date, AI used, what was done, what was learned (good or bad).
 
 ---
 
+### 2026-05-25 — Claude Sonnet 4.6
+
+**Work done:**
+- **Sowan.id Mission Log** — Full rewrite. Old: vague "bridging local businesses." New: accurate EduTech platform description (sesepuh mentors, cultural language learning), CTO role, correct tech stack (Next.js 16 + TypeScript + Tailwind v4 + Vercel), KSE JUARA 1 + EURECA Top 15 results.
+- **Command Deployments** — Added 4 new cards: CTO Sowan.id (Apr 2026, active), Fullstack Dev Intern Synapse Labs (Feb–May 2026, kerjasama AFED × BPD HIPMI DIY), Tim Desain & IT Peran Gendis–SriKandi UGM (2026, active), Student Staff PPB UKDW (Sep 2025, active). All use placeholder SVG thumbs (no cert images yet).
+- **Arena Records** — Added 2 new cards: KSE JUARA 2026 🥇 1st Place Champion (USU, Business Plan Competition), UKRIDA Solve-It 2026 ⏳ Pending Result (Sowan: Bahasa Mama, submitted 2026-05-25).
+- **Timeline** — Added 3 new entries: CTO Sowan.id + KSE win (2026), Synapse Labs intern (2026), Research Assistant Kaprodi SI UKDW for VR Inclusive Tourism (2025).
+- **Metrics row** — Command Clearances 5→9, Organizations 5+→9+.
+- **Archives gallery** — Added Wallpaper.png (copied from `.agent/Bahan_Poster/`).
+- **Protocol.md** — Added Section 7 "Session Changelog" rule. `.agent/changelogs/` folder created.
+- **Universal-Project-Protocol.md** — Added Section 5 "Session Changelog" rule (global, applies all projects).
+- **Committed all:** `docs+fix` commit (Protocol Section 5 + Victus label), `docs` commit (Session Changelog rule + first changelog), `feat` commit (all portfolio content updates).
+
+**Pending (not done yet):**
+- KSE JUARA 1 — swap placeholder card to real team photo when available (cert pending from panitia)
+- UKRIDA Solve-It — update "Pending Result" label when result announced
+- Synapse Labs / PPB / Peran Gendis — add cert images when available
+- WALKTHROUGH.md + AI-HANDOFF.md — not updated this session (dates still show 2026-04-16)
+
+**Commits pushed:** `af529d2` (Protocol+Victus), `d698ad6` (Session Changelog), `7c6a478` (portfolio content)
+
+**What future AI must know:**
+- Sowan.id is an EduTech platform — NOT a general business marketplace. See `D:\AT Kuliah\All of SOWAN Business Plan\Sowan-App\SOWAN-Business-Deck.md` for full accurate description.
+- UKRIDA card uses ⏳ Pending Result — update when result announced.
+- KSE card uses trophy placeholder — swap with `ops-cert-card__thumb` img when team photo ready.
+
+---
+
 ### 2026-04-17 — Claude Opus 4.6
 
 **Work done:**
