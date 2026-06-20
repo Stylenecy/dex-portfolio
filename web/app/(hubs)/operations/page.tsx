@@ -59,8 +59,10 @@ export default function OperationsPage() {
           <p className="ops-role-card__desc">{featuredRole.featuredDesc}</p>
           <span className="ops-role-card__period">{featuredRole.period}</span>
           <div className="ops-role-card__actions">
-            <span className="role-badge role-badge--chairman">Chairman</span>
-            <span className="org-tag org-tag--bordered">KFC Tournament</span>
+            <span className="role-badge role-badge--chairman">
+              ● {featuredRole.status === 'active' ? 'Active' : featuredRole.status.toUpperCase()}
+            </span>
+            <span className="org-tag org-tag--bordered">Command Deployment</span>
           </div>
         </div>
       )}
