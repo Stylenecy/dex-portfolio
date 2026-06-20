@@ -40,14 +40,17 @@
 - [x] P3 depth engine: `components/fx/TiltLayer.tsx` (event-delegated cursor tilt, reduced-motion+coarse-pointer live guard) + `styles/fx.css` (specular sheen, accent FLARE edge, magnetic CTA). data-tilt applied to 7 cards (agent).
 - [x] P4 transitions+reveal: `PageTransition.tsx` (route enter cross-dissolve) + RevealObserver stagger (55ms cascade) + reveal engine switched transform→translate/scale/filter (tilt-safe) + fade/blur/expo.
 - [x] P5 Preloader Dex-fied: `Preloader.tsx` + `preloader.css` — cinematic boot (cyan/void, inline rings/orb/dashed-orbit/emblem/number-arc/dots/corner-brackets, live boot log, chunked progress, INITIALIZE at 100, click-skip, reduced-motion branch). Wired `page.tsx` (BootOverlay archived).
-- [ ] P6 WebGL hero — R3F particle/grid field (pixelRatio≤2, Points+BufferGeometry, visibility pause, reduced-motion)
-- [ ] P7 (if time) Archives hub build-out
-- [ ] P8 polish + perf + reduced-motion audit
+- [x] P6 WebGL hero — `components/fx/AmbientField.tsx` R3F Points field (1800 pts, BufferGeom, additive, dpr≤1.5, pointer-parallax lerp, hub-accent tint, reduced-motion unmount). Mounted in (hubs)/layout z-1.
+- [x] P8a global craft — ::selection per-hub tint + custom scrollbar (fx.css).
+- [ ] P7 (DEFERRED) Archives hub build-out — BLOCKED: 209MB PNG sources need compress before next/image. Separate heavy task.
+- [ ] P8b (DEFERRED) hub structural variety (list/spine/catalog per hub) + mobile fine-tune + motion calibration — better done AFTER Dex eyeballs current result.
 
-## VERIFY (2026-06-20)
-- tsc --noEmit clean. All 5 routes HTTP 200 on dev (:3001). Dev log no errors.
-- ⚠️ VISUAL not yet eyeballed by Dex — pending hard-refresh review of `/` (preloader) + hubs (tilt/reveal).
-- NOTE: had 2 orphan dev servers squatting ports (from `&`+run_in_background bentrok); killed. Clean server now on :3001 (or :3000 next start).
+## VERIFY (2026-06-20) — DONE, screenshots captured
+- tsc --noEmit clean (incl. R3F JSX). All 5 routes HTTP 200 (:3001). Dev log no errors.
+- **Headless Edge screenshots** (`C:\Users\ASUS\AppData\Local\Temp\dexshot\`): preloader + operator-metrics + system-core all render correctly. Method for future: `msedge --headless --disable-gpu --screenshot="C:/win/path.png" URL` (classic `--headless`, Windows path; `--headless=new` + `--virtual-time-budget` flaky/no-write here). Captures rest-state only (framer entrances mid-flight at capture).
+- Preloader confirmed: rings/core/hex-emblem/dashed-orbit/number-arc(0-100)/dots/corner-brackets/boot-log all present. "DEX BENNETT" wordmark in DOM (curl-confirmed) — invisible in shot only because framer entrance (delay 0.5s) hadn't fired at headless capture; real browser animates it in.
+- ⚠️ MOTION (tilt-on-hover, page transitions, WebGL particles, framer entrances) needs real browser — code sound, Dex to eyeball live on :3001.
 
 ## STATE
-- Dev server live :3001. Branch next-migration. Checkpoints: `3fc9744` (migration), + P1–P5 commit (this).
+- Dev server live :3001. Branch next-migration. Commits: `3fc9744` migration · `c6d153c` P1-P5 · `be36793` P6 · (+ P8a craft, this commit).
+- BootOverlay.tsx archived (replaced by Preloader, not deleted).

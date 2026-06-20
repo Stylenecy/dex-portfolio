@@ -65,3 +65,29 @@
     display: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   GLOBAL CRAFT — selection + scrollbar pick up the active hub accent
+   -------------------------------------------------------------------------- */
+::selection {
+  background: var(--hub-accent, var(--cyan));
+  color: #08080a;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline-bright) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--hairline-bright);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background var(--dur-ui) var(--ease-standard);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hub-accent-rest, var(--hairline-bright));
+  background-clip: padding-box;
+}
