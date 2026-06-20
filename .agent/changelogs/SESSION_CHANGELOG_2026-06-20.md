@@ -5,6 +5,36 @@
 
 ---
 
+## ▶ RESUME — FRESH CHAT STARTS HERE (baca ini dulu)
+
+**Di mana:** branch `next-migration`. Kerja di **`web/`** (Next.js 16 App Router + TS + Tailwind v4 + pnpm). Site lama vanilla = `taste-express/public/` (ARSIP referensi, jangan dikerjain).
+
+**Cara jalanin:**
+```
+# dari root repo dex-portfolio
+pnpm --dir web dev          # → localhost:3000 (kalau kepake, auto pindah 3001/dst)
+```
+⚠️ Kalau port "in use" / ada node nyangkut: cek `netstat -ano | grep :300` → `taskkill //PID <pid> //F`. JANGAN start dev pakai `&` + run_in_background bareng (bentrok, orphan).
+
+**Deploy (F4.0, belum dijalanin):** Vercel Root Dir = `web`; env `GEMINI_KEY` (Prod+Preview); SEBELUM deploy: `web/pnpm-workspace.yaml` set `sharp: true` lalu `pnpm install --force` (buat next/image); preview verify → merge `main`.
+
+**Status sekarang (20 Jun):** F0–F2 ✅ · F3.0 Phase1b ✅ · **F4.0 masterpiece pass ✅** (preloader sinematik + 3D tilt + page transition + WebGL ambient field + konten truth). Semua di-commit. tsc clean. 5 route HTTP 200. Screenshot OK (`C:\Users\ASUS\AppData\Local\Temp\dexshot\`).
+
+**NEXT (prioritas):**
+1. **Dex eyeball live di :3001** (motion butuh browser asli) → kalibrasi: derajat tilt (`--tilt-max` 9deg), sheen, timing preloader (auto-enter 2.2s), densitas/opacity partikel WebGL (`AmbientField` COUNT 1800 / opacity .5), feel page-transition.
+2. **P7 Archives** — BLOCKED: kompres 209MB PNG → next/image dulu (script `sharp` siap, lihat NOW.md).
+3. **Hub structural variety** — tiap hub layout beda (list/spine/catalog), bukan cuma beda warna.
+4. **Mobile pass + reduced-motion audit** menyeluruh.
+5. **F3.1** SEO/OG/metadata + image optimization.
+
+**TODO(dex) — flag konten yang BELUM diverifikasi** (aku tandai `// TODO(dex):` di data, TIDAK diinvent): `lumina-edu` & `retail-core` (masih relevan?), KFC 3-community chairman claim, angka "500+/100+ students", nama lengkap kompetisi KSE, organizer EURECA. Konfirmasi → hapus TODO.
+
+**PRIVACY (keras):** Angel / relationship / §7-crisis / no. HP / alamat — TIDAK PERNAH ke site. (Angel-Chat-Analysis cuma soul-context.)
+
+**Peta file baru F4.0:** `components/fx/TiltLayer.tsx` (tilt engine) · `components/fx/PageTransition.tsx` · `components/fx/AmbientField.tsx` (WebGL) · `components/shell/Preloader.tsx` (+`styles/preloader.css`) · `styles/fx.css` · tokens baru di `styles/variables.css`. BootOverlay.tsx = arsip.
+
+---
+
 ## SAFETY ANCHOR
 - Commit `3fc9744` — seluruh `web/` (F0–F2 + F3.0 Phase 1b) di-commit sebagai jangkar SEBELUM YOLO. Branch tadinya nol commit. Sekarang ada rollback point.
 

@@ -135,9 +135,16 @@ Cards and bento cells automatically inherit these. You don't need to hardcode co
 
 ---
 
-## 5. CURRENT STATE (as of 2026-04-16)
+## 5. CURRENT STATE
 
-### What's done
+> 🚨 **ACTIVE WORK = Next.js migration in `web/` (branch `next-migration`), NOT this vanilla site.**
+> This file below describes the ORIGINAL vanilla build (`taste-express/public/`), kept as design reference.
+> For current state + how to resume, read **`.agent/MIGRATION-PLAN_nextjs.md`** and the latest
+> **`.agent/changelogs/SESSION_CHANGELOG_2026-06-20.md`** (has a ▶ RESUME block: run cmds, what's done, what's next).
+> Latest (2026-06-20): **F4.0 "masterpiece pass" shipped** — cinematic preloader, 3D cursor-tilt on cards,
+> route transitions, WebGL ambient field, + full content-accuracy pass. All committed on `next-migration`.
+
+### What's done (original vanilla, as of 2026-04-16)
 - ✅ All 4 hubs: content complete
 - ✅ Visual overhaul: Inter + Geist Mono fonts, multi-layer shadow system, hub-aware accent cascade
 - ✅ All assets in `public/images/` and `public/certificates/` (incl. EURECA Top 15 Semifinalist cert)
