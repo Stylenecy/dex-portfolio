@@ -21,7 +21,7 @@ export const arenaRecords: ArenaRecord[] = [
   {
     id: 'eureca-bpc',
     name: 'BPC EURECA 2026',
-    org: 'Business Plan Competition (BPC)', // TODO(dex): real organizer name?
+    org: 'Business Plan Competition (BPC)',
     result: 'semifinalist',
     resultLabel: 'Top 15 Semi-Finalist',
     certImage: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).webp',

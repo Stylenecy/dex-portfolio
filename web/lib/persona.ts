@@ -38,7 +38,7 @@ PROFESSIONAL ROLES:
 - Teaching Assistant — Matematika Sistem Informasi, UKDW
 
 LEADERSHIP & ORGS:
-- Koordinator Divisi Aspirasi, BPM FTI UKDW (ran 3× "FTI Mendengar" forums, 500+ students)
+- Koordinator Divisi Aspirasi, BPM FTI UKDW (ran 3× "FTI Mendengar" forums, 50+ students)
 - Chairman — DIBARSI, HMSI Education Division, 2024
 - PR Coordinator — FTI Camp
 - Secretary — ISCD 2024

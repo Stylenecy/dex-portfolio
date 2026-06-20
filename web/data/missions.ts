@@ -31,25 +31,20 @@ export const missions: Mission[] = [
     ],
   },
   {
-    id: 'lumina-edu', // TODO(dex): verify still represents you (not in canonical profile)
-    name: 'Lumina.EDU',
-    status: 'conceptual',
-    statusLabel: 'Conceptual Design',
-    desc: 'A comprehensive business plan and visual concept for an EdTech platform. Designed to solve the disconnect between academic syllabus and industry needs — focusing on value proposition, user journey, and market viability.',
-    tags: ['Business Model Canvas', 'UI/UX Design', 'Product Strategy'],
-    image: '/images/Lumina.Edu.webp',
-    links: [
-      { label: 'View Pitch Deck', href: 'https://www.canva.com/design/DAG7uwYIVy8/Um3OpyFJHE4wXzizDnJINQ/edit', variant: 'outline' },
-    ],
+    id: 'kopiloyalty',
+    name: 'KopiLoyalty',
+    status: 'completed',
+    statusLabel: 'Hackathon Build — MonadBlitz 2026',
+    desc: 'Problem: Coffee-shop loyalty points are siloed, forgeable, and vanish when an app shuts down. Thinking: Put loyalty on-chain so points become portable, verifiable, and outlive any single vendor. Decision: Built a blockchain-based coffee loyalty system at MonadBlitz Hackathon Jogja 2026 — wallet-linked points with tamper-proof redemption. Result: Shipped a working prototype inside the hackathon window — first venture into web3 / on-chain product design.',
+    tags: ['Blockchain', 'Web3', 'Smart Contracts', 'Hackathon'],
   },
   {
-    id: 'retail-core', // TODO(dex): verify still represents you (not in canonical profile)
-    name: 'Retail Core Engine',
-    status: 'completed',
-    statusLabel: 'System Prototype',
-    desc: 'Capstone project architecture focusing on inventory logic — automated stock alerts and sales tracking data flow. System analysis and database design phase.',
-    tags: ['System Analysis', 'Database Design', 'Process Flow'],
-    image: '/images/Retail.webp',
+    id: 'prasaja',
+    name: 'Prasaja',
+    status: 'conceptual',
+    statusLabel: 'Concept — VR Horror',
+    desc: 'Problem: Most horror leans on cheap jumpscares instead of dread. Thinking: Build fear from atmosphere, symbolic objects, and Javanese mysticism — environmental storytelling over shock. Decision: Designed Prasaja, a VR horror experience centered on Laras, steeped in Javanese folklore and mood. Result: Concept and design direction defined — a personal world-building project treating VR as an emotional medium, not a thrill ride.',
+    tags: ['VR', 'Game Design', 'World-Building', 'Environmental Storytelling'],
   },
   {
     id: 'vr-inclusive',

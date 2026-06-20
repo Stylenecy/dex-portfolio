@@ -36,7 +36,7 @@ export const timelineEntries: TimelineEntry[] = [
     title: 'Coordinator — Aspirasi Division, BPMFTI',
     tag: 'achievement',
     tagLabel: 'Policy Impact & Advocacy',
-    desc: 'Executed 3× "FTI Mendengar" forums. Facilitated dialogue between 500+ students and deanery. Drove concrete policy changes.', // TODO(dex): verify figures
+    desc: 'Executed 3× "FTI Mendengar" forums. Facilitated dialogue between 50+ students and the deanery, surfacing aspirations into concrete follow-ups.',
     status: 'completed',
   },
   {
@@ -54,7 +54,7 @@ export const timelineEntries: TimelineEntry[] = [
     title: 'FTI Mendengar #3 — Forum Execution',
     tag: 'tech',
     tagLabel: 'Operational Leadership',
-    desc: 'Orchestrated the faculty aspirations forum. 100+ students engaged. Tangible policy changes on facility maintenance.', // TODO(dex): verify figures
+    desc: 'Orchestrated the faculty aspirations forum. 50+ students engaged. Tangible policy changes on facility maintenance.',
     status: 'completed',
   },
   {

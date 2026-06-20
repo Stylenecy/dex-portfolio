@@ -34,7 +34,7 @@ export default function OperationsPage() {
       {/* Impact Metrics Row */}
       <div className="ops-metrics-row" role="list" aria-label="Impact statistics">
         {[
-          { number: '500+', label: 'Students Reached', sub: 'across 3 forum series' },
+          { number: '50+', label: 'Students Reached', sub: 'across 3 forum series' },
           { number: '9',    label: 'Command Clearances', sub: 'leadership roles held' },
           { number: '18+',  label: 'Operations Completed', sub: 'events & certifications' },
           { number: '9+',   label: 'Organizations', sub: 'Sowan.id · Synapse Labs · Peran Gendis · PPB · BPMFTI' },
