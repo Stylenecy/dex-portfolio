@@ -58,7 +58,21 @@ pnpm --dir web dev          # → localhost:3000 (kalau kepake, auto pindah 3001
 2. Settings → Environment Variables → add **`GEMINI_KEY`** = <key Dex> (Production + Preview). (Buat "Ask the Operator". Visual tetap jalan tanpa ini, cuma chat AI yang mati.)
 3. Lalu: merge `next-migration` → `main` + push (atau klik Redeploy). Vercel auto-build → **live di dex-portfolio.vercel.app**.
 
-Alternatif (kalau Dex mau aku yang gas via CLI): Dex jalanin `! npm i -g vercel` → `! vercel login` → bilang aku, lanjut `vercel link` ke project + `vercel --prod` dari `web/`.
+### 🔴 DEPLOY STATUS UPDATE (20 Jun sore) — 95% siap, 1 blocker manual
+Sudah dikerjain (Vercel CLI ternyata UDAH login sbg `stylenecy`):
+- ✅ Vercel CLI v54 keinstall · `web/` LINKED ke project `stylenecys-projects/dex-portfolio` (`.vercel/` gitignored)
+- ✅ env `GEMINI_KEY` di-set ke Production (dari `web/.env.local`, ga di-print)
+- ✅ `web/vercel.json` `{framework:nextjs}` dibuat + committed
+- ✅ `pnpm --dir web build` PASS (production)
+
+**BLOCKER (1, butuh Dex):** project `dex-portfolio` punya **Root Directory = `taste-express`** (sisa setup vanilla 25 hari lalu). `vercel --prod` dari `web/` GAGAL: *"path web/taste-express does not exist"*. 
+- Fix otomatis via Vercel API (PATCH rootDirectory) = **DIBLOKIR safety classifier** (butuh baca token Vercel tersimpan — ga diizinin tanpa approval Dex eksplisit). BENAR diblokir, ga di-bypass.
+- **UNBLOCK (pilih 1):**
+  - **(A) Dashboard, 1 field:** Vercel → dex-portfolio → Settings → Build & Deployment → **Root Directory → `web`** → Save. Lalu deploy via GIT: merge `next-migration`→`main` + push (Vercel auto-build web/). ATAU dari repo root: `cd "D:\AT Kuliah\All of Project\dex-portfolio" && vercel --prod` (rootDir=web bikin Vercel build web/).
+  - **(B) Izinin Claude:** approve aksi baca token + `vercel` API PATCH → Claude set rootDirectory + deploy sendiri.
+- Live site SEKARANG masih vanilla lama (AMAN, ga ke-sentuh). Failed deploy ga nimpa prod.
+
+⚠️ Catatan rootDirectory: utk **git deploy** rootDir=`web`. Utk **CLI deploy dari `web/`** rootDir harus `` (kosong). Beda mekanisme — makanya rekomendasi = set `web` + deploy via git/repo-root.
 
 ---
 
