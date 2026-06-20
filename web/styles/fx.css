@@ -1,0 +1,67 @@
+/* ==========================================================================
+   FX.CSS — 3D depth + interaction effects (loaded LAST so it wins ties)
+   Cursor-tilt engine surface. Driven by components/fx/TiltLayer.tsx, which
+   writes --tilt-rx/ry/mx/my/active per element on pointermove.
+   ========================================================================== */
+
+/* Double-attribute selector → specificity (0,0,2,0): reliably beats existing
+   single-class `:hover { transform }` rules on cards without !important. */
+[data-tilt][data-tilt] {
+  transform:
+    perspective(var(--perspective, 1100px))
+    rotateX(var(--tilt-rx, 0deg))
+    rotateY(var(--tilt-ry, 0deg))
+    translateZ(0);
+  transition:
+    transform var(--tilt-settle, 420ms) var(--ease-out),
+    box-shadow var(--dur-ui, 250ms) var(--ease-standard),
+    border-color var(--dur-ui, 250ms) var(--ease-standard);
+  will-change: transform;
+}
+
+/* Moving specular highlight. A `<span class="tilt-sheen" aria-hidden>` lives
+   inside each tilted card; absolutely positioned so it never affects layout. */
+.tilt-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--tilt-active, 0);
+  background: radial-gradient(
+    340px circle at var(--tilt-mx, 50%) var(--tilt-my, 50%),
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0) 60%
+  );
+  transition: opacity var(--dur-ui, 250ms) var(--ease-standard);
+  mix-blend-mode: soft-light;
+}
+
+/* A faint accent edge that ignites with the tilt (FLARE-on-interaction). */
+.tilt-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--hub-accent, #64d2ff) calc(var(--tilt-active, 0) * 55%), transparent);
+  transition: box-shadow var(--dur-ui, 250ms) var(--ease-standard);
+}
+
+/* Magnetic / pressable CTA helper (opt-in via .magnetic). */
+.magnetic {
+  transition: transform var(--dur-hover, 150ms) var(--ease-standard);
+}
+.magnetic:active {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt][data-tilt] {
+    transform: none;
+    transition: none;
+  }
+  .tilt-sheen {
+    display: none;
+  }
+}

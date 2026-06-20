@@ -1,0 +1,230 @@
+/* ==========================================================================
+   PRELOADER.CSS — Cinematic System-Boot screen (Moneta lineage → Dex/cyan)
+   Component: components/shell/Preloader.tsx. Most position-critical numbers
+   live inline in the component; this file holds the chrome + shared visuals.
+   ========================================================================== */
+
+/* corner brackets — Dex signature motif, pinned to the viewport */
+.pl-bracket {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--cyan);
+  opacity: 0.45;
+  z-index: 6;
+  pointer-events: none;
+}
+.pl-bracket--tl { top: 18px; left: 18px; border-right: none; border-bottom: none; }
+.pl-bracket--tr { top: 18px; right: 18px; border-left: none; border-bottom: none; }
+.pl-bracket--bl { bottom: 18px; left: 18px; border-right: none; border-top: none; }
+.pl-bracket--br { bottom: 18px; right: 18px; border-left: none; border-top: none; }
+
+/* top status bar */
+.pl-topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  z-index: 6;
+}
+.pl-topbar__badge { display: inline-flex; align-items: center; gap: 8px; color: var(--text-primary); }
+.pl-topbar__dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pl-dot-pulse 2s ease-in-out infinite;
+}
+.pl-topbar__sep { opacity: 0.5; margin: 0 4px; }
+
+/* central scaled cluster */
+.pl-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 940px;
+  height: 800px;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* radial blooms */
+.pl-bloom {
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: -280px 0 0 -280px;
+  width: 560px; height: 560px;
+  border-radius: 50%;
+}
+.pl-bloom--inner {
+  background: radial-gradient(circle, rgba(100, 210, 255, 0.10) 0%, rgba(80, 120, 200, 0.05) 40%, transparent 70%);
+}
+.pl-bloom--outer {
+  margin: -440px 0 0 -440px;
+  width: 880px; height: 880px;
+  background: radial-gradient(circle, rgba(60, 120, 200, 0.05) 0%, transparent 65%);
+}
+
+/* twinkle field */
+.pl-particles { position: absolute; inset: 0; }
+.pl-particles span {
+  position: absolute;
+  width: 1.6px; height: 1.6px;
+  border-radius: 50%;
+  background: #d6f4ff;
+}
+
+/* concentric rings */
+.pl-rings {
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: -350px 0 0 -350px;
+  width: 700px; height: 700px;
+}
+.pl-rings circle { fill: none; stroke: var(--cyan); stroke-width: 1; }
+.pl-rings__tick { stroke: rgba(100, 210, 255, 0.4) !important; }
+
+/* glowing core — centered via margin (framer animates transform: scale) */
+.pl-core {
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: -85px 0 0 -85px;
+  width: 170px; height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(130, 230, 255, 0.55) 0%, rgba(100, 210, 255, 0.16) 42%, transparent 70%);
+  filter: blur(2px);
+  mix-blend-mode: screen;
+}
+
+/* dashed orbit line */
+.pl-orbit {
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: -210px 0 0 -420px;
+  width: 840px; height: 420px;
+  z-index: 2;
+}
+.pl-orbit svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* emblem + wordmark */
+.pl-id {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  z-index: 3;
+}
+.pl-emblem {
+  width: 64px; height: 64px;
+  filter: drop-shadow(0 0 12px rgba(100, 210, 255, 0.4));
+}
+.pl-wordmark {
+  font-family: var(--font-mono);
+  font-size: clamp(24px, 3.6vw, 42px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  text-align: center;
+  text-shadow: 0 0 28px rgba(100, 210, 255, 0.18);
+}
+.pl-subline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* bouncing dots */
+.pl-dots {
+  position: absolute;
+  left: 50%; bottom: 70px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 5;
+}
+.pl-dots span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(180, 235, 255, 0.7);
+}
+
+/* boot log + enter prompt */
+.pl-footer {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+  z-index: 6;
+}
+.pl-log {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.pl-log__caret { color: var(--cyan); }
+.pl-log__pct { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+.pl-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--hairline-bright);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: color var(--dur-ui) var(--ease-standard),
+    border-color var(--dur-ui) var(--ease-standard),
+    box-shadow var(--dur-ui) var(--ease-standard),
+    opacity var(--dur-ui) var(--ease-standard);
+}
+.pl-enter svg {
+  width: 15px; height: 15px;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.pl-enter:hover { color: var(--text-primary); }
+.pl-enter.is-ready {
+  opacity: 1;
+  color: var(--cyan);
+  border-color: var(--cyan-border);
+  box-shadow: 0 0 24px rgba(100, 210, 255, 0.16);
+  animation: pl-enter-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pl-dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+@keyframes pl-enter-pulse {
+  0%, 100% { box-shadow: 0 0 22px rgba(100, 210, 255, 0.14); }
+  50% { box-shadow: 0 0 34px rgba(100, 210, 255, 0.26); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-topbar__dot,
+  .pl-enter.is-ready { animation: none; }
+}

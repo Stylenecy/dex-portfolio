@@ -11,8 +11,9 @@ export interface Stat {
 }
 
 export const operatorStats: Stat[] = [
+  { label: 'VISION',       rank: 'S',  filled: 7, max: 7, color: 'purple', awakened: true },
   { label: 'STRENGTH',     rank: 'B',  filled: 5, max: 7, color: 'cyan' },
-  { label: 'SPEED',        rank: 'S-', filled: 7, max: 7, color: 'red' },
+  { label: 'SPEED',        rank: 'B',  filled: 4, max: 7, color: 'red' },
   { label: 'POTENTIAL',    rank: 'A',  filled: 6, max: 7, color: 'orange', awakened: true },
   { label: 'INTELLIGENCE', rank: 'A-', filled: 6, max: 7, color: 'orange' },
   { label: 'ENDURANCE',    rank: 'B',  filled: 5, max: 7, color: 'cyan' },

@@ -1,5 +1,5 @@
-import BootOverlay from '@/components/shell/BootOverlay';
+import Preloader from '@/components/shell/Preloader';
 
 export default function LandingPage() {
-  return <BootOverlay />;
+  return <Preloader />;
 }

@@ -13,7 +13,7 @@ export interface ArenaRecord {
 export const arenaRecords: ArenaRecord[] = [
   {
     id: 'kse-juara',
-    name: 'KSE JUARA 2026',
+    name: 'KSE JUARA 2026', // TODO(dex): full KSE competition name
     org: 'Business Plan Competition — USU',
     result: 'champion',
     resultLabel: '🥇 1st Place Champion',
@@ -21,7 +21,7 @@ export const arenaRecords: ArenaRecord[] = [
   {
     id: 'eureca-bpc',
     name: 'BPC EURECA 2026',
-    org: 'Business Plan Competition — UKDW',
+    org: 'Business Plan Competition (BPC)', // TODO(dex): real organizer name?
     result: 'semifinalist',
     resultLabel: 'Top 15 Semi-Finalist',
     certImage: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).png',
@@ -29,8 +29,8 @@ export const arenaRecords: ArenaRecord[] = [
   },
   {
     id: 'ukrida-solveit',
-    name: 'UKRIDA Solve-It 2026',
-    org: 'Sowan: Bahasa Mama — UKRIDA',
+    name: 'Solve-It Challenge 2026 — UKRIDA',
+    org: 'Sowan.id — UKRIDA',
     result: 'finalist',
     resultLabel: 'Top 10 Finalist',
   },
@@ -49,6 +49,12 @@ export const arenaRecords: ArenaRecord[] = [
     result: 'competitor',
     resultLabel: 'Competitor',
     certImage: '/images/certificates/Dex Bennett (Turnamen Valorant).png',
-    certPdf: '/certificates/Dex Bennett (Turnamen Valorant).png',
+  },
+  {
+    id: 'turnamen-mlbb',
+    name: 'Turnamen Mobile Legends',
+    org: 'MLBB Esports',
+    result: 'competitor',
+    resultLabel: 'Competitor',
   },
 ];

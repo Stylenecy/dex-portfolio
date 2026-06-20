@@ -12,6 +12,7 @@
 @import "../styles/variables.css";
 @import "../styles/reset.css";
 @import "../styles/landing.css";
+@import "../styles/preloader.css";
 
 /* LAYER 2 — ambient background (aurora killed → static grain + graticule) */
 @import "../styles/atmosphere.css";
@@ -40,5 +41,8 @@
 
 /* LAYER 8 — font bridge (must win over variables.css → imported last) */
 @import "../styles/font-bridge.css";
+
+/* LAYER 9 — FX: 3D tilt + interaction (loaded last so it wins :hover ties) */
+@import "../styles/fx.css";
 
 /* touch: invalidate import chain */

@@ -56,7 +56,9 @@ export default function SystemCorePage() {
               rel="noopener noreferrer"
               className="arsenal-card arsenal-card--deployed reveal"
               aria-label={`${mod.name} — ${mod.highlight ?? mod.desc.slice(0, 60)}`}
+              data-tilt
             >
+              <span className="tilt-sheen" aria-hidden />
               {mod.highlight && (
                 <span className="hub__label hub__label--xs" style={{ marginBottom: 'var(--space-2)' }}>
                   {mod.highlight}
@@ -83,7 +85,8 @@ export default function SystemCorePage() {
         </div>
         <div className="arsenal-grid">
           {skillModules.map((mod, i) => (
-            <div key={mod.id} className={`arsenal-card reveal${i > 0 ? ` reveal-delay-${i}` : ''}`}>
+            <div key={mod.id} className={`arsenal-card reveal${i > 0 ? ` reveal-delay-${i}` : ''}`} data-tilt>
+              <span className="tilt-sheen" aria-hidden />
               <h4 className="arsenal-card-title">{mod.title}</h4>
               <p className="card-desc">{mod.desc}</p>
               <div className="tech-stack">
@@ -104,7 +107,8 @@ export default function SystemCorePage() {
         </div>
         <div className="mission-container">
           {missions.map((m, i) => (
-            <article key={m.id} className={`mission-item reveal${i > 0 ? ` reveal-delay-${i}` : ''}`}>
+            <article key={m.id} className={`mission-item reveal${i > 0 ? ` reveal-delay-${i}` : ''}`} data-tilt>
+              <span className="tilt-sheen" aria-hidden />
               <div className="mission-visual">
                 {m.image && (
                   <img

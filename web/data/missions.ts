@@ -22,8 +22,8 @@ export const missions: Mission[] = [
     id: 'sowan',
     name: 'Sowan.id',
     status: 'active',
-    statusLabel: 'Active — CTO',
-    desc: 'Problem: Language apps teach vocabulary, not cultural wisdom. 183K+ foreign workers in Indonesia struggle to integrate culturally. Decision: CTO role — built the full platform (Next.js 16, TypeScript, Tailwind v4, Vercel). Result: 🥇 1st Place KSE JUARA 2026 BPC (USU, national level). Top 15 Semifinalist BPC EURECA 2026.',
+    statusLabel: 'Active — Platform Builder',
+    desc: 'Problem: Generational knowledge is fading — younger learners lose access to the cultural wisdom, language, and life knowledge held by elderly Indonesians. Thinking: A cross-generational EduTech platform that connects learners directly with elderly Indonesian mentors (sesepuh/lansia) across multiple domains — culture, language, and life skills. Decision: Built the full platform as the team\'s Platform Builder (Next.js 16, TypeScript, Tailwind v4, Vercel). Result: 🥇 1st Place — KSE JUARA 2026 (USU) · Top 15 Semifinalist — BPC EURECA 2026 · Top 10 Finalist — UKRIDA Solve-It Challenge 2026. HAKI registration in progress (LPPM UKDW).',
     tags: ['Next.js 16', 'TypeScript', 'Tailwind v4', 'Vercel', 'Shadcn UI'],
     image: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).png',
     links: [
@@ -31,7 +31,7 @@ export const missions: Mission[] = [
     ],
   },
   {
-    id: 'lumina-edu',
+    id: 'lumina-edu', // TODO(dex): verify still represents you (not in canonical profile)
     name: 'Lumina.EDU',
     status: 'conceptual',
     statusLabel: 'Conceptual Design',
@@ -43,7 +43,7 @@ export const missions: Mission[] = [
     ],
   },
   {
-    id: 'retail-core',
+    id: 'retail-core', // TODO(dex): verify still represents you (not in canonical profile)
     name: 'Retail Core Engine',
     status: 'completed',
     statusLabel: 'System Prototype',

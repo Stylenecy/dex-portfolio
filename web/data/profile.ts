@@ -1,10 +1,10 @@
 export const profile = {
   name: 'Dex Bennett',
   alias: 'Style / Stylenecy',
-  role: 'Aspiring Fullstack & System Thinker',
+  role: 'Creative Technologist / Product-minded Builder',
   tagline: "I build systems that don't just function — but feel alive.",
   affiliation: 'UKDW — Faculty of Information Technology',
-  program: 'Information Systems · Semester 6',
+  program: 'Information Systems · Entering Semester 7',
   location: 'Yogyakarta, Indonesia',
   email: 'dex.bennett28@gmail.com',
   linkedin: 'https://www.linkedin.com/in/dex-bennett-313b40293/',
@@ -16,13 +16,13 @@ export const profile = {
   buildVersion: '2.0.0-reforge',
   physical: {
     origin: 'Indonesia',
-    height: '182 cm',
-    weight: '60 kg',
+    height: '', // TODO(dex): real value?
+    weight: '', // TODO(dex): real value?
     sports: 'Badminton · Table Tennis',
   },
   stats: {
     projects: '05',
-    rolesHeld: '08+',
+    rolesHeld: '10+',
     phase: '2 / 3',
   },
   power: {

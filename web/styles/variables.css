@@ -245,11 +245,39 @@
   --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-responsive:  cubic-bezier(0.2, 0.8, 0.2, 1);  /* From reference — bouncy + fast */
 
+  /* F4.0 masterpiece motion system — derived from the design playbook
+     (linear/framer/apple/material). PRIMARY reveal curve = expo-out. */
+  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);   /* reveals, entrances    */
+  --ease-emphasized:  cubic-bezier(0.2, 0, 0, 1);      /* premium, no overshoot */
+  --ease-decisive:    cubic-bezier(0.25, 0, 0, 1);     /* fast, editorial       */
+  --ease-standard:    cubic-bezier(0.4, 0, 0.2, 1);    /* hover/state changes   */
+
   --duration-instant: 80ms;
   --duration-fast:    160ms;
   --duration-base:    280ms;
   --duration-slow:    480ms;
   --duration-crawl:   700ms;
+
+  /* Named durations matching the motion playbook (enter slow, exit fast) */
+  --dur-tap:          100ms;   /* toggles            */
+  --dur-hover:        150ms;   /* hover + ALL exits  */
+  --dur-ui:           250ms;   /* buttons, cards     */
+  --dur-reveal:       400ms;   /* scroll reveal      */
+  --dur-hero:         640ms;   /* hero entrances     */
+
+  /* --------------------------------------------------------------------------
+     12b. 3D / DEPTH — cursor-tilt engine (TiltLayer reads/writes these)
+     -------------------------------------------------------------------------- */
+  --perspective:      1100px;  /* parent perspective for tilt cards */
+  --tilt-max:         9deg;    /* clamp — >12deg reads gimmicky     */
+  --tilt-settle:      420ms;   /* settle-back ease on pointerleave  */
+  /* Per-element live values, written by TiltLayer on pointermove.
+     Default to flat so SSR/no-JS renders identically. */
+  --tilt-rx:          0deg;
+  --tilt-ry:          0deg;
+  --tilt-mx:          50%;     /* specular sheen focal X */
+  --tilt-my:          50%;     /* specular sheen focal Y */
+  --tilt-active:      0;       /* 0 at rest, 1 while hovered (sheen opacity) */
 
   /* --------------------------------------------------------------------------
      13. Z-INDEX STACK

@@ -50,64 +50,61 @@
 .reveal-left,
 .reveal-right,
 .reveal-scale {
-  will-change: opacity, transform;
+  will-change: opacity, translate, scale, filter;
 }
 
+/* Primary reveal — fade + rise + de-blur. Uses the individual `translate` /
+   `filter` properties (NOT `transform`) so it COMPOSES cleanly with the
+   [data-tilt] `transform` on the same card instead of overwriting it. */
 .js-reveal .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  translate: 0 22px;
+  filter: blur(8px);
   transition:
-    opacity 0.50s var(--ease-out),
-    transform 0.50s var(--ease-out);
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    translate var(--dur-reveal) var(--ease-out-expo),
+    filter var(--dur-reveal) var(--ease-out-expo);
 }
 .js-reveal .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  translate: 0 0;
+  filter: blur(0);
 }
 
-/* Staggered delay variants */
-.reveal-delay-1 { transition-delay: 0.10s; }
-.reveal-delay-2 { transition-delay: 0.20s; }
-.reveal-delay-3 { transition-delay: 0.30s; }
-.reveal-delay-4 { transition-delay: 0.45s; }
-.reveal-delay-5 { transition-delay: 0.60s; }
+/* Staggered delay variants — tightened to ~70ms steps (premium cadence) */
+.reveal-delay-1 { transition-delay: 0.07s; }
+.reveal-delay-2 { transition-delay: 0.14s; }
+.reveal-delay-3 { transition-delay: 0.21s; }
+.reveal-delay-4 { transition-delay: 0.28s; }
+.reveal-delay-5 { transition-delay: 0.35s; }
 
-/* Directional reveal variants */
+/* Directional reveal variants (also via `translate`, tilt-safe) */
 .js-reveal .reveal-left {
   opacity: 0;
-  transform: translateX(-28px);
+  translate: -28px 0;
   transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    translate var(--dur-reveal) var(--ease-out-expo);
 }
-.js-reveal .reveal-left.active {
-  opacity: 1;
-  transform: translateX(0);
-}
+.js-reveal .reveal-left.active { opacity: 1; translate: 0 0; }
 
 .js-reveal .reveal-right {
   opacity: 0;
-  transform: translateX(28px);
+  translate: 28px 0;
   transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    translate var(--dur-reveal) var(--ease-out-expo);
 }
-.js-reveal .reveal-right.active {
-  opacity: 1;
-  transform: translateX(0);
-}
+.js-reveal .reveal-right.active { opacity: 1; translate: 0 0; }
 
 .js-reveal .reveal-scale {
   opacity: 0;
-  transform: scale(0.94);
+  scale: 0.94;
   transition:
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    scale var(--dur-reveal) var(--ease-out-expo);
 }
-.js-reveal .reveal-scale.active {
-  opacity: 1;
-  transform: scale(1);
-}
+.js-reveal .reveal-scale.active { opacity: 1; scale: 1; }
 
 
 /* =========================================

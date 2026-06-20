@@ -17,11 +17,35 @@ export interface Role {
 export const commandRoles: Role[] = [
   {
     id: 'cto-sowan',
-    title: 'CTO — Sowan.id',
+    title: 'Platform Builder — Sowan.id',
     org: 'EduTech Platform · Trio Capybara Gaje',
     badge: 'command',
     status: 'active',
     period: 'Apr 2026 — Active',
+  },
+  {
+    id: 'research-assistant',
+    title: 'Research Assistant',
+    org: 'Kaprodi SI · VR Inclusive Tourism',
+    badge: 'command',
+    status: 'completed',
+    period: 'Jun 2025 – Feb 2026',
+  },
+  {
+    id: 'teaching-assistant-math',
+    title: 'Teaching Assistant — Math (SI)',
+    org: 'UKDW · Information Systems',
+    badge: 'command',
+    status: 'completed',
+    period: 'Feb 2025 – Jun 2025',
+  },
+  {
+    id: 'koor-aspirasi-bpm',
+    title: 'Koordinator Divisi Aspirasi',
+    org: 'BPM FTI UKDW',
+    badge: 'command',
+    status: 'completed',
+    period: 'Feb 2025 – Apr 2026',
   },
   {
     id: 'fullstack-synapse',
@@ -29,7 +53,7 @@ export const commandRoles: Role[] = [
     org: 'Synapse Labs · AFED × BPD HIPMI DIY',
     badge: 'command',
     status: 'completed',
-    period: 'Feb–May 2026',
+    period: 'Feb 2026 – 8 May 2026',
   },
   {
     id: 'design-it-perangendis',
@@ -48,7 +72,7 @@ export const commandRoles: Role[] = [
     period: 'Sep 2025 — Active',
   },
   {
-    id: 'chairman-kfc',
+    id: 'chairman-kfc', // TODO(dex): verify three-community chairman claim
     title: 'Chairman — Inter-Church Tournament KFC 2026',
     org: 'GKKK · Aletheia · Hagios Communities',
     badge: 'command',

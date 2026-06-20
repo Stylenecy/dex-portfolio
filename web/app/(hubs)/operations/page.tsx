@@ -51,7 +51,8 @@ export default function OperationsPage() {
 
       {/* Featured Role */}
       {featuredRole && (
-        <div className="ops-role-card reveal mt-lg">
+        <div className="ops-role-card reveal mt-lg" data-tilt>
+          <span className="tilt-sheen" aria-hidden />
           <span className="ops-role-card__sys-label">// CURRENT DEPLOYMENT</span>
           <h3 className="ops-role-card__title">{featuredRole.title}</h3>
           <div className="ops-role-card__org">{featuredRole.org}</div>
@@ -71,7 +72,8 @@ export default function OperationsPage() {
       </div>
       <div className="ops-cert-grid">
         {nonFeaturedRoles.map((role, i) => (
-          <div key={role.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i % 5}` : ''}`}>
+          <div key={role.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i % 5}` : ''}`} data-tilt>
+            <span className="tilt-sheen" aria-hidden />
             <div className={`ops-cert-card__thumb${!role.certImage ? ' ops-cert-card__thumb--placeholder' : ''}`}>
               {role.certImage
                 ? <img src={role.certImage} alt={`${role.title} certificate`} loading="lazy" />
@@ -113,7 +115,8 @@ export default function OperationsPage() {
       </div>
       <div className="ops-cert-grid">
         {operationLogs.map((op, i) => (
-          <div key={op.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i % 5}` : ''}`}>
+          <div key={op.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i % 5}` : ''}`} data-tilt>
+            <span className="tilt-sheen" aria-hidden />
             <div className={`ops-cert-card__thumb${!op.certImage ? ' ops-cert-card__thumb--placeholder' : ''}`}>
               {op.certImage
                 ? <img src={op.certImage} alt={`${op.name} certificate`} loading="lazy" />
@@ -148,7 +151,8 @@ export default function OperationsPage() {
       </div>
       <div className="ops-cert-grid">
         {arenaRecords.map((rec, i) => (
-          <div key={rec.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i}` : ''}`}>
+          <div key={rec.id} className={`ops-cert-card reveal${i > 0 ? ` reveal-delay-${i}` : ''}`} data-tilt>
+            <span className="tilt-sheen" aria-hidden />
             <div className={`ops-cert-card__thumb${!rec.certImage ? ' ops-cert-card__thumb--placeholder' : ''}`}>
               {rec.certImage
                 ? <img src={rec.certImage} alt={`${rec.name} certificate`} loading="lazy" />

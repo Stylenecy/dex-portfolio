@@ -16,7 +16,7 @@ export const skillModules: SkillModule[] = [
     id: 'core-systems',
     title: 'Core Systems',
     desc: 'Server-side logic, data pipelines, and API architecture. The engine beneath the interface.',
-    tags: ['Node.js', 'Express', 'MySQL', 'Supabase', 'API Integration'],
+    tags: ['Node.js', 'Express', 'Python', 'MySQL', 'PostgreSQL', 'Supabase', 'API Integration'],
   },
   {
     id: 'creative-engine',
@@ -29,5 +29,11 @@ export const skillModules: SkillModule[] = [
     title: 'Environment',
     desc: 'Tools to maintain system integrity, version control, and deployment pipelines.',
     tags: ['VS Code', 'Git / GitHub', 'Postman', 'Vercel'],
+  },
+  {
+    id: 'spatial-3d',
+    title: 'Spatial / 3D',
+    desc: 'Immersive and spatial computing. Building VR environments and 3D scenes — load-bearing work behind VR Inclusive Tourism.',
+    tags: ['Unity', '3D Modeling', 'VR Environments', 'Scene Setting'],
   },
 ];

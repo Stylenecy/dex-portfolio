@@ -44,13 +44,19 @@ export default function RevealObserver() {
 
     const io = new IntersectionObserver(
       (entries, obs) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
+        // Cards entering together (a grid scrolling into view) cascade ~55ms
+        // apart for a staggered reveal. Elements with an explicit
+        // .reveal-delay-* class keep their authored delay.
+        const hits = entries.filter((e) => e.isIntersecting);
+        hits.forEach((entry, idx) => {
           const el = entry.target as HTMLElement;
+          if (!/reveal-delay-/.test(el.className)) {
+            el.style.transitionDelay = `${Math.min(idx, 10) * 55}ms`;
+          }
           el.classList.add('active');
           if (el.querySelector('.quest-stats-v3')) fireStatBlock(el);
           obs.unobserve(el);
-        }
+        });
       },
       { threshold: 0.16, rootMargin: '0px 0px -6% 0px' }
     );
