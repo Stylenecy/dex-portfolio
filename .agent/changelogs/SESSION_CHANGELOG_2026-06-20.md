@@ -58,7 +58,12 @@ pnpm --dir web dev          # → localhost:3000 (kalau kepake, auto pindah 3001
 2. Settings → Environment Variables → add **`GEMINI_KEY`** = <key Dex> (Production + Preview). (Buat "Ask the Operator". Visual tetap jalan tanpa ini, cuma chat AI yang mati.)
 3. Lalu: merge `next-migration` → `main` + push (atau klik Redeploy). Vercel auto-build → **live di dex-portfolio.vercel.app**.
 
-### 🔴 DEPLOY STATUS UPDATE (20 Jun sore) — 95% siap, 1 blocker manual
+### ✅ DEPLOYED LIVE (20 Jun sore) — https://dex-portfolio.vercel.app
+Dex set Root Directory=`web` → `vercel --prod` dari repo root → **build 42s, READY, aliased ke dex-portfolio.vercel.app**. New Next.js masterpiece LIVE (5 route 200, KFC 0-trace verified on prod, featured=Sowan, FTI 50+, foto webp). Catch tambahan: KFC ternyata ke-HARDCODE di `operations/page.tsx` JSX (featured-role badge "Chairman/KFC Tournament") — bukan dari data — difix ke data-driven (commit final), redeploy. Verified live screenshot OK.
+- Deploy mechanism: Root Directory=`web` + `web/vercel.json` framework=nextjs. CLI deploy HARUS dari **repo root** (bukan `web/`) karena rootDir=web. Git deploy (push main) juga build web/ skrg.
+- NOTE next: branch `next-migration` belum di-merge ke `main` (prod di-deploy via CLI dari branch). Kalau mau main = source of truth, merge nanti.
+
+#### (history) DEPLOY STATUS — 95% siap, 1 blocker manual (RESOLVED above)
 Sudah dikerjain (Vercel CLI ternyata UDAH login sbg `stylenecy`):
 - ✅ Vercel CLI v54 keinstall · `web/` LINKED ke project `stylenecys-projects/dex-portfolio` (`.vercel/` gitignored)
 - ✅ env `GEMINI_KEY` di-set ke Production (dari `web/.env.local`, ga di-print)
