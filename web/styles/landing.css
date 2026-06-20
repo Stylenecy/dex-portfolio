@@ -1,0 +1,516 @@
+/* ==========================================================================
+   LANDING.CSS — System Boot Overlay  (F3.0 "Quiet Operator × Awakened")
+   Full-screen intro page before the dashboard.
+
+   DESIGN LANGUAGE (matches atmosphere.css + hub hero codenames):
+   - Matte near-black canvas. NO aurora glow orbs, NO CRT scan beam. Depth
+     comes from value-steps + hairlines (var(--hairline)), not glow blobs.
+   - Hero codename in Geist Mono, gradient ink → accent — same family as the
+     in-app `.hub__label` hero gesture (clamp up to ~108px, line-height 0.88,
+     letter-spacing -0.045em, -webkit-background-clip:text).
+   - Accent at REST is dormant (var(--hub-accent-rest)). ONE flare moment:
+     the INITIALIZE SYSTEM button ignites the accent on hover/focus — the
+     "charge" — while everything around it stays dark.
+
+   FIX NOTE (Protocol BAD-01): never put var() in the timing-function slot of
+   the `animation:` shorthand — the browser drops the whole animation. All
+   easing is hardcoded:  --ease-out = cubic-bezier(0.22, 1, 0.36, 1).
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. KEYFRAMES — entrance, atmosphere, exit
+   -------------------------------------------------------------------------- */
+
+/* Name words — slide up from below (line-level reveal, clipped by overflow) */
+@keyframes lp-slide-up {
+  from {
+    transform: translateY(108%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Badge, codename tag, footer — gentle fade-rise */
+@keyframes lp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Right descriptor — comes in from the right */
+@keyframes lp-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Badge dot — quiet breathing pulse (opacity only, no glow halo) */
+@keyframes lp-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* Boot bar — fills left to right while you're on the landing */
+@keyframes lp-boot-progress {
+  from { width: 0%;   opacity: 1; }
+  92%  { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+/* Exit — whole overlay sweeps upward off screen (Protocol BAD-02: keyframes,
+   not transition; the TSX listens for animationName === 'lp-exit-sweep'). */
+@keyframes lp-exit-sweep {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0.6;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   2. OVERLAY CONTAINER — matte graphite, lets atmosphere read through
+   -------------------------------------------------------------------------- */
+
+#lp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  /* Matte near-black canvas. A barely-there top-down value-step gives depth
+     without any glow blob — same restraint as atmosphere.css. */
+  background-color: var(--bg-void);
+  background-image: linear-gradient(
+    180deg,
+    var(--bg-surface) 0%,
+    var(--bg-void) 42%,
+    var(--bg-void) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 4.5vw, 3.5rem);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* When the TSX adds .lp-exit — plays the sweep-up exit (keyframes, not
+   transition). 'forwards' holds the final off-screen state. */
+#lp-overlay.lp-exit {
+  animation: lp-exit-sweep 0.85s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  pointer-events: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. ATMOSPHERE — warm vignette + boot bar (orbs / scan-beam / scanline KILLED)
+   -------------------------------------------------------------------------- */
+
+/* Subtle warm vignette, same warm family as atmosphere.css body::before.
+   Static, non-glow — darkens the edges so structure reads by contrast. */
+.lp-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(
+      ellipse 90% 70% at 50% -12%,
+      var(--orange-dim) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 120% 100% at 50% 50%,
+      transparent 56%,
+      var(--bg-void) 100%
+    );
+}
+
+/* Boot progress bar — hairline fill along the bottom edge. Dormant accent at
+   rest; it's a quiet readout, not a glow. */
+.lp-boot-bar {
+  position: absolute;
+  bottom: 0;
+  left: clamp(1.5rem, 4.5vw, 3.5rem);
+  right: clamp(1.5rem, 4.5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--hub-accent-rest),
+    var(--hairline) 72%,
+    transparent
+  );
+  width: 0%;
+  /* Starts after 0.4s, fills over 2.8s, fades at the end. */
+  animation: lp-boot-progress 3.2s cubic-bezier(0.4, 0, 0.6, 1) 0.4s forwards;
+  z-index: 3;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. TOP BAR
+   -------------------------------------------------------------------------- */
+
+.lp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  /* FIX: hardcoded cubic-bezier — no var() in animation timing slot */
+  animation: lp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+/* Badge — matte chip, hairline border, dormant accent text. No backdrop glow. */
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* Pulsing status dot — the one live accent in the chrome, but no glow halo;
+   opacity breathing only so it reads as "online", not "neon". */
+.lp-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hub-accent);
+  flex-shrink: 0;
+  animation: lp-breathe 2.4s ease-in-out infinite;
+}
+
+.lp-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.10em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.lp-topbar__sep {
+  opacity: 0.3;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. HERO — name block left, descriptor right
+   -------------------------------------------------------------------------- */
+
+.lp-hero {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. NAME BLOCK — Geist Mono hero codename (same family as .hub__label hero)
+   -------------------------------------------------------------------------- */
+
+.lp-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Mono kicker above the codename — quiet structural label */
+.lp-name__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  /* FIX: hardcoded cubic-bezier */
+  animation: lp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+/* overflow:hidden is the clip box for the slide-up reveal */
+.lp-name-line {
+  overflow: hidden;
+  line-height: 0.88;
+  display: flex;
+  align-items: baseline;
+}
+
+/* "DEX" animates first */
+.lp-name-line:nth-of-type(1) .lp-name__word {
+  animation: lp-slide-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+/* "BENNETT" follows 250ms later */
+.lp-name-line:nth-of-type(2) .lp-name__word {
+  animation: lp-slide-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+}
+
+/* Hero codename — Geist Mono, gradient ink → accent. Mirrors the in-app
+   `.hub__label` hero gesture (clamp up to ~108px, line-height 0.88,
+   letter-spacing -0.045em, -webkit-background-clip:text). */
+.lp-name__word {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(4.5rem, 17vw, 11rem);
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  display: block;
+  /* gradient: warm ink at top, hub accent bleeding in at the baseline */
+  color: var(--hub-accent);
+  background: linear-gradient(
+    176deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 55%,
+    var(--hub-accent) 135%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. RIGHT DESCRIPTOR — mono label + tagline
+   -------------------------------------------------------------------------- */
+
+.lp-descriptor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.875rem;
+  max-width: clamp(200px, 22vw, 300px);
+  text-align: right;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+  /* FIX: hardcoded cubic-bezier */
+  animation: lp-fade-right 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
+}
+
+/* "CREATIVE TECHNOLOGIST" — dormant accent, mono, restrained */
+.lp-descriptor__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--hub-accent-rest);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Thin right-aligned hairline divider */
+.lp-descriptor__divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to left, var(--hairline-bright), transparent);
+}
+
+.lp-descriptor__tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+
+/* --------------------------------------------------------------------------
+   8. FOOTER BAR — meta + the ONE FLARE (CTA)
+   -------------------------------------------------------------------------- */
+
+.lp-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  padding-top: 1.125rem;
+  border-top: 1px solid var(--hairline);
+  /* FIX: hardcoded cubic-bezier */
+  animation: lp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+}
+
+.lp-footer__meta {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.11em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  gap: 0;
+}
+
+.lp-footer__meta span + span::before {
+  content: ' · ';
+  white-space: pre;
+  opacity: 0.35;
+}
+
+/* INITIALIZE SYSTEM — the single FLARE moment. At rest: matte, hairline edge,
+   dormant accent. On hover/focus the accent IGNITES in place (border + text +
+   one ring of glow) while the rest of the screen stays dark — energy by
+   contrast, not glow-everywhere. */
+.lp-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  /* var() IS allowed in transition (only the animation shorthand is broken). */
+  transition:
+    background   280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color        280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow   280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lp-enter-btn:hover,
+.lp-enter-btn:focus-visible {
+  background: var(--hub-accent-dim);
+  border-color: var(--hub-accent-border);
+  color: var(--hub-accent);
+  box-shadow: var(--hub-shadow-hover);
+  outline: none;
+}
+
+.lp-enter-btn:hover .lp-enter-btn__arrow,
+.lp-enter-btn:focus-visible .lp-enter-btn__arrow {
+  transform: translateX(5px);
+}
+
+.lp-enter-btn__arrow {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  /* FIX: hardcoded easing */
+  transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .lp-hero { gap: 1.25rem; }
+  .lp-descriptor { max-width: clamp(160px, 28vw, 240px); }
+}
+
+@media (max-width: 640px) {
+  #lp-overlay {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .lp-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 1.25rem;
+  }
+
+  .lp-descriptor {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .lp-descriptor__divider {
+    background: linear-gradient(to right, var(--hairline-bright), transparent);
+  }
+
+  .lp-topbar__right { display: none; }
+  .lp-footer__meta  { display: none; }
+
+  .lp-enter-btn {
+    padding: 10px 20px;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .lp-name__word { font-size: clamp(3.5rem, 22vw, 6rem); }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. REDUCED MOTION  (Protocol BAD-03)
+   Dex runs Windows with "Animation effects" OFF, so prefers-reduced-motion:
+   reduce is ACTIVE for him. NEVER use `animation: none` here — that left the
+   whole screen frozen/blank in the past. Instead collapse durations to
+   ~0.01ms so every element jumps straight to its FINAL state (fully visible,
+   in place) instead of being stuck on the `from` frame.
+   The exit sweep still functions: animationend fires near-instantly, and the
+   TSX has a setTimeout fallback regardless.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-topbar,
+  .lp-name__tag,
+  .lp-name-line:nth-of-type(1) .lp-name__word,
+  .lp-name-line:nth-of-type(2) .lp-name__word,
+  .lp-descriptor,
+  .lp-footer {
+    animation-duration: 0.01ms;
+    animation-delay: 0ms;
+  }
+
+  /* Quiet the looping atmosphere/status motion to a single resting frame. */
+  .lp-badge__dot {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    opacity: 1;
+  }
+
+  /* Boot bar: snap to full, then hold — no crawling fill. */
+  .lp-boot-bar {
+    animation-duration: 0.01ms;
+    width: 100%;
+  }
+}

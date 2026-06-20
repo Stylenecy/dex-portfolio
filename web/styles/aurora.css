@@ -1,0 +1,120 @@
+/* =========================================
+   AURORA ENGINE — Ambient Background System
+   Role: Fixed animated glow blobs that live
+   permanently behind ALL dashboard content.
+
+   Updated: richer, warmer multi-color aurora
+   with slightly more opacity and a hint of
+   orange warmth for visual interest.
+   ========================================= */
+
+/* ── Container ──────────────────────────── */
+.aurora-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Base Blob Style ────────────────────── */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+  animation: float-ambient 24s infinite alternate ease-in-out;
+}
+
+/* ── Blob 1: Top-Left — Cyan Dominant ───── */
+.a1 {
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(198, 100%, 56%, 0.18) 0%,
+    hsla(198, 100%, 56%, 0.06) 60%,
+    transparent 100%
+  );
+  top: -28%;
+  left: -16%;
+  opacity: 1;
+  animation-duration: 24s;
+  animation-delay: 0s;
+}
+
+/* ── Blob 2: Bottom-Right — Purple Dominant */
+.a2 {
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(258, 80%, 65%, 0.14) 0%,
+    hsla(258, 80%, 65%, 0.05) 60%,
+    transparent 100%
+  );
+  bottom: -16%;
+  right: -14%;
+  opacity: 1;
+  animation-duration: 30s;
+  animation-delay: -7s;
+}
+
+/* ── Blob 3: Center-Stage — Cyan-Purple Mix */
+.a3 {
+  width: 48vw;
+  height: 48vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(198, 100%, 56%, 0.08) 0%,
+    hsla(258, 80%, 65%, 0.06) 50%,
+    transparent 100%
+  );
+  top: 35%;
+  left: 25%;
+  opacity: 1;
+  animation-duration: 36s;
+  animation-delay: -14s;
+}
+
+/* ── Blob 4: Top-Right — Purple Accent ──── */
+.a4 {
+  width: 38vw;
+  height: 38vw;
+  background: radial-gradient(
+    ellipse at center,
+    hsla(258, 80%, 65%, 0.10) 0%,
+    transparent 100%
+  );
+  top: -8%;
+  right: 2%;
+  opacity: 1;
+  animation-duration: 42s;
+  animation-delay: -21s;
+}
+
+/* ── Keyframe: Slow Drift ───────────────── */
+@keyframes float-ambient {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(2%, 5%) scale(1.04);
+  }
+  50% {
+    transform: translate(4%, 2%) scale(0.97);
+  }
+  75% {
+    transform: translate(-1%, 7%) scale(1.06);
+  }
+  100% {
+    transform: translate(5%, 9%) scale(1.02);
+  }
+}
+
+/* ── Reduced Motion Override ────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none;
+  }
+}

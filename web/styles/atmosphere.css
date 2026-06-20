@@ -1,0 +1,56 @@
+/* =========================================================================
+   ATMOSPHERE — Static Background Material (F3.0 "Quiet × Awakened")
+   Replaces the aurora engine. Three fixed, non-animated, pointer-events:none
+   layers behind ALL content:
+     1. body::before  — warm vignette + blueprint graticule (depth + texture)
+     2. body::after   — film grain (material warmth, kills "digital plastic")
+   All STATIC. Nothing drifts on idle — depth/motion come from interaction.
+
+   Tuned LOUDER than a typical "tasteful" grain pass: the surface must read
+   as deliberately textured at a glance, not whisper-quiet.
+   ========================================================================= */
+
+/* ── Layer 1: Warm vignette + blueprint graticule ───────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    /* warm pool of light, top-center — gives the void visible tonal life */
+    radial-gradient(ellipse 90% 70% at 50% -10%,
+      rgba(255, 176, 112, 0.07) 0%,
+      rgba(255, 140, 90, 0.025) 32%,
+      transparent 65%),
+    /* cool counter-tint, bottom — subtle depth contrast */
+    radial-gradient(ellipse 80% 60% at 50% 115%,
+      rgba(110, 150, 255, 0.035) 0%,
+      transparent 60%),
+    /* blueprint grid */
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    36px 36px,
+    36px 36px;
+}
+
+/* ── Layer 2: Film grain ────────────────────────────────────────────────── */
+/* fractalNoise, desaturated. Normal blend at low opacity = faint light
+   speckle that actually reads on near-black (soft-light vanished here). */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.085;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px auto;
+}
+
+/* The graticule + grain are static by design — nothing to disable for
+   reduced-motion. Left here as documentation of intent. */

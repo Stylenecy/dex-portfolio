@@ -1,0 +1,592 @@
+/* =========================================
+   CARDS.CSS — Arsenal Cards, Tech Tags & Mission Items
+   Part of the Dex Bennett // System OS Design System
+
+   Upgraded: multi-layer shadows, inset highlights,
+   refined easing, better visual depth.
+   =========================================
+   TABLE OF CONTENTS:
+   1. Arsenal Cards (Skills Grid)
+   2. Tech Tags (Skill Badges)
+   3. Mission Items (Project Log)
+   4. Mission Visual Thumbnails
+   5. Mission Status Badges
+   6. Mission Content & Links
+   7. Mini Tech Stack
+   8. Responsive
+   ========================================= */
+
+
+/* =========================================
+   1. ARSENAL CARDS — Technical Skill Grid
+   ========================================= */
+
+.arsenal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.arsenal-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px 24px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+
+  /* Multi-layer depth shadow */
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform    var(--duration-base) var(--ease-responsive),
+    box-shadow   var(--duration-base) var(--ease-responsive),
+    border-color var(--duration-base) ease;
+
+  will-change: transform;
+}
+
+/* Glass bevel — top edge highlight */
+.arsenal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.09) 30%,
+    rgba(100, 210, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.09) 70%,
+    transparent
+  );
+  opacity: 0.5;
+  transition: opacity var(--duration-base) ease;
+  pointer-events: none;
+}
+
+/* Face sheen — subtle gradient on card face */
+.arsenal-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.025) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.arsenal-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.22));
+  box-shadow: var(--hub-shadow-hover, var(--shadow-hover-cyan));
+}
+
+.arsenal-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Card Icon ─────────────────────────────── */
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.07));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.16));
+  color: var(--hub-accent, var(--cyan));
+  flex-shrink: 0;
+  box-shadow: 0 0 16px var(--hub-accent-glow, var(--cyan-glow));
+  transition:
+    background var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.arsenal-card:hover .card-icon {
+  background: rgba(100, 210, 255, 0.12);
+  border-color: rgba(100, 210, 255, 0.32);
+  box-shadow: 0 0 24px var(--hub-accent-glow, var(--cyan-glow));
+}
+
+.card-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--hub-accent, var(--cyan));
+  stroke-width: 1.75;
+}
+
+/* ── Card Heading ──────────────────────────── */
+.arsenal-card-title,
+.arsenal-card h3,
+.arsenal-card h4 {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Card Description ──────────────────────── */
+.card-desc {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Tech Stack Tags (inside arsenal-card) ─── */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================================
+   2. TECH TAGS — Skill / Stack Badges
+   ========================================= */
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--hub-accent, var(--cyan));
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.07));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.18));
+  border-radius: var(--radius-pill);
+  line-height: 1.5;
+  white-space: nowrap;
+  box-shadow: var(--shadow-xs);
+  transition:
+    background   var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color        var(--duration-fast) ease,
+    transform    var(--duration-fast) var(--ease-responsive);
+}
+
+.tech-tag:hover {
+  background: rgba(100, 210, 255, 0.14);
+  border-color: rgba(100, 210, 255, 0.38);
+  transform: translateY(-1px);
+}
+
+/* Variants */
+.tech-tag--purple {
+  color: var(--purple);
+  background: var(--purple-dim);
+  border-color: var(--purple-border);
+}
+.tech-tag--purple:hover {
+  background: rgba(139, 92, 246, 0.16);
+  border-color: rgba(139, 92, 246, 0.42);
+}
+
+.tech-tag--green {
+  color: var(--green);
+  background: var(--green-dim);
+  border-color: rgba(74, 222, 128, 0.22);
+}
+
+.tech-tag--orange {
+  color: var(--orange);
+  background: var(--orange-dim);
+  border-color: rgba(251, 146, 60, 0.22);
+}
+
+.tech-tag--muted {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--glass-border);
+}
+
+
+/* =========================================
+   3. MISSION ITEMS — Project Log Cards
+   ========================================= */
+
+.mission-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.mission-item {
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  gap: 32px;
+  align-items: start;
+  padding: 28px;
+
+  background: var(--glass-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+
+  position: relative;
+  overflow: hidden;
+
+  /* Multi-layer shadow */
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    border-color var(--duration-base) ease,
+    box-shadow   var(--duration-base) var(--ease-responsive),
+    transform    var(--duration-base) var(--ease-responsive);
+
+  will-change: transform;
+}
+
+/* Alternate zig-zag layout */
+.mission-item:nth-child(even) {
+  grid-template-columns: 1.45fr 1fr;
+  direction: rtl;
+}
+.mission-item:nth-child(even) > * {
+  direction: ltr;
+}
+
+/* Top-edge accent glow */
+.mission-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--hub-accent-glow, rgba(100, 210, 255, 0.3)),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) ease;
+  pointer-events: none;
+}
+
+/* Face sheen */
+.mission-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.020) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mission-item:hover {
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.20));
+  box-shadow: var(--hub-shadow-hover, var(--shadow-hover-cyan));
+  transform: translateY(-3px);
+}
+
+.mission-item:hover::before {
+  opacity: 1;
+}
+
+.mission-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================================
+   4. MISSION VISUAL — Project Thumbnail
+   ========================================= */
+
+.mission-visual {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.mission-visual:hover {
+  transform: scale(1.025);
+}
+
+.mission-visual-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0.82;
+  filter: saturate(0.85) brightness(0.92);
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.5s var(--ease-out);
+}
+
+.mission-item:hover .mission-visual-img {
+  opacity: 1;
+  filter: saturate(1.05) brightness(1);
+  transform: scale(1.05);
+}
+
+/* Gradient placeholder fills */
+.visual-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.6;
+}
+.gradient-1 {
+  background: linear-gradient(135deg, rgba(100, 210, 255, 0.22) 0%, rgba(139, 92, 246, 0.14) 100%);
+}
+.gradient-2 {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.18) 0%, rgba(100, 210, 255, 0.10) 100%);
+}
+.gradient-3 {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(74, 222, 128, 0.10) 100%);
+}
+
+/* Bottom-fade overlay */
+.mission-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(8, 8, 16, 0.65), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mission-visual--wide {
+  aspect-ratio: 16 / 8;
+  margin: 8px 0;
+}
+
+
+/* =========================================
+   5. MISSION STATUS BADGES
+   ========================================= */
+
+.mission-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-xs);
+}
+
+.mission-status.active {
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border-color: rgba(100, 210, 255, 0.24);
+}
+.mission-status.completed {
+  color: var(--green);
+  background: var(--green-dim);
+  border-color: rgba(74, 222, 128, 0.24);
+}
+.mission-status.archived {
+  color: var(--purple);
+  background: var(--purple-dim);
+  border-color: rgba(139, 92, 246, 0.24);
+}
+.mission-status.locked {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--glass-border);
+}
+
+
+/* =========================================
+   6. MISSION CONTENT
+   ========================================= */
+
+.mission-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.mission-content h3,
+.mission-content h4 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  transition: color var(--duration-fast) ease;
+}
+
+.mission-item:hover .mission-content h3,
+.mission-item:hover .mission-content h4 {
+  color: #fff;
+}
+
+.mission-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+
+/* =========================================
+   7. MINI TECH STACK & LINKS
+   ========================================= */
+
+.tech-stack-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tech-stack-mini span {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+
+.mission-item:hover .tech-stack-mini span {
+  color: var(--hub-accent, var(--cyan));
+  border-color: var(--hub-accent-border, rgba(100, 210, 255, 0.20));
+}
+
+/* Mission action links row */
+.mission-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Outline button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--hub-accent, var(--cyan));
+  background: var(--hub-accent-dim, rgba(100, 210, 255, 0.06));
+  border: 1px solid var(--hub-accent-border, rgba(100, 210, 255, 0.24));
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-xs);
+  transition:
+    background   var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color        var(--duration-fast) ease,
+    transform    var(--duration-fast) var(--ease-responsive),
+    box-shadow   var(--duration-fast) ease;
+}
+
+.btn-outline:hover {
+  background: rgba(100, 210, 255, 0.12);
+  border-color: rgba(100, 210, 255, 0.52);
+  box-shadow:
+    var(--shadow-xs),
+    0 0 20px rgba(100, 210, 255, 0.14);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+/* Text link — secondary CTA */
+.link-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 8px 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  transition: color var(--duration-fast) ease, gap var(--duration-fast) ease;
+}
+
+.link-text:hover {
+  color: var(--hub-accent, var(--cyan));
+  gap: 9px;
+}
+
+
+/* =========================================
+   8. RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+  .mission-item,
+  .mission-item:nth-child(even) {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+  .mission-item:nth-child(even) > * { direction: ltr; }
+  .mission-visual { aspect-ratio: 16 / 8; }
+  .mission-content p { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .arsenal-grid { grid-template-columns: 1fr; }
+  .arsenal-card { padding: 20px 18px; }
+  .mission-item { padding: 20px; gap: 20px; }
+  .mission-content h3,
+  .mission-content h4 { font-size: 17px; }
+  .mission-links { flex-direction: column; align-items: flex-start; }
+}

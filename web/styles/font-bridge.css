@@ -1,0 +1,6 @@
+/* Re-point design-system font tokens at the self-hosted next/font faces.
+   Imported LAST in globals.css so it overrides variables.css. */
+:root {
+  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "Cascadia Code", "Fira Code", monospace;
+}

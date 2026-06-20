@@ -1,0 +1,33 @@
+export const profile = {
+  name: 'Dex Bennett',
+  alias: 'Style / Stylenecy',
+  role: 'Aspiring Fullstack & System Thinker',
+  tagline: "I build systems that don't just function — but feel alive.",
+  affiliation: 'UKDW — Faculty of Information Technology',
+  program: 'Information Systems · Semester 6',
+  location: 'Yogyakarta, Indonesia',
+  email: 'dex.bennett28@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/dex-bennett-313b40293/',
+  github: 'https://github.com/Stylenecy',
+  instagram: 'https://instagram.com/dex.bennett',
+  youtube: 'https://www.youtube.com/channel/UCJuSrzhIrZxb7qPOZwAvA8Q/featured',
+  phase: 'Reforging Phase — Active',
+  systemId: 'DEX-2026-SYS',
+  buildVersion: '2.0.0-reforge',
+  physical: {
+    origin: 'Indonesia',
+    height: '182 cm',
+    weight: '60 kg',
+    sports: 'Badminton · Table Tennis',
+  },
+  stats: {
+    projects: '05',
+    rolesHeld: '08+',
+    phase: '2 / 3',
+  },
+  power: {
+    score: 74,
+    maxScore: 100,
+    rank: 'A',
+  },
+} as const;

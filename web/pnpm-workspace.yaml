@@ -1,0 +1,6 @@
+# Native post-install builds. Skipped for dev (not needed to run/compile).
+# Before production deploy: flip `sharp: true` for next/image optimization,
+# then `pnpm install --force`.
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
