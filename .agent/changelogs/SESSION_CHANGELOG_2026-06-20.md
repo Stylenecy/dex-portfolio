@@ -35,6 +35,33 @@ pnpm --dir web dev          # → localhost:3000 (kalau kepake, auto pindah 3001
 
 ---
 
+## 🚀 PASS 2 (20 Jun, sore) — KFC purge + FOTO + deploy-ready
+
+**KFC chairman DIHAPUS TOTAL** (Dex marah, claim ini palsu/cancelled). 3 tempat:
+- `roles.ts` — object `chairman-kfc` (yang FEATURED) dibuang; ganti featured → Sowan Platform Builder (real, kuat).
+- `timeline.ts` — entry `kfc-chairman` dibuang.
+- `lib/persona.ts` — baris "Chairman elect — KFC..." dibuang (penting: ini yang AI omongin ke orang).
+- Verified grep: 0 sisa kfc/aletheia/hagios di `web/`.
+
+**FOTO — beres (blocker terbesar):** `node .agent/plans/compress-images.mjs --write` → **209MB → 7.48MB WebP (96% potong)**, 39 file. Semua referensi di-swap ke `.webp` (roles/arena/operations/missions/Sidebar/operator-metrics). Originals di-`git rm --cached` + gitignore (`web/.gitignore`) — tetap di disk lokal sebagai master, ga ke-deploy. Repo image tree: 209MB→7.6MB.
+
+**Build verified:** `pnpm --dir web build` = **PASS** (compile + tsc + 9 pages generated, /api/chat function). Siap deploy.
+
+## ⚠️ DEPLOY — KENAPA BELUM KELIHATAN DI dex-portfolio.vercel.app + cara go-live
+
+**Masalah:** `vercel.json` (repo root) masih build **site LAMA** (`taste-express/public` static). App Next baru ada di `web/`. Jadi prod URL masih serve vanilla sampai Vercel diarahin ke `web/`. Branch `next-migration` juga belum di-merge ke `main`.
+
+**Aku TIDAK bisa deploy sendiri:** Vercel CLI ga keinstall + `vercel login` interaktif (butuh Dex) + ganti Root Directory = aksi dashboard (butuh Dex). Live site aman (failed deploy ga nimpa prod).
+
+**CARA GO-LIVE (2 langkah dashboard, sekali aja, lalu merge):**
+1. Vercel → project **dex-portfolio** → Settings → General → **Root Directory = `web`** → Save. (Ini bikin Vercel build app Next, abaikan vercel.json lama.)
+2. Settings → Environment Variables → add **`GEMINI_KEY`** = <key Dex> (Production + Preview). (Buat "Ask the Operator". Visual tetap jalan tanpa ini, cuma chat AI yang mati.)
+3. Lalu: merge `next-migration` → `main` + push (atau klik Redeploy). Vercel auto-build → **live di dex-portfolio.vercel.app**.
+
+Alternatif (kalau Dex mau aku yang gas via CLI): Dex jalanin `! npm i -g vercel` → `! vercel login` → bilang aku, lanjut `vercel link` ke project + `vercel --prod` dari `web/`.
+
+---
+
 ## SAFETY ANCHOR
 - Commit `3fc9744` — seluruh `web/` (F0–F2 + F3.0 Phase 1b) di-commit sebagai jangkar SEBELUM YOLO. Branch tadinya nol commit. Sekarang ada rollback point.
 

@@ -163,7 +163,7 @@ export default function Sidebar() {
           aria-label="Expand operator profile photo"
         >
           <Image
-            src="/images/profile-dex.jpg"
+            src="/images/profile-dex.webp"
             alt="Dex Bennett — Operator Profile Photo"
             width={120}
             height={120}
@@ -330,7 +330,7 @@ export default function Sidebar() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="photo-lightbox__img"
-            src="/images/profile-dex.jpg"
+            src="/images/profile-dex.webp"
             alt="Dex Bennett — Operator Profile Photo, enlarged"
           />
           <button

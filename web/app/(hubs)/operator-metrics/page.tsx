@@ -131,7 +131,7 @@ export default function OperatorMetricsPage() {
           <div className="metrics-bio">
             <div className="metrics-bio__top">
               <div className="metrics-bio__avatar">
-                <img src="/images/profile-dex.jpg" alt="Dex Bennett profile photo" loading="lazy" />
+                <img src="/images/profile-dex.webp" alt="Dex Bennett profile photo" loading="lazy" />
               </div>
               <div className="metrics-bio__identity">
                 <div className="metrics-bio__name">{profile.name}</div>

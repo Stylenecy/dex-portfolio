@@ -24,7 +24,7 @@ export const arenaRecords: ArenaRecord[] = [
     org: 'Business Plan Competition (BPC)', // TODO(dex): real organizer name?
     result: 'semifinalist',
     resultLabel: 'Top 15 Semi-Finalist',
-    certImage: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).png',
+    certImage: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).webp',
     certPdf: '/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).pdf',
   },
   {
@@ -48,7 +48,7 @@ export const arenaRecords: ArenaRecord[] = [
     org: 'Valorant Esports',
     result: 'competitor',
     resultLabel: 'Competitor',
-    certImage: '/images/certificates/Dex Bennett (Turnamen Valorant).png',
+    certImage: '/images/certificates/Dex Bennett (Turnamen Valorant).webp',
   },
   {
     id: 'turnamen-mlbb',

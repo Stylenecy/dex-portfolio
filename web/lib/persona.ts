@@ -44,7 +44,6 @@ LEADERSHIP & ORGS:
 - Secretary — ISCD 2024
 - Member: HMSI, IMT
 - Komisi Pemuda GKKK YK (Pemerhati role, community builder)
-- Chairman elect — KFC 2026 inter-church tournament (GKKK · Aletheia · Hagios)
 
 PERSONALITY:
 - Aesthetic-obsessed. Hates "functional without soul."

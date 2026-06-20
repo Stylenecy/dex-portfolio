@@ -13,15 +13,6 @@ export interface TimelineEntry {
 
 export const timelineEntries: TimelineEntry[] = [
   {
-    id: 'kfc-chairman',
-    year: '2026 (Upcoming)',
-    title: 'Chairman — Inter-Church Tournament KFC',
-    tag: 'leadership',
-    tagLabel: 'Large-Scale Event Leadership',
-    desc: 'Leading the KFC 2026 tournament uniting GKKK, Aletheia, and Hagios communities. Full operational responsibility from planning to debrief.',
-    status: 'upcoming',
-  },
-  {
     id: 'cto-sowan',
     year: '2026',
     title: 'Platform Builder — Sowan.id · 🥇 KSE JUARA 2026 1st Place',

@@ -25,7 +25,7 @@ export const missions: Mission[] = [
     statusLabel: 'Active — Platform Builder',
     desc: 'Problem: Generational knowledge is fading — younger learners lose access to the cultural wisdom, language, and life knowledge held by elderly Indonesians. Thinking: A cross-generational EduTech platform that connects learners directly with elderly Indonesian mentors (sesepuh/lansia) across multiple domains — culture, language, and life skills. Decision: Built the full platform as the team\'s Platform Builder (Next.js 16, TypeScript, Tailwind v4, Vercel). Result: 🥇 1st Place — KSE JUARA 2026 (USU) · Top 15 Semifinalist — BPC EURECA 2026 · Top 10 Finalist — UKRIDA Solve-It Challenge 2026. HAKI registration in progress (LPPM UKDW).',
     tags: ['Next.js 16', 'TypeScript', 'Tailwind v4', 'Vercel', 'Shadcn UI'],
-    image: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).png',
+    image: '/images/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).webp',
     links: [
       { label: 'View Certificate', href: '/certificates/Dex Bennett (EURECA-Top 15 Semifinalist).pdf', variant: 'outline' },
     ],
@@ -37,7 +37,7 @@ export const missions: Mission[] = [
     statusLabel: 'Conceptual Design',
     desc: 'A comprehensive business plan and visual concept for an EdTech platform. Designed to solve the disconnect between academic syllabus and industry needs — focusing on value proposition, user journey, and market viability.',
     tags: ['Business Model Canvas', 'UI/UX Design', 'Product Strategy'],
-    image: '/images/Lumina.Edu.png',
+    image: '/images/Lumina.Edu.webp',
     links: [
       { label: 'View Pitch Deck', href: 'https://www.canva.com/design/DAG7uwYIVy8/Um3OpyFJHE4wXzizDnJINQ/edit', variant: 'outline' },
     ],
@@ -49,7 +49,7 @@ export const missions: Mission[] = [
     statusLabel: 'System Prototype',
     desc: 'Capstone project architecture focusing on inventory logic — automated stock alerts and sales tracking data flow. System analysis and database design phase.',
     tags: ['System Analysis', 'Database Design', 'Process Flow'],
-    image: '/images/Retail.png',
+    image: '/images/Retail.webp',
   },
   {
     id: 'vr-inclusive',
