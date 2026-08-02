@@ -60,7 +60,7 @@ Before writing a single line of code, confirm you have done ALL of these:
 | Font tokens | `var(--font-sans)`, `var(--font-mono)` — NEVER hardcode font names |
 | Shadow tokens | `var(--shadow-sm)` etc. — NEVER write raw box-shadow |
 | Hub accent | `var(--hub-accent)` etc. — NEVER hardcode hex in components |
-| Live URL | `dex.web-portofolio.com` |
+| Live URL | **`https://dex-portfolio.vercel.app`** — ⚠️ `dex.web-portofolio.com` is **NOT** this site (checked 2 Ags 2026: served by LiteSpeed, not Vercel, showing an old page). Do not cite it. |
 | Repo | `github.com/Stylenecy/dex-portfolio` |
 | Deploy | Every `git push origin main` auto-deploys via Vercel |
 

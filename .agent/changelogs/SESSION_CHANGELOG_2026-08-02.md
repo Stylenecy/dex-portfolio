@@ -125,5 +125,12 @@ nama rekan tim (privasi — cukup "tim bertiga"), nama tim per lomba (dokumen ti
    tidak dipakai lagi. Sengaja tidak kuhapus supaya `pnpm-lock.yaml` tidak perlu diregenerasi
    (risiko gagal deploy). Menghapusnya = penghematan waktu build, tapi lakukan bersama
    `pnpm install` dan build ulang.
-6. **`vercel.json` di root repo masih menunjuk `taste-express/`** (situs statis lama). Tidak
+6. 🔴 **`dex.web-portofolio.com` TIDAK menunjuk ke project Vercel ini.** Dicek 2 Ags 2026:
+   domain itu balas **HTTP 200 tapi dari server LiteSpeed** (hosting lain, bukan Vercel),
+   dan isinya halaman lama berjudul *"Dex Style Bennett – Reforging Phase"* — bukan portfolio
+   ini, bukan juga versi v2. `Protocol.md` §2 menulis domain itu sebagai "Live URL"; **itu
+   sudah tidak benar.** URL yang benar dan hidup: **https://dex-portfolio.vercel.app**.
+   Kalau kamu mau domainnya dipakai, itu perlu ubah DNS / tambah domain di project Vercel —
+   sengaja **tidak kusentuh**, karena itu keputusan & akses Dex.
+7. **`vercel.json` di root repo masih menunjuk `taste-express/`** (situs statis lama). Tidak
    dipakai karena Root Directory project Vercel = `web`. Tidak kusentuh supaya deploy tidak rusak.
