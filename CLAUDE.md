@@ -23,7 +23,16 @@ Kalau mau tau full history dan pending tasks: `.agent/WALKTHROUGH.md`
 - **Hub IDs** (`#hub-system-core` dll) jangan diubah — router.js bergantung padanya
 
 ## Working directory
-`taste-express/public/` — static site. HTML + CSS modular + Vanilla JS.
+`web/` — Next.js 16 (App Router), TypeScript. Ini yang di-deploy ke Vercel.
+Rute: `/` · `/work/[slug]` · `/about` · `/record`.
+
+- Isi situs ada di `web/data/caseStudies.ts` dan `web/data/record.ts`.
+  **Aturan file itu: setiap klaim harus punya berkas sumber di field `sources`.**
+  Kalau tidak bisa menunjuk sumbernya, jangan ditulis.
+- Token desain: `web/styles/v3/tokens.css`. `web/app/globals.css` = manifest, jangan isi style.
+- `taste-express/public/` = situs statis lama (v1). `web/_v2/` + `web/styles/_v2/` = dashboard
+  v2 yang diarsipkan 2 Ags 2026 — masih di disk & git, tapi di-exclude dari build.
+  Aturan CSS di bawah (font/shadow/warna/hub ID) berlaku untuk v1/v2, bukan v3.
 
 ---
 
