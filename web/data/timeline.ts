@@ -1,87 +1,59 @@
-export type TimelineStatus = 'current' | 'completed' | 'archived' | 'upcoming';
-export type TimelineTag = 'achievement' | 'tech' | 'leadership' | 'milestone';
-
 export interface TimelineEntry {
   id: string;
   year: string;
   title: string;
-  tag: TimelineTag;
-  tagLabel: string;
   desc: string;
-  status: TimelineStatus;
+  current?: boolean;
 }
 
 export const timelineEntries: TimelineEntry[] = [
   {
-    id: 'cto-sowan',
+    id: 'kkn-2026',
     year: '2026',
-    title: 'Platform Builder — Sowan.id · 🥇 KSE JUARA 2026 1st Place',
-    tag: 'achievement',
-    tagLabel: 'National Champion · EduTech',
-    desc: 'Built SOWAN — cross-generational EduTech platform connecting learners with elderly Indonesian mentors (sesepuh/lansia) for cultural wisdom, language, and life knowledge. Platform Builder role: full Next.js 16 + TypeScript + Vercel stack. Results: 🥇 1st Place — KSE JUARA 2026 (USU, national level) · Top 15 Semifinalist — BPC EURECA 2026 · Top 10 Finalist — UKRIDA Solve-It Challenge 2026. HAKI registration in progress (LPPM UKDW).',
-    status: 'current',
+    title: 'Chaired a 59-student service programme, and shipped the software for it',
+    desc:
+      'Overall chair of KKN Tematik STEM 2026 with Hong Kong Polytechnic University, and direct liaison to their supervisors. Vision screening reached 2,029 pupils across 7 schools in July. In August my group ran the LEAP 2036 workshop I built, one session per class, across two high schools.',
+    current: true,
   },
   {
-    id: 'synapse-intern',
+    id: 'audit-2026',
+    year: 'Jul 2026',
+    title: 'Audited my own live system and found participant data exposed',
+    desc:
+      'A self-audit on LEAP 2036 showed the public key could read every participant row. I closed it — reads moved behind a server function, database constraints added — applied it to production, and re-verified. The same reasoning shaped the Sowan backend a month later: never create the key that can leak.',
+  },
+  {
+    id: 'sowan-2026',
     year: '2026',
-    title: 'Fullstack Developer — Synapse Labs (Internship)',
-    tag: 'tech',
-    tagLabel: 'Industry · Fullstack',
-    desc: 'Fullstack development internship at Synapse Labs — industry collaboration between AFED & BPD HIPMI DIY. Built and integrated fullstack features for enterprise-level systems. Feb 2026 – 8 May 2026.',
-    status: 'completed',
+    title: 'Sowan won a national business plan competition',
+    desc:
+      '1st place at KSE Juara national level, announced 2 May. Top 15 at EURECA, Top 10 at UKRIDA Solve-It. I was the platform builder on a team of three. The thesis version of the backend followed, written on the assumption that the browser cannot be trusted with anything.',
   },
   {
-    id: 'bpmfti-coordinator',
+    id: 'synapse-2026',
+    year: '2026',
+    title: 'First industry internship',
+    desc: 'Fullstack developer at Synapse Labs, an industry collaboration between AFED and BPD HIPMI DIY. February to May 2026.',
+  },
+  {
+    id: 'ra-2025',
     year: '2025',
-    title: 'Coordinator — Aspirasi Division, BPMFTI',
-    tag: 'achievement',
-    tagLabel: 'Policy Impact & Advocacy',
-    desc: 'Executed 3× "FTI Mendengar" forums. Facilitated dialogue between 50+ students and the deanery, surfacing aspirations into concrete follow-ups.',
-    status: 'completed',
+    title: 'Research assistant — VR for people excluded from tourism',
+    desc:
+      'Assistant to the head of the Information Systems programme. Built 3D assets and scenes for an accessible beach experience, then taught community members with disabilities to use it in person.',
   },
   {
-    id: 'research-assistant',
+    id: 'bpm-2025',
     year: '2025',
-    title: 'Research Assistant — Kaprodi SI, UKDW',
-    tag: 'tech',
-    tagLabel: 'Academic Research · VR',
-    desc: 'Research assistant to the Head of Information Systems. Core project: VR Inclusive Tourism — beach VR experience for persons with disabilities. Contributed 3D asset modeling, scene setup, and field deployment teaching community members to experience VR firsthand. Jun 2025–Feb 2026.',
-    status: 'completed',
+    title: 'Ran the forum where students speak and the faculty has to answer',
+    desc:
+      'Coordinator of the Aspirations Division at BPM FTI. Three "FTI Mendengar" forums, 50+ students in direct dialogue with the faculty leadership, followed through to concrete changes.',
   },
   {
-    id: 'fti-mendengar-3',
-    year: '2025',
-    title: 'FTI Mendengar #3 — Forum Execution',
-    tag: 'tech',
-    tagLabel: 'Operational Leadership',
-    desc: 'Orchestrated the faculty aspirations forum. 50+ students engaged. Tangible policy changes on facility maintenance.',
-    status: 'completed',
-  },
-  {
-    id: 'dibarsi-chairman',
-    year: '2024',
-    title: 'Chairman — DIBARSI, HMSI',
-    tag: 'tech',
-    tagLabel: 'Academic Leadership',
-    desc: 'Led "Diskusi Bareng Sistem Informasi" under HMSI Education Division. Facilitated peer-to-peer academic growth.',
-    status: 'archived',
-  },
-  {
-    id: 'dev-programs-2024',
-    year: '2024',
-    title: 'DLI 2024 · SmartPath · PeDas APTIKOM',
-    tag: 'milestone',
-    tagLabel: 'Professional Development',
-    desc: 'Active participation in Data Lab Indonesia, SmartPath career program, and PeDas APTIKOM. Building industry connections.',
-    status: 'archived',
-  },
-  {
-    id: 'system-boot',
+    id: 'start-2023',
     year: '2023',
-    title: 'System Boot & Resilience Initialized',
-    tag: 'milestone',
-    tagLabel: 'Adaptability',
-    desc: 'Enrolled in Information Systems, UKDW. Initially driven by necessity rather than passion. Survived through intellect, faith, and strategic tech leverage. Proof that adaptability beats raw talent.',
-    status: 'archived',
+    title: 'Started Information Systems out of necessity, not passion',
+    desc:
+      'I did not arrive with a plan. What I had was the ability to adapt fast and a stubbornness about finishing things. That turned out to be enough to build on.',
   },
 ];

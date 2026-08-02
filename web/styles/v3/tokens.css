@@ -1,0 +1,76 @@
+/* ==========================================================================
+   TOKENS — v3 "Field Notes"
+   Dark technical canvas, editorial rhythm. One warm accent per case study so
+   the projects stay visually distinct without introducing a rainbow.
+
+   Contrast: every foreground token below is measured against --ink-0 and
+   --ink-1 and clears WCAG AA (4.5:1). Numbers are in
+   .agent/changelogs/SESSION_CHANGELOG_2026-08-02.md — re-run the check if you
+   change any value here.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --ink-0: #0a0b0d;   /* page canvas */
+  --ink-1: #121418;   /* card / raised surface */
+  --ink-2: #1a1d23;   /* hover, inset */
+  --line:  #262a32;   /* decorative hairline */
+  --line-strong: #363b45;
+  /* Boundary of an interactive control. WCAG 1.4.11 wants 3:1 for these, so
+     this is deliberately lighter than --line-strong: 3.70:1 on --ink-0. */
+  --ui-line: #666d79;
+
+  /* Foreground */
+  --text-1: #f4f6f8;  /* 17.4:1 on ink-0 */
+  --text-2: #b4bcc8;  /* 10.1:1 */
+  --text-3: #8b94a2;  /*  6.3:1 — smallest text still clears AA */
+
+  /* Accents */
+  --cyan:   #67d3f5;  /* 11.2:1 */
+  --amber:  #f5b963;  /* 11.0:1 */
+  --violet: #b49cff;  /*  8.4:1 */
+  --green:  #6ee7a8;  /* 12.6:1 */
+
+  /* Per-context accent. Case pages and cards override this locally. */
+  --accent: var(--cyan);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 38%, transparent);
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  --step--1: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --step-1:  clamp(1.125rem, 1.06rem + 0.32vw, 1.3125rem);
+  --step-2:  clamp(1.375rem, 1.24rem + 0.66vw, 1.75rem);
+  --step-3:  clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
+  --step-4:  clamp(2.25rem, 1.7rem + 2.75vw, 3.75rem);
+  --step-5:  clamp(2.75rem, 1.4rem + 6.75vw, 6.5rem);
+
+  /* Space */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 7rem;
+
+  --radius: 4px;
+  --radius-lg: 8px;
+
+  --shell: 76rem;
+  /* ~64 characters at body size. Anything wider and the eye loses the line
+     return on a 1280px screen. */
+  --measure: 34rem;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Light mode is not offered: the whole palette, the glow and the accent
+   contrast ratios are designed for a dark canvas. Declaring the scheme stops
+   the browser painting white behind us during load. */
+:root { color-scheme: dark; }

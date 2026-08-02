@@ -1,48 +1,12 @@
 /* ==========================================================================
-   GLOBALS — Next.js entry stylesheet
-   Tailwind v4 first, then the ported System OS design system as a FLAT import
-   list (mirrors the old css/main.css manifest order). Flat string-form imports
-   avoid the nested @import-url() hoisting problem under Lightning CSS.
-   No bare rules here — keep this a pure manifest so @import stays valid.
+   GLOBALS — pure manifest. Never write rules here.
+
+   v3 ("Field Notes", 2 Aug 2026) replaced the v2 System-OS dashboard sheets.
+   The v2 files still live in ../styles/ and are kept in git history; they are
+   simply no longer imported, so none of that CSS ships. If you ever need the
+   old look, the imports are recorded in the changelog for that date.
    ========================================================================== */
 
-@import "tailwindcss";
-
-/* LAYER 1 — foundation */
-@import "../styles/variables.css";
-@import "../styles/reset.css";
-@import "../styles/landing.css";
-@import "../styles/preloader.css";
-
-/* LAYER 2 — ambient background (aurora killed → static grain + graticule) */
-@import "../styles/atmosphere.css";
-
-/* LAYER 3 — design-system utilities */
-@import "../styles/glassmorphism.css";
-
-/* LAYER 4 — layout shell */
-@import "../styles/layout-dashboard.css";
-
-/* LAYER 5 — utility classes */
-@import "../styles/utilities.css";
-
-/* LAYER 6 — components */
-@import "../styles/components/sidebar.css";
-@import "../styles/components/dock.css";
-@import "../styles/components/stat-block.css";
-@import "../styles/components/cards.css";
-@import "../styles/components/timeline.css";
-
-/* LAYER 7 — hub modules */
-@import "../styles/hubs/system-core.css";
-@import "../styles/hubs/operations.css";
-@import "../styles/hubs/operator-metrics.css";
-@import "../styles/hubs/archives.css";
-
-/* LAYER 8 — font bridge (must win over variables.css → imported last) */
-@import "../styles/font-bridge.css";
-
-/* LAYER 9 — FX: 3D tilt + interaction (loaded last so it wins :hover ties) */
-@import "../styles/fx.css";
-
-/* touch: invalidate import chain */
+@import "../styles/v3/tokens.css";
+@import "../styles/v3/base.css";
+@import "../styles/v3/app.css";
