@@ -83,7 +83,7 @@ export default function HomePage() {
           </div>
           <div>
             <span className="mono">Competitions</span>
-            <b>1 national win, 3 finals</b>
+            <b>1 national win, 4 further placements</b>
           </div>
           <div>
             <span className="mono">Currently</span>
