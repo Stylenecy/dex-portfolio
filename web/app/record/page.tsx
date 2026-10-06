@@ -1,7 +1,11 @@
+import type React from 'react';
 import Image from 'next/image';
-import type { Metadata } from 'next';
+import { pageMeta } from '@/data/seo';
 import {
   competitions,
+  alsoEntered,
+  hackathonNow,
+  hackathonBuilds,
   roleRecord,
   certificates,
   posters,
@@ -9,19 +13,21 @@ import {
 } from '@/data/record';
 import { profile } from '@/data/profile';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'Record',
   description:
     'The full record: competition results, organisational roles, certificates, and graphic design work — with what is verified and what is still undecided.',
-};
+  path: '/record',
+});
 
 export default function RecordPage() {
   return (
     <>
       <section className="hero shell" aria-labelledby="rec-h">
-        <p className="mono">Record</p>
-        <h1 id="rec-h" style={{ fontSize: 'var(--step-4)', marginTop: 'var(--s-4)' }}>
-          The paperwork
+        <p className="mono">(Record) — the dashboard layer</p>
+        <h1 id="rec-h" className="lines" style={{ fontSize: 'var(--step-5)', marginTop: 'var(--s-4)' }}>
+          <span className="ln"><span>The</span></span>
+          <span className="ln"><span><em className="serif" style={{ color: 'var(--sys)' }}>paperwork.</em></span></span>
         </h1>
         <p className="hero__sub">
           Results, roles and certificates. Everything here was checked against a document on{' '}
@@ -31,24 +37,61 @@ export default function RecordPage() {
 
       <section className="sec shell" aria-labelledby="comp-h">
         <div className="sec__head">
-          <p className="sec__idx">01 / Competitions</p>
+          <p className="sec__idx">(01) Competitions</p>
           <h2 className="sec__title" id="comp-h">Results</h2>
         </div>
         <div className="rows">
-          {competitions.map((c) => (
-            <div className="row" key={c.id}>
+          {competitions.map((c, n) => (
+            <div className="row reveal draw" style={{ ['--i' as string]: n } as React.CSSProperties} key={c.id}>
               <span className="row__k">{c.outcomeLabel}</span>
               <span>
                 <span className="row__t">{c.name}</span>
                 <span className="row__d">
                   {c.organiser} · {c.date}
                   {c.project ? ` · ${c.project}` : ''}
-                  {c.note ? ` — ${c.note}` : ''}
+                  {c.role ? ` — ${c.role}` : ''}
+                  {c.note ? `. ${c.note}` : ''}
                 </span>
               </span>
-              <span className={`pill${c.outcome === 'pending' ? ' pill--pending' : ''}`}>
-                {c.outcome === 'pending' ? 'Undecided' : 'Confirmed'}
+              {c.url ? (
+                <a className="row__a tlink" href={c.url} target="_blank" rel="noopener noreferrer">Open ↗</a>
+              ) : (
+                <span className="pill">Confirmed</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mono" style={{ margin: 'var(--s-7) 0 var(--s-3)' }}>Entered, did not place</h3>
+        <div className="rows">
+          {alsoEntered.map((e) => (
+            <div className="row reveal" key={e.id}>
+              <span className="row__k">{e.date}</span>
+              <span>
+                <span className="row__t">{e.name}</span>
+                <span className="row__d">{e.what}</span>
               </span>
+              {e.url ? (
+                <a className="row__a tlink" href={e.url} target="_blank" rel="noopener noreferrer">Read ↗</a>
+              ) : (
+                <span className="row__a">Submitted</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mono" style={{ margin: 'var(--s-7) 0 var(--s-3)' }}>
+          Building now — {hackathonNow.event}
+        </h3>
+        <div className="rows">
+          {hackathonBuilds.map((b) => (
+            <div className="row reveal" key={b.id}>
+              <span className="row__k">Oct 2026</span>
+              <span>
+                <span className="row__t">{b.name}</span>
+                <span className="row__d">{b.line} {b.credit}</span>
+              </span>
+              <span className="pill pill--pending">No result yet</span>
             </div>
           ))}
         </div>
@@ -56,12 +99,12 @@ export default function RecordPage() {
 
       <section className="sec shell" aria-labelledby="roles-h">
         <div className="sec__head">
-          <p className="sec__idx">02 / Roles</p>
+          <p className="sec__idx">(02) Roles</p>
           <h2 className="sec__title" id="roles-h">Where I have been responsible for something</h2>
         </div>
         <div className="rows">
           {roleRecord.map((r) => (
-            <div className="row" key={r.id}>
+            <div className="row reveal" key={r.id}>
               <span className="row__k">{r.period}</span>
               <span>
                 <span className="row__t">{r.title}</span>
@@ -78,7 +121,7 @@ export default function RecordPage() {
 
       <section className="sec shell" aria-labelledby="cert-h">
         <div className="sec__head">
-          <p className="sec__idx">03 / Certificates</p>
+          <p className="sec__idx">(03) Certificates</p>
           <div>
             <h2 className="sec__title" id="cert-h">Scans</h2>
             <p className="sec__note">
@@ -116,7 +159,7 @@ export default function RecordPage() {
 
       <section className="sec shell" aria-labelledby="poster-h">
         <div className="sec__head">
-          <p className="sec__idx">04 / Design</p>
+          <p className="sec__idx">(04) Design</p>
           <div>
             <h2 className="sec__title" id="poster-h">Graphic work</h2>
             <p className="sec__note">

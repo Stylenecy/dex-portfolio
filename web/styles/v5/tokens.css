@@ -1,0 +1,82 @@
+/* ==========================================================================
+   TOKENS — v5 "Reforged" (6 Oct 2026)
+   House neutrals from Dex-Brain DEX-MOTION-LANGUAGE §3, one accent: the
+   Operator cyan Dex has used since v1 (Questism "system window" blue).
+   Variable NAMES are kept from v3 so /work, /record and /about re-skin
+   without touching their markup. Spec + reasons: docs/DESIGN-V5.md
+
+   Contrast (kontras.mjs, 6 Oct 2026):
+     --text-1 on ink-0 15.3:1 · --text-2 10.6:1 · --text-3 7.5:1 (6.5:1 on ink-1)
+     --sys on ink-0 11.3:1 · ink-0 on --sys 11.3:1 · --ui-line on ink-0 4.0:1 (UI ≥3)
+   ========================================================================== */
+
+:root {
+  /* Surfaces — a ladder, each step slightly lighter (DESIGN-ANTI-SLOP §5) */
+  --ink-0: #0c0d0d;
+  --ink-1: #141717;
+  --ink-2: #1c2020;
+  --line: rgba(225, 229, 229, 0.08);
+  --line-strong: rgba(225, 229, 229, 0.16);
+  --ui-line: #6b7373;
+
+  /* Foreground */
+  --text-1: #e6eaea;
+  --text-2: #b9c1c1;
+  --text-3: #9aa3a3;
+
+  /* The one accent */
+  --sys: #64d2ff;
+  --sys-soft: rgba(100, 210, 255, 0.12);
+  --sys-line: rgba(100, 210, 255, 0.36);
+  --sys-glow: rgba(100, 210, 255, 0.22);
+
+  /* Functional only — never decorative */
+  --green: #6ee7a8;  /* live */
+  --amber: #f5b963;  /* unfinished / honest */
+
+  /* v3 names, now aliases, so older markup keeps working */
+  --cyan: var(--sys);
+  --violet: var(--sys);
+  --accent: var(--sys);
+  --accent-soft: var(--sys-soft);
+  --accent-line: var(--sys-line);
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+  --font-serif: var(--font-instrument), 'Iowan Old Style', Georgia, serif;
+
+  --step--1: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --step-1:  clamp(1.125rem, 1.06rem + 0.32vw, 1.3125rem);
+  --step-2:  clamp(1.375rem, 1.24rem + 0.66vw, 1.75rem);
+  --step-3:  clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
+  --step-4:  clamp(2.25rem, 1.7rem + 2.75vw, 3.75rem);
+  --step-5:  clamp(2.75rem, 1.4rem + 6.75vw, 6.5rem);
+  /* House "display raksasa": clamp(56px, 9vw, 168px), tightened for 360px */
+  --display: clamp(3.4rem, 1rem + 10.5vw, 10.5rem);
+
+  /* Space (4/8 rhythm) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 7rem;
+
+  --radius: 6px;
+  --radius-lg: 14px;
+
+  --shell: 80rem;
+  --measure: 34rem;
+
+  /* Easing (house §4). NEVER inside an `animation:` shorthand — BAD-01. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Dark only: palette and contrast are designed for this canvas. */
+:root { color-scheme: dark; }

@@ -1,0 +1,128 @@
+/* ==========================================================================
+   BASE — reset, type defaults, accessibility, the motion switch
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  background: var(--ink-0);
+  color: var(--text-2);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3, h4 {
+  color: var(--text-1);
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-5); letter-spacing: -0.045em; line-height: 0.95; }
+h2 { font-size: var(--step-4); letter-spacing: -0.04em; }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); letter-spacing: -0.02em; }
+
+p { text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+em.serif, .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+::selection { background: var(--sys); color: var(--ink-0); }
+
+/* --- Focus -------------------------------------------------------------- */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--sys);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- Skip link ---------------------------------------------------------- */
+.skip {
+  position: absolute;
+  left: var(--s-4);
+  top: -4rem;
+  z-index: 200;
+  padding: var(--s-3) var(--s-5);
+  background: var(--sys);
+  color: var(--ink-0);
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: top 160ms var(--ease);
+}
+.skip:focus-visible { top: var(--s-4); }
+
+.sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Layout primitives -------------------------------------------------- */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 3.5rem);
+}
+.measure { max-width: var(--measure); }
+.stack > * + * { margin-top: var(--s-4); }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 500;
+}
+@media (max-width: 420px) { .mono { letter-spacing: 0.08em; } }
+
+.lede { font-size: var(--step-1); line-height: 1.55; color: var(--text-2); }
+
+/* --- The motion switch ----------------------------------------------------
+   html[data-motion] is set before first paint by the inline script in
+   app/layout.tsx: "on" / "off" from the visitor's Motion button, otherwise
+   from prefers-reduced-motion. Reduced motion means "no movement", never
+   "no content" — everything lands in its final state (BAD-03).
+   Without JS the attribute is missing and the media query still applies. */
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+}
+html[data-motion='off'] { scroll-behavior: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion]) *,
+  html:not([data-motion]) *::before,
+  html:not([data-motion]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html:not([data-motion='on']) { scroll-behavior: auto; }
+}

@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import { pageMeta } from '@/data/seo';
 import { profile, contactChannels } from '@/data/profile';
 import { timelineEntries } from '@/data/timeline';
 import { skillGroups, roleRecord } from '@/data/record';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'About',
   description:
     'Dex Bennett — Information Systems student at UKDW Yogyakarta. What I work on, what I am good at, and the roles behind it.',
-};
+  path: '/about',
+});
 
 export default function AboutPage() {
   const current = roleRecord.filter((r) => r.current);
@@ -17,18 +18,19 @@ export default function AboutPage() {
   return (
     <>
       <section className="hero shell" aria-labelledby="about-h">
-        <p className="mono">About</p>
-        <h1 id="about-h" style={{ fontSize: 'var(--step-4)', marginTop: 'var(--s-4)' }}>
-          I build the unglamorous half
+        <p className="mono">(About) — Dex Bennett / Stylenecy</p>
+        <h1 id="about-h" className="lines" style={{ fontSize: 'var(--step-5)', marginTop: 'var(--s-4)' }}>
+          <span className="ln"><span>I build the</span></span>
+          <span className="ln"><span><em className="serif" style={{ color: 'var(--sys)' }}>unglamorous half.</em></span></span>
         </h1>
 
         <div className="about-top" style={{ marginTop: 'var(--s-7)' }}>
           <div className="portrait">
             <Image
-              src="/images/profile-dex.webp"
-              alt="Portrait of Dex Bennett"
+              src="/images/dex/dex-cutout-720.webp"
+              alt="Dex Bennett in a black blazer and black T-shirt"
               fill
-              sizes="(max-width: 820px) 100vw, 15rem"
+              sizes="(max-width: 820px) 90vw, 17rem"
               priority
             />
           </div>
@@ -36,7 +38,7 @@ export default function AboutPage() {
           <div className="prose">
             <p>
               I am an Information Systems student at Universitas Kristen Duta Wacana in Yogyakarta,
-              entering my seventh semester. I did not choose the programme out of passion — I chose it
+              in my seventh semester, writing my thesis on Sowan.id. I did not choose the programme out of passion — I chose it
               out of necessity, and then found something in it worth being stubborn about.
             </p>
             <p>
@@ -56,9 +58,12 @@ export default function AboutPage() {
               out would make the rest of it less believable.
             </p>
             <p>
-              Right now I chair a 59-student international service programme with Hong Kong Polytechnic
-              University, which is mostly an exercise in the thing nobody teaches: getting a large group
-              of tired people to the right room at the right time.
+              This summer I chaired a 59-student international service programme with Hong Kong
+              Polytechnic University, which is mostly an exercise in the thing nobody teaches: getting a
+              large group of tired people to the right room at the right time. The same year I presented
+              in competition finals more than once, mostly online and in English — a track win at the
+              Mantle Turing Test Hackathon, 2nd place at the BMC #12 international final, 1st at a
+              national business plan competition.
             </p>
           </div>
         </div>
@@ -66,7 +71,7 @@ export default function AboutPage() {
 
       <section className="sec shell" aria-labelledby="now-h">
         <div className="sec__head">
-          <p className="sec__idx">01 / Right now</p>
+          <p className="sec__idx">(01) Right now</p>
           <h2 className="sec__title" id="now-h">What I am in the middle of</h2>
         </div>
         <div className="rows">
@@ -88,7 +93,7 @@ export default function AboutPage() {
 
       <section className="sec shell" aria-labelledby="path-h">
         <div className="sec__head">
-          <p className="sec__idx">02 / How it went</p>
+          <p className="sec__idx">(02) How it went</p>
           <h2 className="sec__title" id="path-h">The short version</h2>
         </div>
         <div className="tl">
@@ -104,11 +109,11 @@ export default function AboutPage() {
 
       <section className="sec shell" aria-labelledby="skills-h">
         <div className="sec__head">
-          <p className="sec__idx">03 / Tools</p>
+          <p className="sec__idx">(03) Loadout</p>
           <div>
             <h2 className="sec__title" id="skills-h">What I actually reach for</h2>
             <p className="sec__note">
-              Listed because I have shipped something with it, not because I have watched a tutorial.
+              Core is what I write comfortably myself. Shipped with is what my live projects are built on.
             </p>
           </div>
         </div>
@@ -128,7 +133,7 @@ export default function AboutPage() {
 
       <section className="sec shell" aria-labelledby="reach-h">
         <div className="sec__head">
-          <p className="sec__idx">04 / Reach me</p>
+          <p className="sec__idx">(04) Signal</p>
           <h2 className="sec__title" id="reach-h">Open to internships</h2>
         </div>
         <div className="contact">
