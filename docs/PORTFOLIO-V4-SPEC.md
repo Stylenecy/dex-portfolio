@@ -277,7 +277,7 @@ kesatuan yang hidup. Bahasa Dex sendiri di `.agent/Protocol.md` §5.1: *"Static 
 - Angka yang menghitung naik tetap harus angka yang sama dengan `web/data/v4/stats.ts`.
   Animasi tidak boleh jadi alasan menulis angka yang lebih "enak dilihat".
 
-## 8. Keputusan yang masih menunggu Dex
+## 8. Keputusan terbuka (pemilik: Dex)
 
 1. **Dashboard Layer 2 = v3 sekarang, atau dibangun baru?** Rekomendasi: pakai v3. Isinya
    sudah lengkap, terverifikasi, dan sudah live. Yang perlu cuma header yang bilang

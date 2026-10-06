@@ -1,6 +1,6 @@
 # DESIGN v5 — "Reforged"
 
-**Status:** dibangun 6 Okt 2026 di cabang `dex/upgrade-2026-10` (preview saja; production menunggu Dex).
+**Status:** dibangun 6 Okt 2026 di cabang `dex/upgrade-2026-10` (preview; production setelah Dex meninjau).
 **Menggantikan:** v3 "Field Notes" (isi dipertahankan — aturan `sources` tetap berlaku) + kerangka v4 "Layered" (visi Dex dipakai,
 kanvas placeholder tidak).
 
