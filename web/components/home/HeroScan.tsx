@@ -26,7 +26,7 @@ export default function HeroScan({ targetId }: { targetId: string }) {
       const rect = hero.getBoundingClientRect();
       // Desktop: the stage is pinned, so the story must finish exactly when
       // the pin releases. Mobile: no pin, so it runs while the hero leaves.
-      const pinned = hero.offsetHeight - window.innerHeight;
+      const pinned = hero.offsetHeight - (window.innerHeight - 60); // 60 = sticky header
       const travel = pinned > 200 ? pinned : Math.max(1, hero.offsetHeight);
       const p = Math.min(1, Math.max(0, -rect.top / travel));
       const q = Math.min(1, Math.max(0, (p - 0.55) / 0.45));

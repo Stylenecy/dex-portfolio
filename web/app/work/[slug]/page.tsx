@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { caseStudies, getCase } from '@/data/caseStudies';
 import { liveBuilds } from '@/data/record';
+import { pageMeta } from '@/data/seo';
 
 export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -17,11 +18,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const c = getCase(slug);
   if (!c) return { title: 'Not found' };
-  return {
-    title: `${c.name} — ${c.forWhom}`,
-    description: c.summary,
-    openGraph: { title: `${c.name} — Dex Bennett`, description: c.summary },
-  };
+  return pageMeta({ title: `${c.name} — ${c.forWhom}`, description: c.summary, path: `/work/${c.slug}` });
 }
 
 export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {

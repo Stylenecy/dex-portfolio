@@ -20,14 +20,14 @@ export const timelineEntries: TimelineEntry[] = [
     year: 'Aug 2026',
     title: 'Second place at an international business plan final',
     desc:
-      'Co-presented Emitra live in English at the BMC #12 grand final, Politeknik Negeri Bali. Fifteen finalist teams, three prizes; we took 2nd.',
+      'Co-presented Emitra live, online and in English, at the BMC #12 grand final hosted by Politeknik Negeri Bali. Fifteen finalist teams, three prizes; we took 2nd.',
   },
   {
     id: 'mantle-2026',
     year: 'Jul 2026',
     title: 'Track winner at an international Web3 hackathon',
     desc:
-      'Cult of the Digital Oracle won the Consumer & Viral DApps track of the Mantle Turing Test Hackathon, one of six track winners. On a team of three, I made the UI assets and the docs and gave the pitch.',
+      'Cult of the Digital Oracle won the Consumer & Viral DApps track of the Mantle Turing Test Hackathon, one of six track winners. On a team of three, I made the UI assets and the docs and gave the six-minute pitch.',
   },
   {
     id: 'kkn-2026',
@@ -61,7 +61,7 @@ export const timelineEntries: TimelineEntry[] = [
     year: '2025',
     title: 'Research assistant — VR for people excluded from tourism',
     desc:
-      'Assistant to the head of the Information Systems programme. Built 3D assets and scenes for an accessible beach experience, then taught community members with disabilities to use it in person.',
+      'Assistant to the head of the Information Systems programme. Built 3D assets and scenes for an accessible VR beach experience, then taught community members how to play it.',
   },
   {
     id: 'bpm-2025',

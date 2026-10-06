@@ -1,6 +1,6 @@
 import type React from 'react';
 import Image from 'next/image';
-import type { Metadata } from 'next';
+import { pageMeta } from '@/data/seo';
 import {
   competitions,
   alsoEntered,
@@ -13,11 +13,12 @@ import {
 } from '@/data/record';
 import { profile } from '@/data/profile';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'Record',
   description:
     'The full record: competition results, organisational roles, certificates, and graphic design work — with what is verified and what is still undecided.',
-};
+  path: '/record',
+});
 
 export default function RecordPage() {
   return (
@@ -41,7 +42,7 @@ export default function RecordPage() {
         </div>
         <div className="rows">
           {competitions.map((c, n) => (
-            <div className="row reveal draw" style={{ ['--i' as string]: n } as React.CSSProperties} key={c.id} title={`Source: ${c.source}`}>
+            <div className="row reveal draw" style={{ ['--i' as string]: n } as React.CSSProperties} key={c.id}>
               <span className="row__k">{c.outcomeLabel}</span>
               <span>
                 <span className="row__t">{c.name}</span>
@@ -64,7 +65,7 @@ export default function RecordPage() {
         <h3 className="mono" style={{ margin: 'var(--s-7) 0 var(--s-3)' }}>Entered, did not place</h3>
         <div className="rows">
           {alsoEntered.map((e) => (
-            <div className="row reveal" key={e.id} title={`Source: ${e.source}`}>
+            <div className="row reveal" key={e.id}>
               <span className="row__k">{e.date}</span>
               <span>
                 <span className="row__t">{e.name}</span>
@@ -84,13 +85,13 @@ export default function RecordPage() {
         </h3>
         <div className="rows">
           {hackathonBuilds.map((b) => (
-            <div className="row reveal" key={b.id} title={`Source: ${b.source}`}>
+            <div className="row reveal" key={b.id}>
               <span className="row__k">Oct 2026</span>
               <span>
                 <span className="row__t">{b.name}</span>
                 <span className="row__d">{b.line} {b.credit}</span>
               </span>
-              <span className="pill pill--pending">Results pending</span>
+              <span className="pill pill--pending">No result yet</span>
             </div>
           ))}
         </div>
@@ -103,7 +104,7 @@ export default function RecordPage() {
         </div>
         <div className="rows">
           {roleRecord.map((r) => (
-            <div className="row reveal" key={r.id} title={`Source: ${r.source}`}>
+            <div className="row reveal" key={r.id}>
               <span className="row__k">{r.period}</span>
               <span>
                 <span className="row__t">{r.title}</span>

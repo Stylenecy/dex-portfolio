@@ -1,6 +1,6 @@
 # DESIGN v5 — "Reforged"
 
-**Status:** dibangun 6 Okt 2026 di cabang `dex/upgrade-2026-10` (preview; production setelah Dex meninjau).
+**Status:** dibangun 6 Okt 2026.
 **Menggantikan:** v3 "Field Notes" (isi dipertahankan — aturan `sources` tetap berlaku) + kerangka v4 "Layered" (visi Dex dipakai,
 kanvas placeholder tidak).
 
@@ -8,13 +8,13 @@ kanvas placeholder tidak).
 dial E/R/M **3/3/3** di landing, **2/2/2** di halaman detail (`/work/*`, `/record`, `/about`).
 
 ## Acuan (tercatat, bukan tebakan)
-| Acuan | Path | Yang diambil |
-|---|---|---|
-| Bahasa visual rumah Dex | `Dex-Brain/50-KNOWLEDGE/teknis/AI-Orchestration/DEX-MOTION-LANGUAGE.md` | token netral, HUD siku, metadata mono, display raksasa, satu frasa serif miring, label dalam kurung, counter sekali jalan, easing expo-out, ringan |
-| Selera UI Dex | `Dex-Brain/00-CORE/04-karakter.md:97` | futuristik, modern, tipografi geometris & besar, gradasi |
-| Visi layered Dex | `docs/PORTFOLIO-V4-SPEC.md` §1 | intro singkat ala Marvel → figur Dex turun kepala→perut lalu habis oleh gradasi → outer layer → pintu ke detail |
-| Umpan balik Dex 2 Ags | `docs/PORTFOLIO-V4-SPEC.md` §7b | informasinya juga harus animatif (counter, reveal per baris, stagger, garis menggambar diri) |
-| Identitas lama | `.agent/Protocol.md` §5.2 | Operator cyan `#64d2ff`, gelap, mono, bahasa "System OS" / Questism |
+| Acuan | Yang diambil |
+|---|---|
+| Bahasa visual rumah Dex (catatan desain pribadi, Okt 2026) | token netral, HUD siku, metadata mono, display raksasa, satu frasa serif miring, label dalam kurung, counter sekali jalan, easing expo-out, ringan |
+| Selera UI Dex | futuristik, modern, tipografi geometris & besar, gradasi |
+| Visi layered Dex (Ags 2026) | intro singkat ala film → figur Dex turun kepala→perut lalu habis oleh gradasi → lapisan luar → pintu ke detail |
+| Umpan balik Dex (Ags 2026) | informasinya juga harus animatif: counter, reveal per baris, stagger, garis menggambar diri |
+| Identitas lama situs | Operator cyan `#64d2ff`, gelap, mono, bahasa "System OS" |
 
 ## Token (`web/styles/v5/tokens.css`)
 - Netral rumah: ink `#0c0d0d`, permukaan `#141717` / `#1c2020`, garis putih alfa .08 / .16.

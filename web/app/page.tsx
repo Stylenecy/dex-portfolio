@@ -13,9 +13,18 @@ import {
   skillGroups,
 } from '@/data/record';
 import { timelineEntries } from '@/data/timeline';
+import { pageMeta } from '@/data/seo';
 import Intro from '@/components/home/Intro';
 import HeroScan from '@/components/home/HeroScan';
 import LiveClock from '@/components/home/LiveClock';
+
+export const metadata = pageMeta({
+  title: 'Dex Bennett — creative technologist, Yogyakarta',
+  description:
+    'Dex Bennett designs systems, builds them, and pitches them. Track winner at the Mantle Turing Test Hackathon, 2nd at the BMC #12 international final, 1st at a national business plan competition — with case studies, sources, and what is still unfinished.',
+  path: '/',
+  absoluteTitle: true,
+});
 
 /** Inline stagger index for the CSS reveal system (motion.css). */
 const i = (n: number) => ({ ['--i' as string]: n }) as CSSProperties;
@@ -54,7 +63,7 @@ function Lines({ lines, accent }: { lines: string[]; accent?: string }) {
 function stats() {
   const placed = competitions.length;
   return [
-    { v: '59', n: 59, l: 'students led across 10 groups — KKN STEM 2026 overall chair', s: 'roleRecord kkn-chair' },
+    { v: '59', n: 59, l: 'students led across 10 groups as KKN STEM 2026 overall chair', s: 'roleRecord kkn-chair' },
     { v: '2,029', n: 2029, l: 'pupils reached by vision screening, 7 schools', s: 'roleRecord kkn-chair, 21–27 Jul 2026' },
     { v: String(liveBuilds.length), n: liveBuilds.length, l: 'builds live on the internet right now', s: `liveBuilds — HTTP 200 on ${profile.verifiedOn}` },
     { v: String(placed), n: placed, l: 'competition results, three of them podiums', s: 'competitions — prestasi.md' },
@@ -161,17 +170,17 @@ export default function HomePage() {
           <dl className="status__grid">
             <div className="status__item"><dt>Name</dt><dd data-decode>Dex Bennett</dd></div>
             <div className="status__item"><dt>Alias</dt><dd data-decode>Stylenecy</dd></div>
-            <div className="status__item"><dt>Class</dt><dd>Creative technologist — design, build, pitch</dd></div>
+            <div className="status__item"><dt>Class</dt><dd>Creative technologist: design, build, pitch</dd></div>
             <div className="status__item"><dt>Base</dt><dd>{profile.location}</dd></div>
             <div className="status__item status__item--wide"><dt>Guild</dt><dd>{profile.program}, UKDW</dd></div>
-            <div className="status__item status__item--wide"><dt>Quest</dt><dd>Thesis — {profile.thesisTitle}</dd></div>
+            <div className="status__item status__item--wide"><dt>Quest</dt><dd>Thesis: {profile.thesisTitle}</dd></div>
           </dl>
           <ul className="status__titles" aria-label="Titles">
             {competitions
               .filter((c) => c.outcome === 'won' || c.outcome === 'runner-up')
               .map((c) => (
                 <li className="title-chip" key={c.id}>
-                  <b>{c.rank}</b> {c.name.replace(' — KSE Juara, national level', ' — KSE, national')}
+                  <b>{c.rank}</b> {c.name.replace(' — KSE Juara, national level', ' (KSE, national)')}
                 </li>
               ))}
           </ul>
@@ -179,7 +188,7 @@ export default function HomePage() {
 
         <ul className="counters">
           {stats().map((s, n) => (
-            <li className="counter reveal" style={i(n)} key={s.l} title={`Source: ${s.s}`}>
+            <li className="counter reveal" style={i(n)} key={s.l} data-source={s.s}>
               <span className="counter__v" data-count={s.n}>{s.v}</span>
               <span className="counter__l">{s.l}</span>
             </li>
@@ -188,7 +197,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== 3 · ARENA ================================================ */}
-      <section className="sec shell" id="arena" aria-labelledby="arena-h">
+      <section className="sec shell sec--band" id="arena" aria-labelledby="arena-h">
         <div className="sec__head">
           <p className="sec__idx">(02) Arena</p>
           <div>
@@ -196,7 +205,7 @@ export default function HomePage() {
               <Lines lines={['Where the work', 'was']} accent="judged." />
             </h2>
             <p className="sec__note reveal">
-              Results exactly as announced — a track win is not rounded up to a first place, and an entry that
+              Results exactly as announced. A track win is not rounded up to a first place, and an entry that
               did not place is listed as one.
             </p>
           </div>
@@ -216,7 +225,7 @@ export default function HomePage() {
                 {(c.project || c.role) && (
                   <p className="arena__role">
                     {c.project && <b>{c.project}</b>}
-                    {c.project && c.role ? ' — ' : ''}
+                    {c.project && c.role ? ' · ' : ''}
                     {c.role}
                     {c.note ? `. ${c.note}` : ''}
                   </p>
@@ -234,7 +243,7 @@ export default function HomePage() {
         </ol>
 
         <p className="mono arena__also reveal">
-          Also entered, did not place —{' '}
+          Also entered, did not place:{' '}
           {alsoEntered.map((e, n) => (
             <span key={e.id}>
               {e.url ? (
@@ -249,7 +258,7 @@ export default function HomePage() {
 
         <div className="now">
           <div className="now__head">
-            <h3 className="reveal">Building now — {hackathonNow.event}</h3>
+            <h3 className="reveal">Building now: {hackathonNow.event}</h3>
             <span className="pill pill--pending reveal">{hackathonNow.status}</span>
           </div>
           <div className="builds">
@@ -275,8 +284,8 @@ export default function HomePage() {
       </section>
 
       {/* ===== 4 · WORK ================================================= */}
-      <section className="sec shell" id="work" aria-labelledby="work-h">
-        <div className="sec__head">
+      <section className="sec shell sec--lift" id="work" aria-labelledby="work-h">
+        <div className="sec__head sec__head--big">
           <p className="sec__idx">(03) Selected work</p>
           <div>
             <h2 className="sec__title lines" id="work-h">
@@ -310,7 +319,7 @@ export default function HomePage() {
                     <Link href={`/work/${c.slug}`}>{c.name}</Link>
                   </h3>
                   <p className="work__for reveal">{c.forWhom}</p>
-                  <p className="work__sum reveal">{c.summary}</p>
+                  <p className="work__sum reveal">{c.summary.split(/(?<=\.)\s/)[0]}</p>
                   {c.metrics.length > 0 && (
                     <div className="metrics reveal">
                       {c.metrics.slice(0, 4).map((m) => (
@@ -342,7 +351,7 @@ export default function HomePage() {
               <span className="row__k">{c.year}</span>
               <span>
                 <span className="row__t">{c.name}</span>
-                <span className="row__d">{c.forWhom} — {c.role}</span>
+                <span className="row__d">{c.forWhom} · {c.role}</span>
               </span>
               <span className="row__a">Read →</span>
             </Link>
@@ -384,15 +393,17 @@ export default function HomePage() {
             </h2>
           </div>
         </div>
-        <div className="tl">
+        <div className="tl tl--brief">
           {timelineEntries.map((t, n) => (
-            <div className={`tl__item reveal${t.current ? ' tl__item--now' : ''}`} style={i(n % 3)} key={t.id}>
+            <div className={`tl__item reveal${t.current ? ' tl__item--now' : ''}`} style={i(n % 2)} key={t.id}>
               <span className="tl__y">{t.year}</span>
               <h3 className="tl__t">{t.title}</h3>
-              <p className="tl__d">{t.desc}</p>
             </div>
           ))}
         </div>
+        <p className="path-more reveal">
+          <Link className="tlink" href="/about">Read the full story on the About page →</Link>
+        </p>
       </section>
 
       {/* ===== 6 · GUILDS =============================================== */}
@@ -401,9 +412,9 @@ export default function HomePage() {
           <p className="sec__idx">(05) Guilds</p>
           <div>
             <h2 className="sec__title lines" id="guilds-h">
-              <Lines lines={['Where I show up', 'every']} accent="week." />
+              <Lines lines={['Where I show up']} accent="right now." />
             </h2>
-            <p className="sec__note reveal">Current roles — work, campus, and community.</p>
+            <p className="sec__note reveal">Current roles across work, campus and community.</p>
           </div>
         </div>
         <div className="guilds">
@@ -456,7 +467,7 @@ export default function HomePage() {
             <Lines lines={['Let’s build something', 'people']} accent="actually use." />
           </h2>
           <p className="signal__p">
-            Open to internships, collaborations and hackathon teams — Yogyakarta or remote. I am most useful
+            Open to internships, collaborations and hackathon teams, in Yogyakarta or remote. I am most useful
             where a real person has to be able to operate the thing.
           </p>
           <div className="btn-row">

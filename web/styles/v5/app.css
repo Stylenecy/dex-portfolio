@@ -22,7 +22,7 @@
   position: sticky;
   top: 0;
   z-index: 60;
-  background: color-mix(in srgb, var(--ink-0) 78%, transparent);
+  background: color-mix(in srgb, var(--ink-0) 93%, transparent);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom: 1px solid var(--line);
@@ -129,6 +129,15 @@
   align-items: center;
   gap: var(--s-3);
 }
+.sec__idx::before {
+  /* HUD corner on every section label (house §2) */
+  content: '';
+  flex: none;
+  width: 10px; height: 10px;
+  border-left: 1px solid var(--sys-line);
+  border-top: 1px solid var(--sys-line);
+  transform: translateY(2px);
+}
 .sec__idx::after {
   content: '';
   flex: 1;
@@ -233,7 +242,7 @@
 
 /* --- Case page ---------------------------------------------------------- */
 .case-hero { padding-block: clamp(2.5rem, 8vh, 5rem) clamp(2rem, 5vh, 3rem); }
-.case-hero__for { margin-top: var(--s-4); font-size: var(--step-1); color: var(--sys); }
+.case-hero__for { margin-top: var(--s-4); font-size: var(--step-1); color: var(--text-2); }
 .case-hero__sum { margin-top: var(--s-5); max-width: 40rem; font-size: var(--step-1); line-height: 1.55; color: var(--text-2); }
 .case-shot {
   margin-top: var(--s-6);

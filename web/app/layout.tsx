@@ -44,14 +44,12 @@ export const metadata: Metadata = {
     'LEAP 2036',
   ],
   authors: [{ name: 'Dex Bennett', url: 'https://dex-portfolio.vercel.app' }],
-  alternates: { canonical: '/' },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     type: 'profile',
     locale: 'en_US',
     siteName: 'Dex Bennett',
-    url: 'https://dex-portfolio.vercel.app',
   },
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
   robots: { index: true, follow: true },
@@ -67,7 +65,7 @@ export const viewport: Viewport = {
    chip when the OS asks for reduced motion and nobody has chosen yet (Dex's
    own Windows does exactly that — BAD-03); and arms the intro once per
    session on the home page. Must stay tiny and dependency-free. */
-const PREPAINT = `(function(){try{var d=document.documentElement,m=localStorage.getItem('${MOTION_KEY}'),s=matchMedia('(prefers-reduced-motion: reduce)').matches,off=m==='on'?false:(m==='off'?true:s);d.setAttribute('data-motion',off?'off':'on');if(s&&!m)d.setAttribute('data-motion-hint','1');if(!off&&location.pathname==='/'&&!sessionStorage.getItem('${INTRO_KEY}')){d.setAttribute('data-intro','1');for(var i=1;i<8;i++){var l=document.createElement('link');l.rel='preload';l.as='image';l.href='/images/intro/f'+i+'.webp';document.head.appendChild(l);}}}catch(e){}})();`;
+const PREPAINT = `(function(){try{var d=document.documentElement,m=localStorage.getItem('${MOTION_KEY}'),s=matchMedia('(prefers-reduced-motion: reduce)').matches,off=m==='on'?false:(m==='off'?true:s);d.setAttribute('data-motion',off?'off':'on');if(s&&!m)d.setAttribute('data-motion-hint','1');if(!off&&location.pathname==='/'&&!sessionStorage.getItem('${INTRO_KEY}')){d.setAttribute('data-intro','1');setTimeout(function(){d.removeAttribute('data-intro')},2600);for(var i=1;i<8;i++){var l=document.createElement('link');l.rel='preload';l.as='image';l.href='/images/intro/f'+i+'.webp';document.head.appendChild(l);}}}catch(e){}})();`;
 
 const PERSON_LD = {
   '@context': 'https://schema.org',

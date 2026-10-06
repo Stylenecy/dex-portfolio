@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import { pageMeta } from '@/data/seo';
 import { profile, contactChannels } from '@/data/profile';
 import { timelineEntries } from '@/data/timeline';
 import { skillGroups, roleRecord } from '@/data/record';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'About',
   description:
     'Dex Bennett — Information Systems student at UKDW Yogyakarta. What I work on, what I am good at, and the roles behind it.',
-};
+  path: '/about',
+});
 
 export default function AboutPage() {
   const current = roleRecord.filter((r) => r.current);
@@ -59,9 +60,10 @@ export default function AboutPage() {
             <p>
               This summer I chaired a 59-student international service programme with Hong Kong
               Polytechnic University, which is mostly an exercise in the thing nobody teaches: getting a
-              large group of tired people to the right room at the right time. The same year I pitched on
-              stage more than once — a track win at the Mantle Turing Test Hackathon, 2nd place at the
-              BMC #12 international final, 1st at a national business plan competition.
+              large group of tired people to the right room at the right time. The same year I presented
+              in competition finals more than once, mostly online and in English — a track win at the
+              Mantle Turing Test Hackathon, 2nd place at the BMC #12 international final, 1st at a
+              national business plan competition.
             </p>
           </div>
         </div>

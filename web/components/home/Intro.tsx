@@ -9,13 +9,15 @@ import { INTRO_KEY } from '@/components/site/motionPref';
  * Seven panels of Dex's real work (his posters and his live products) flip
  * past at ~150 ms each, collapse, the name lands, the curtain lifts. ≈2.3 s.
  *
- * Rules it obeys (docs/PORTFOLIO-V4-SPEC.md §2, DEX-MOTION-LANGUAGE):
+ * Rules it obeys (docs/DESIGN-V5.md):
  *   · visible only when the pre-paint script set html[data-intro="1"]:
  *     first visit this session, on '/', motion allowed — so no flash for
  *     anyone else, and no intro at all with JS off
  *   · skippable by button, click anywhere, Escape/Enter/Space, wheel or touch
  *   · removes itself on animationend, with a timer as the guaranteed path
- *     (BAD-02: never trust animationend alone)
+ *     (BAD-02: never trust animationend alone). The pre-paint script in
+ *     app/layout.tsx carries its own 2.6s timer too, so a slow or dead
+ *     bundle can never leave the page locked behind the curtain
  *   · the page underneath is already rendered; nothing waits on this
  */
 
@@ -45,20 +47,26 @@ export default function Intro() {
       /* private mode: it may show again next visit, which is harmless */
     }
 
-    const timer = window.setTimeout(done, TOTAL_MS);
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') done();
+    const finish = () => {
+      done();
+      detach();
     };
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('wheel', done, { passive: true, once: true });
-    window.addEventListener('touchstart', done, { passive: true, once: true });
-
-    return () => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish();
+    };
+    const detach = () => {
       window.clearTimeout(timer);
       window.removeEventListener('keydown', onKey);
-      window.removeEventListener('wheel', done);
-      window.removeEventListener('touchstart', done);
+      window.removeEventListener('wheel', finish);
+      window.removeEventListener('touchstart', finish);
     };
+    // The curtain started at first paint, not at hydration: only wait for what is left.
+    const timer = window.setTimeout(finish, Math.max(0, TOTAL_MS - performance.now()));
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('wheel', finish, { passive: true });
+    window.addEventListener('touchstart', finish, { passive: true });
+
+    return detach;
   }, [done]);
 
   return (

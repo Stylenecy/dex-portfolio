@@ -6,7 +6,7 @@
 export const profile = {
   name: 'Dex Bennett',
   alias: 'Stylenecy',
-  role: 'Creative technologist — designs systems, builds them, and stands on stage to pitch them',
+  role: 'Creative technologist — designs systems, builds them, and pitches them',
   /** The through-line from v3. Everything on this site should support this sentence. */
   thesis:
     'Most of what I build ends up in the hands of people software usually skips — elderly mentors, church volunteers, high-school students, people who cannot travel.',
