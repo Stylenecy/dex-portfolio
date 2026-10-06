@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
-import { profile, contactChannels } from '@/data/profile';
+import { profile, contactChannels, physicalStats } from '@/data/profile';
 import { caseStudies } from '@/data/caseStudies';
 import {
   competitions,
@@ -174,6 +174,17 @@ export default function HomePage() {
             <div className="status__item"><dt>Base</dt><dd>{profile.location}</dd></div>
             <div className="status__item status__item--wide"><dt>Guild</dt><dd>{profile.program}, UKDW</dd></div>
             <div className="status__item status__item--wide"><dt>Quest</dt><dd>Thesis: {profile.thesisTitle}</dd></div>
+          </dl>
+          <div className="status__bar status__bar--sub">
+            <span className="mono">[ Physical ]</span>
+          </div>
+          <dl className="phys">
+            {physicalStats.map((p) => (
+              <div className="phys__item" key={p.id}>
+                <dt>{p.label}</dt>
+                <dd data-decode>{p.value}</dd>
+              </div>
+            ))}
           </dl>
           <ul className="status__titles" aria-label="Titles">
             {competitions

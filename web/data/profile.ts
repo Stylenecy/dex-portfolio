@@ -27,6 +27,19 @@ export const profile = {
   verifiedOn: '6 October 2026',
 } as const;
 
+/**
+ * PHYSICAL STATS — the Questism status window. Values given by Dex himself in
+ * chat, 6 Oct 2026 20.54 WIB, with the request to publish them. Never guess one.
+ */
+export const physicalStats = [
+  { id: 'height', label: 'Height', value: '182 cm' },
+  { id: 'weight', label: 'Weight', value: '60 kg' },
+  { id: 'age', label: 'Age', value: '20' },
+  { id: 'hand', label: 'Hand', value: 'Right' },
+  { id: 'blood', label: 'Blood', value: 'B' },
+  { id: 'sport', label: 'Sport', value: 'Badminton, table tennis' },
+] as const;
+
 export const contactChannels = [
   { name: 'Email', value: profile.email, href: `mailto:${profile.email}`, external: false },
   { name: 'LinkedIn', value: 'dex-bennett', href: profile.linkedin, external: true },
