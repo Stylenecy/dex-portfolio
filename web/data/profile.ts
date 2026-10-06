@@ -17,8 +17,12 @@ export const profile = {
   thesisTitle: 'Sowan.id — an EduTech platform for learning across generations',
   location: 'Yogyakarta, Indonesia',
   email: 'dex.bennett28@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/dex-bennett-313b40293/',
+  linkedin: 'https://www.linkedin.com/in/dex-bennett/',
   github: 'https://github.com/Stylenecy',
+  /** Handles from Dex-Brain/20-PROJEK/personal-branding.md (5 Oct 2026); Dex approved listing them, 6 Oct 2026. */
+  instagram: 'https://www.instagram.com/dex.bennett/',
+  tiktok: 'https://www.tiktok.com/@stylenecy',
+  youtube: 'https://www.youtube.com/channel/UCJuSrzhIrZxb7qPOZwAvA8Q',
   /** Last time the facts on this site were checked against source files. */
   verifiedOn: '6 October 2026',
 } as const;
@@ -27,4 +31,7 @@ export const contactChannels = [
   { name: 'Email', value: profile.email, href: `mailto:${profile.email}`, external: false },
   { name: 'LinkedIn', value: 'dex-bennett', href: profile.linkedin, external: true },
   { name: 'GitHub', value: '@Stylenecy', href: profile.github, external: true },
+  { name: 'Instagram', value: '@dex.bennett', href: profile.instagram, external: true },
+  { name: 'TikTok', value: '@stylenecy', href: profile.tiktok, external: true },
+  { name: 'YouTube', value: 'Style Official', href: profile.youtube, external: true },
 ] as const;

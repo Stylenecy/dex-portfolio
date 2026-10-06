@@ -77,7 +77,7 @@ const PERSON_LD = {
   jobTitle: 'Information Systems student and creative technologist',
   affiliation: { '@type': 'CollegeOrUniversity', name: 'Universitas Kristen Duta Wacana' },
   address: { '@type': 'PostalAddress', addressLocality: 'Yogyakarta', addressCountry: 'ID' },
-  sameAs: [profile.linkedin, profile.github],
+  sameAs: [profile.linkedin, profile.github, profile.instagram, profile.tiktok, profile.youtube],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
