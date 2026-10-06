@@ -8,12 +8,33 @@ export interface TimelineEntry {
 
 export const timelineEntries: TimelineEntry[] = [
   {
+    id: 'web3-2026',
+    year: 'Oct 2026',
+    title: 'Two Web3 builds for the Indonesia Web3 Hackathon',
+    desc:
+      'DRIFT, an on-chain risk guard a trading bot cannot overrule, and Cermin Saku, an allowance that a contract refuses to pay when the position is not safe. Both on BNB Smart Chain Testnet, both credited to the work they build on. No result yet.',
+    current: true,
+  },
+  {
+    id: 'bmc-2026',
+    year: 'Aug 2026',
+    title: 'Second place at an international business plan final',
+    desc:
+      'Co-presented Emitra live in English at the BMC #12 grand final, Politeknik Negeri Bali. Fifteen finalist teams, three prizes; we took 2nd.',
+  },
+  {
+    id: 'mantle-2026',
+    year: 'Jul 2026',
+    title: 'Track winner at an international Web3 hackathon',
+    desc:
+      'Cult of the Digital Oracle won the Consumer & Viral DApps track of the Mantle Turing Test Hackathon, one of six track winners. On a team of three, I made the UI assets and the docs and gave the pitch.',
+  },
+  {
     id: 'kkn-2026',
-    year: '2026',
+    year: 'Jul – Aug 2026',
     title: 'Chaired a 59-student service programme, and shipped the software for it',
     desc:
       'Overall chair of KKN Tematik STEM 2026 with Hong Kong Polytechnic University, and direct liaison to their supervisors. Vision screening reached 2,029 pupils across 7 schools in July. In August my group ran the LEAP 2036 workshop I built, one session per class, across two high schools.',
-    current: true,
   },
   {
     id: 'audit-2026',
@@ -27,7 +48,7 @@ export const timelineEntries: TimelineEntry[] = [
     year: '2026',
     title: 'Sowan won a national business plan competition',
     desc:
-      '1st place at KSE Juara national level, announced 2 May. Top 15 at EURECA, Top 10 at UKRIDA Solve-It. I was the platform builder on a team of three. The thesis version of the backend followed, written on the assumption that the browser cannot be trusted with anything.',
+      '1st place at KSE Juara national level, announced 2 May. Top 15 at EURECA, Top 10 at UKRIDA Solve-It. I built the platform for the team. The thesis version of the backend followed, written on the assumption that the browser cannot be trusted with anything.',
   },
   {
     id: 'synapse-2026',

@@ -1,15 +1,9 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import type { CSSProperties } from 'react';
-import { caseStudies, getCase, type CaseStudy } from '@/data/caseStudies';
-
-const ACCENT_VAR: Record<CaseStudy['accent'], string> = {
-  cyan: 'var(--cyan)',
-  amber: 'var(--amber)',
-  violet: 'var(--violet)',
-  green: 'var(--green)',
-};
+import { caseStudies, getCase } from '@/data/caseStudies';
+import { liveBuilds } from '@/data/record';
 
 export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -35,17 +29,21 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   const c = getCase(slug);
   if (!c) notFound();
 
-  const style = { ['--accent' as string]: ACCENT_VAR[c.accent] } as CSSProperties;
+  /* v5: one accent site-wide (docs/DESIGN-V5.md), so the per-case colour in
+     the data is no longer applied. The field stays for history. */
+  const shot = liveBuilds.find((b) => b.caseSlug === c.slug)?.image;
   const idx = caseStudies.findIndex((x) => x.slug === c.slug) + 1;
 
   return (
-    <div style={style}>
+    <div>
       <article>
         <header className="case-hero shell">
           <p className="mono">
             Case {String(idx).padStart(2, '0')} · {c.year}
           </p>
-          <h1 style={{ marginTop: 'var(--s-4)', fontSize: 'var(--step-4)' }}>{c.name}</h1>
+          <h1 className="lines" style={{ marginTop: 'var(--s-4)', fontSize: 'var(--step-5)' }}>
+            <span className="ln"><span>{c.name}</span></span>
+          </h1>
           <p className="case-hero__for">{c.forWhom}</p>
           <p className="case-hero__sum">{c.summary}</p>
 
@@ -73,6 +71,18 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               </div>
             )}
           </dl>
+
+          {shot && (
+            <div className="case-shot">
+              <Image
+                src={shot}
+                alt={`${c.name} — screenshot of the live site, 6 Oct 2026`}
+                fill
+                sizes="(max-width: 1280px) 100vw, 76rem"
+                priority
+              />
+            </div>
+          )}
         </header>
 
         {c.metrics.length > 0 && (
@@ -91,7 +101,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell" aria-labelledby="h-problem">
           <div className="sec__head">
-            <p className="sec__idx">01 / The problem</p>
+            <p className="sec__idx">(01) The problem</p>
             <h2 className="sec__title" id="h-problem">What was actually in the way</h2>
           </div>
           <div className="prose reveal">
@@ -103,7 +113,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell" aria-labelledby="h-decisions">
           <div className="sec__head">
-            <p className="sec__idx">02 / Decisions</p>
+            <p className="sec__idx">(02) Decisions</p>
             <h2 className="sec__title" id="h-decisions">What I chose, and why</h2>
           </div>
           <div className="blocks">
@@ -121,7 +131,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell" aria-labelledby="h-result">
           <div className="sec__head">
-            <p className="sec__idx">03 / Result</p>
+            <p className="sec__idx">(03) Result</p>
             <h2 className="sec__title" id="h-result">What is true now</h2>
           </div>
           <ul className="bullets reveal">
@@ -133,7 +143,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell" aria-labelledby="h-honest">
           <div className="sec__head">
-            <p className="sec__idx">04 / Not done</p>
+            <p className="sec__idx">(04) Not done</p>
             <h2 className="sec__title" id="h-honest">What is unfinished or untrue yet</h2>
           </div>
           <div className="honest reveal">
@@ -147,7 +157,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell" aria-labelledby="h-src">
           <div className="sec__head">
-            <p className="sec__idx">05 / Sources</p>
+            <p className="sec__idx">(05) Sources</p>
             <div>
               <h2 className="sec__title" id="h-src">Where these claims come from</h2>
               <p className="sec__note">
@@ -165,7 +175,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
         <section className="sec shell">
           <div className="btn-row">
-            <Link className="btn" href="/">← All work</Link>
+            <Link className="btn" href="/#work">← All work</Link>
             {c.url && (
               <a className="btn btn--primary" href={c.url} target="_blank" rel="noopener noreferrer">
                 Open {c.name} ↗

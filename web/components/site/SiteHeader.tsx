@@ -4,23 +4,20 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV = [
-  { href: '/', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/record', label: 'Record' },
+  { href: '/#work', label: 'Work', match: (p: string) => p.startsWith('/work') },
+  { href: '/record', label: 'Record', match: (p: string) => p.startsWith('/record') },
+  { href: '/about', label: 'About', match: (p: string) => p.startsWith('/about') },
 ];
 
 export default function SiteHeader() {
   const pathname = usePathname();
 
-  const isCurrent = (href: string) =>
-    href === '/' ? pathname === '/' || pathname.startsWith('/work') : pathname.startsWith(href);
-
   return (
     <header className="hdr">
       <div className="shell hdr__in">
-        <Link href="/" className="hdr__mark">
+        <Link href="/" className="hdr__mark" aria-label="Dex Bennett — home">
           <span className="hdr__dot" aria-hidden="true" />
-          Dex&nbsp;Bennett
+          Dex Bennett <b>/ Stylenecy</b>
         </Link>
         <nav className="hdr__nav" aria-label="Primary">
           {NAV.map((item) => (
@@ -28,7 +25,7 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               className="hdr__link"
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              aria-current={item.match(pathname) ? 'page' : undefined}
             >
               {item.label}
             </Link>

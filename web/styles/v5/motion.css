@@ -1,0 +1,58 @@
+/* ==========================================================================
+   MOTION PRIMITIVES — reveal, line masks, drawn hairlines, image wipes.
+   House numbers (DEX-MOTION-LANGUAGE §4): expo-out entrances, 0.8–1.1s,
+   stagger 90ms. Everything is inverted on purpose: visible by default,
+   hidden ONLY once JS has added html.anim (set by components/site/Motion.tsx
+   when motion is allowed). A dead bundle can never blank the page.
+   Stagger uses --i (set inline). var() is fine in transition-delay; it is
+   only the animation shorthand timing slot that breaks (BAD-01).
+   ========================================================================== */
+
+/* Fade-up (paragraphs, panels, rows) */
+html.anim .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.anim .reveal.is-in { opacity: 1; transform: none; }
+
+/* Line mask (headings): <span class="ln"><span>text</span></span> */
+.ln { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.ln > span { display: block; }
+html.anim .lines .ln > span {
+  transform: translateY(110%);
+  transition: transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.anim .lines.is-in .ln > span { transform: none; }
+
+/* Hairline that draws itself */
+html.anim .draw { position: relative; }
+html.anim .draw::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--sys), var(--line-strong) 40%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+html.anim .draw.is-in::after { transform: scaleX(1); }
+
+/* Image wipe. The clip sits on the <img>, never on the observed box:
+   Chrome's IntersectionObserver honours the target's own clip-path, so a box
+   clipped to nothing is never reported as visible and never reveals. */
+html.anim .wipe img {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1000ms cubic-bezier(0.16, 1, 0.3, 1), transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms), 0ms;
+}
+html.anim .wipe.is-in img { clip-path: inset(0 0 0 0); }
+
+/* Counters and decoders keep their width while they run */
+[data-count], [data-decode] { font-variant-numeric: tabular-nums; }

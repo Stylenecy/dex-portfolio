@@ -1,12 +1,13 @@
 /* ==========================================================================
    GLOBALS — pure manifest. Never write rules here.
 
-   v3 ("Field Notes", 2 Aug 2026) replaced the v2 System-OS dashboard sheets.
-   The v2 files still live in ../styles/ and are kept in git history; they are
-   simply no longer imported, so none of that CSS ships. If you ever need the
-   old look, the imports are recorded in the changelog for that date.
+   v5 "Reforged" (6 Oct 2026) — docs/DESIGN-V5.md. Re-skins every route with
+   the house language and adds the layered landing. v3 sheets stay on disk
+   (styles/v3/) for history; they are simply no longer imported.
    ========================================================================== */
 
-@import "../styles/v3/tokens.css";
-@import "../styles/v3/base.css";
-@import "../styles/v3/app.css";
+@import "../styles/v5/tokens.css";
+@import "../styles/v5/base.css";
+@import "../styles/v5/motion.css";
+@import "../styles/v5/app.css";
+@import "../styles/v5/home.css";

@@ -198,7 +198,7 @@ export const caseStudies: CaseStudy[] = [
     name: 'Sowan',
     forWhom: 'Elderly Indonesians with knowledge and no route to income',
     year: '2025 — present',
-    role: 'Platform builder (CTO in the team) · thesis build author',
+    role: 'Platform builder in a three-person student team · thesis build author',
     status: 'live',
     statusLabel: 'Live demo · thesis build in progress',
     accent: 'violet',
@@ -315,15 +315,15 @@ export const caseStudies: CaseStudy[] = [
     year: '2026',
     role: 'Technical lead — architecture, prototype',
     status: 'live',
-    statusLabel: 'Top 15 semifinalist — final round 20 Aug 2026',
+    statusLabel: '2nd place (1st runner-up) — BMC #12 international final',
     accent: 'cyan',
     summary:
-      'Carbon border compliance is a paperwork wall that large exporters can pay to climb and small ones cannot. A prototype and a business case, currently through to the final of an international competition.',
+      'Carbon border compliance is a paperwork wall that large exporters can pay to climb and small ones cannot. A prototype and a business case that placed 2nd out of 15 international finalist teams.',
     url: 'https://emitra-app.vercel.app',
     urlLabel: 'emitra-app.vercel.app',
     stack: ['React', 'TypeScript', 'Vite', 'Vercel'],
     metrics: [
-      { value: 'Top 15', label: 'of the international field', note: 'announced 24 Jul 2026' },
+      { value: '2nd', label: 'of 15 international finalist teams', note: 'BMC #12, Politeknik Negeri Bali, announced 21 Aug 2026' },
     ],
     problem: [
       'European carbon border rules require importers to document the emissions embedded in what they buy. A large exporter hires a consultancy. A small producer has no such option, and the compliance cost quietly becomes an export ban.',
@@ -336,14 +336,14 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     result: [
-      'Confirmed Top 15 semifinalist in the BMC #12 international business plan competition, announced 24 July 2026.',
+      'Reached the grand final as one of 15 international finalist teams (from the 24 Jul 2026 Top 15 announcement), presented live, and placed 2nd — 1st Runner-Up — in the BMC #12 International Business Plan Competition, Politeknik Negeri Bali, announced 21 August 2026.',
     ],
     honest: [
-      'The final round is on 20 August 2026. It has not happened. There is no result to report beyond reaching the last fifteen.',
       'This is a competition prototype, not a production compliance tool. It has not processed a real shipment.',
     ],
     sources: [
-      'All of Project/Competition-PNB/PROJECT_MASTER.md §12 — Top 15 confirmation 24 Jul 2026, final round 20 Aug 2026',
+      'All of Project/Competition-PNB/PROJECT_MASTER.md §12 — Top 15 confirmation 24 Jul 2026',
+      'Dex-Brain/40-REKAM-JEJAK/prestasi.md (Kompetisi #5) and Dex-Brain/20-PROJEK/bmc-emitra.md — 2nd place result, announced 21 Aug 2026, team MAKOSAN',
     ],
   },
 
