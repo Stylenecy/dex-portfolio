@@ -156,6 +156,10 @@ export interface HackathonBuild {
   repo: string;
   image: string;
   tags: string[];
+  /** Where it stands in the judging, in a few words. Only what a source shows. */
+  result: string;
+  /** done = the round is decided for this build; pending = still in play. */
+  resultKind: 'pending' | 'done';
   source: string;
 }
 
@@ -166,8 +170,10 @@ export interface HackathonBuild {
  */
 export const hackathonNow = {
   event: 'Indonesia Web3 Hackathon 2026 (BNB Chain)',
-  status: 'Oct 2026 · no result yet',
-  source: 'Dex-Brain/PAPAN.md — Aktif #1 DRIFT, Aktif #3 Cermin Saku (6 Oct 2026)',
+  label: 'Next: Demo Day',
+  status: '31 Oct 2026 · Yogyakarta',
+  source:
+    'Dex-Brain/PAPAN.md + 20-PROJEK/lencana-bnb-2026.md (organiser email 15 Oct), cermin-saku.md, drift-bnb-2026.md (18 Oct 2026)',
 };
 
 export const hackathonBuilds: HackathonBuild[] = [
@@ -181,7 +187,9 @@ export const hackathonBuilds: HackathonBuild[] = [
     repo: 'https://github.com/Stylenecy/seed-bnb/tree/dex/drift',
     image: '/images/work/drift.webp',
     tags: ['Solidity', 'BSC Testnet', 'Next.js'],
-    source: 'Dex-Brain/20-PROJEK/drift-bnb-2026.md (lines 20–29); Dex-Brain/PAPAN.md Aktif #1',
+    result: 'Not shortlisted for Demo Day',
+    resultKind: 'done',
+    source: 'Dex-Brain/20-PROJEK/drift-bnb-2026.md (lines 20–29, 132–133)',
   },
   {
     id: 'cermin-saku',
@@ -193,7 +201,23 @@ export const hackathonBuilds: HackathonBuild[] = [
     repo: 'https://github.com/Stylenecy/cermin-saku',
     image: '/images/work/cermin.webp',
     tags: ['Solidity', 'BSC Testnet', 'Rupiah UI'],
-    source: 'Dex-Brain/20-PROJEK/cermin-saku.md (lines 13, 16, 21, 41); Dex-Brain/PAPAN.md Aktif #3',
+    result: 'Finalist · Demo Day invite pending',
+    resultKind: 'pending',
+    source: 'Dex-Brain/20-PROJEK/cermin-saku.md (lines 13, 16, 21, 41, 72–75)',
+  },
+  {
+    id: 'lencana',
+    name: 'Lencana',
+    line: 'Learning credentials anyone can verify in a browser — an AI agent proposes the grade, the issuer is checked on BNB Chain.',
+    credit: 'A team build: Hans Gunawan leads the product and contracts, with Dave Aryanda.',
+    mine: 'My part: the visual layer — the cinematic hero with the tilting credential card.',
+    url: 'https://lencana-psi.vercel.app',
+    repo: 'https://github.com/Shenhan01-sys/Lencana',
+    image: '/images/work/lencana.webp',
+    tags: ['BNB Chain', 'AI agent', 'Open Badges'],
+    result: 'Invited to pitch at Demo Day',
+    resultKind: 'pending',
+    source: 'Dex-Brain/20-PROJEK/lencana-bnb-2026.md (Update 16 Oct; Status kanonik, 26 Sep)',
   },
 ];
 

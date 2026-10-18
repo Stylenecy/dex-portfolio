@@ -269,7 +269,7 @@ export default function HomePage() {
 
         <div className="now">
           <div className="now__head">
-            <h3 className="reveal">Building now: {hackathonNow.event}</h3>
+            <h3 className="reveal">{hackathonNow.label}: {hackathonNow.event}</h3>
             <span className="pill pill--pending reveal">{hackathonNow.status}</span>
           </div>
           <div className="builds">
@@ -283,6 +283,7 @@ export default function HomePage() {
                   <p className="build__line">{b.line}</p>
                   <p className="build__mine">{b.mine}</p>
                   <p className="build__credit">{b.credit}</p>
+                  <span className={`pill ${b.resultKind === 'pending' ? 'pill--pending' : ''}`}>{b.result}</span>
                   <div className="btn-row">
                     <a className="tlink" href={b.url} target="_blank" rel="noopener noreferrer">Open the live demo ↗</a>
                     <a className="tlink" href={b.repo} target="_blank" rel="noopener noreferrer">Read the code ↗</a>

@@ -81,7 +81,7 @@ export default function RecordPage() {
         </div>
 
         <h3 className="mono" style={{ margin: 'var(--s-7) 0 var(--s-3)' }}>
-          Building now — {hackathonNow.event}
+          {hackathonNow.label} — {hackathonNow.event}
         </h3>
         <div className="rows">
           {hackathonBuilds.map((b) => (
@@ -91,7 +91,7 @@ export default function RecordPage() {
                 <span className="row__t">{b.name}</span>
                 <span className="row__d">{b.line} {b.credit}</span>
               </span>
-              <span className="pill pill--pending">No result yet</span>
+              <span className={`pill ${b.resultKind === 'pending' ? 'pill--pending' : ''}`}>{b.result}</span>
             </div>
           ))}
         </div>

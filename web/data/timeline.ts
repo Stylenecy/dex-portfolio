@@ -10,9 +10,9 @@ export const timelineEntries: TimelineEntry[] = [
   {
     id: 'web3-2026',
     year: 'Oct 2026',
-    title: 'Two Web3 builds for the Indonesia Web3 Hackathon',
+    title: 'Three Web3 builds, two still in the running for Demo Day',
     desc:
-      'DRIFT, an on-chain risk guard a trading bot cannot overrule, and Cermin Saku, an allowance that a contract refuses to pay when the position is not safe. Both on BNB Smart Chain Testnet, both credited to the work they build on. No result yet.',
+      'For the Indonesia Web3 Hackathon (228 submissions): Lencana, the team credential app I designed the front for, was invited to pitch; Cermin Saku, my allowance a contract refuses to pay when the position is not safe, is a finalist awaiting its invite; DRIFT, my on-chain risk guard, did not make the cut. Demo Day is 31 October in Yogyakarta.',
     current: true,
   },
   {
