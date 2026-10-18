@@ -465,6 +465,7 @@ html[data-intro='1'] .lp-name .ln > span { animation-play-state: paused; }
 .now__head h3 { font-size: var(--step-3); }
 .builds { display: grid; gap: var(--s-5); }
 @media (min-width: 900px) { .builds { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1200px) { .builds { grid-template-columns: repeat(3, 1fr); } }
 .build {
   display: grid;
   gap: var(--s-4);
@@ -490,6 +491,7 @@ html[data-intro='1'] .lp-name .ln > span { animation-play-state: paused; }
 .build__line { color: var(--text-1); }
 .build__mine { color: var(--text-2); font-size: var(--step--1); }
 .build__credit { color: var(--text-3); font-size: var(--step--1); border-left: 2px solid var(--amber); padding-left: 10px; }
+.build__body .pill { justify-self: start; }
 
 /* ===== 4 · WORK ========================================================== */
 .works { display: grid; gap: clamp(3rem, 8vh, 5.5rem); }
