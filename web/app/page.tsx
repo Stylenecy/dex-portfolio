@@ -269,7 +269,7 @@ export default function HomePage() {
 
         <div className="now">
           <div className="now__head">
-            <h3 className="reveal">{hackathonNow.label}: {hackathonNow.event}</h3>
+            <h3 className="reveal">{hackathonNow.label} {hackathonNow.event}</h3>
             <span className="pill pill--pending reveal">{hackathonNow.status}</span>
           </div>
           <div className="builds">

@@ -81,7 +81,7 @@ export default function RecordPage() {
         </div>
 
         <h3 className="mono" style={{ margin: 'var(--s-7) 0 var(--s-3)' }}>
-          {hackathonNow.label} — {hackathonNow.event}
+          {hackathonNow.label} {hackathonNow.event}
         </h3>
         <div className="rows">
           {hackathonBuilds.map((b) => (
