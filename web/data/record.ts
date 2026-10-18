@@ -170,7 +170,7 @@ export interface HackathonBuild {
  */
 export const hackathonNow = {
   event: 'Indonesia Web3 Hackathon 2026 (BNB Chain)',
-  label: 'Next: Demo Day',
+  label: 'Up next: Demo Day at the',
   status: '31 Oct 2026 · Yogyakarta',
   source:
     'Dex-Brain/PAPAN.md + 20-PROJEK/lencana-bnb-2026.md (organiser email 15 Oct), cermin-saku.md, drift-bnb-2026.md (18 Oct 2026)',
