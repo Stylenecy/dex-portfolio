@@ -201,9 +201,9 @@ export const hackathonBuilds: HackathonBuild[] = [
     repo: 'https://github.com/Stylenecy/cermin-saku',
     image: '/images/work/cermin.webp',
     tags: ['Solidity', 'BSC Testnet', 'Rupiah UI'],
-    result: 'Finalist · Demo Day invite pending',
-    resultKind: 'pending',
-    source: 'Dex-Brain/20-PROJEK/cermin-saku.md (lines 13, 16, 21, 41, 72–75)',
+    result: 'Top 15 of 228 · not in the final 10',
+    resultKind: 'done',
+    source: 'Dex-Brain/PAPAN.md Aktif #5 — organiser WA, 18 Oct 2026 11.55',
   },
   {
     id: 'lencana',
