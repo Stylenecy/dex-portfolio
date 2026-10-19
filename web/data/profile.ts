@@ -24,7 +24,7 @@ export const profile = {
   tiktok: 'https://www.tiktok.com/@stylenecy',
   youtube: 'https://www.youtube.com/channel/UCJuSrzhIrZxb7qPOZwAvA8Q',
   /** Last time the facts on this site were checked against source files. */
-  verifiedOn: '18 October 2026',
+  verifiedOn: '19 October 2026',
 } as const;
 
 /**

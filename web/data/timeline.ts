@@ -10,9 +10,9 @@ export const timelineEntries: TimelineEntry[] = [
   {
     id: 'web3-2026',
     year: 'Oct 2026',
-    title: 'Three Web3 builds, two still in the running for Demo Day',
+    title: 'Three Web3 builds, one through to Demo Day',
     desc:
-      'For the Indonesia Web3 Hackathon (228 submissions): Lencana, the team credential app I designed the front for, was invited to pitch; Cermin Saku, my allowance a contract refuses to pay when the position is not safe, is a finalist awaiting its invite; DRIFT, my on-chain risk guard, did not make the cut. Demo Day is 31 October in Yogyakarta.',
+      'For the Indonesia Web3 Hackathon (228 submissions): Lencana, the team credential app I designed the front for, made the final 10 and pitches at Demo Day on 31 October in Yogyakarta. Cermin Saku, my allowance a contract refuses to pay when the position is not safe, reached the top 15 but not the final 10. DRIFT, my on-chain risk guard, did not make the cut.',
     current: true,
   },
   {
